@@ -126,6 +126,7 @@
   .prompt{background:var(--bg2);border:1px solid var(--rule);border-left:3px solid var(--gold);
           border-radius:0 8px 8px 0;padding:14px 17px;margin-bottom:14px}
   .prompt .q{font-size:17px;margin:0 0 4px}
+  .prompt .q em{font-style:italic;color:var(--gold)}
   .prompt .sub{font-family:var(--sans);font-size:12.5px;color:var(--muted);margin:0}
   .axisPick{display:flex;gap:9px;flex-wrap:wrap;margin:13px 0 0;align-items:center}
   .axisPick .hintSmall{font-family:var(--sans);font-size:11.5px;color:var(--faint);margin-left:4px}
@@ -305,11 +306,11 @@
       <svg class="stage" id="stage" viewBox="0 0 1000 640" preserveAspectRatio="xMidYMid meet"></svg>
     </div>
 
+    <div class="quizBar hidden" id="quizBar"></div>
     <div class="viewBar" id="viewBar"></div>
 
     <div class="verdict hidden" id="verdict"></div>
     <div class="meters hidden" id="meters"></div>
-    <div class="quizBar hidden" id="quizBar"></div>
     <div class="detail hidden" id="detail"></div>
     <div class="glossGrid hidden" id="glossGrid"></div>
 
@@ -1162,7 +1163,7 @@ function stageBox(){
   const cubeTop = narrow ? 4 : 42, cubeH = narrow ? 592 : 528;
   let flatTop, flatH;
   if (state.layout === 'line'){
-    flatTop = LY - (f.words.length > 6 ? 118 : 62)*TS();
+    flatTop = LY - (f.words.length > 6 ? 118 : 62)*TS() - (state.quiz && !state.quiz.done ? 18 : 0);
     const lanes = f.words.length > 7 ? 4 : 3;
     const bottom = (narrow || state.phase==='ask')
       ? LY + 70*TS()
@@ -1188,14 +1189,16 @@ function quizOverlay(f){
   const q = state.quiz, w = f.words[q.i];
   let s = '';
   if (!q.done){
+    const name = wordLabel(w);
+    const cue = 'click where '+name+' belongs';
     if (state.layout==='line'){
       const b = LB();
       s += '<rect x="'+b[0]+'" y="'+(LY-46)+'" width="'+(b[1]-b[0])+'" height="92" fill="'+PAL.gold+'" opacity="'+PAL.quizTint+'" rx="6"/>';
-      s += '<text class="axEnd" font-size="'+fs(11)+'" x="500" y="'+(LY-56)+'" text-anchor="middle" fill="'+PAL.gold+'">click where it belongs</text>';
+      s += '<text class="axEnd" font-size="'+fs(13)+'" x="500" y="'+(LY-56)+'" text-anchor="middle" fill="'+PAL.gold+'">'+esc(cue)+'</text>';
     } else {
       const b = FB();
+      s += '<text class="axEnd" font-size="'+fs(13)+'" x="'+((b[0]+b[1])/2)+'" y="'+(FY0-12)+'" text-anchor="middle" fill="'+PAL.gold+'">'+esc(cue)+'</text>';
       s += '<rect x="'+b[0]+'" y="'+FY0+'" width="'+(b[1]-b[0])+'" height="'+(FY1-FY0)+'" fill="'+PAL.gold+'" opacity="'+PAL.quizTint+'" rx="6"/>';
-      s += '<text class="axEnd" font-size="'+fs(11)+'" x="'+((b[0]+b[1])/2)+'" y="'+(FY0-12)+'" text-anchor="middle" fill="'+PAL.gold+'">click where it belongs</text>';
     }
     return s;
   }
@@ -1457,11 +1460,19 @@ function openFamily(i){
 function renderLessonChrome(){
   const f = fam();
   const asking = state.phase==='ask';
+  const quizzing = !!(state.quiz && !state.quiz.done);
 
-  $('#promptQ').textContent = asking ? f.prompt : f.insight;
-  $('#promptSub').textContent = asking
-    ? 'Drag the cube to look around. Pick one axis, or more than one if you think one line cannot hold them.'
-    : 'The panel under the meters is that word\u2019s origin, usage over time, and root. Click another word to compare.';
+  if (quizzing){
+    const w = f.words[state.quiz.i];
+    const where = state.layout==='line' ? 'line' : 'field';
+    $('#promptQ').innerHTML = 'Place <em>'+esc(wordLabel(w))+'</em> on this '+where+'.';
+    $('#promptSub').textContent = w.gloss + ' Click the '+where+' where it belongs.';
+  } else {
+    $('#promptQ').textContent = asking ? f.prompt : f.insight;
+    $('#promptSub').textContent = asking
+      ? 'Drag the cube to look around. Pick one axis, or more than one if you think one line cannot hold them.'
+      : 'The panel under the meters is that word\u2019s origin, usage over time, and root. Click another word to compare.';
+  }
   $('#axisPick').innerHTML = asking
     ? AXNAMES.map(n=>'<button data-ax="'+n+'"'+(state.guess.has(n)?' class="on"':'')+'>'+
         n+' <span style="opacity:.6">'+AXES[n].lo+' \u2192 '+AXES[n].hi+'</span></button>').join('') +
@@ -1532,11 +1543,11 @@ function renderLessonChrome(){
 
   // the field always needs the written list; on a phone the line does too,
   // because SVG gloss cards are unreadable at that width
-  const wantGrid = state.phase!=='ask' && (state.layout==='field' || NARROW());
+  const wantGrid = state.phase!=='ask' && !quizzing && (state.layout==='field' || NARROW());
   $('#glossGrid').classList.toggle('hidden', !wantGrid);
   if (wantGrid) renderGlossGrid();
 
-  $('#detail').classList.toggle('hidden', state.phase==='ask');
+  $('#detail').classList.toggle('hidden', state.phase==='ask' || quizzing);
   renderDetail();
   $('#stage').classList.toggle('locked', state.flat>0.5 || COARSE);
 }
@@ -1594,7 +1605,7 @@ function doReveal(){
 function renderGlossGrid(){
   const f = fam();
   const k = KEYOF(state.layout==='line' ? state.lineAxis : orderedAnswer(f)[0]);
-  const order = f.words.map((w,i)=>({w:w,i:i})).sort((p,q)=> p.w[k]-q.w[k]);
+  const order = f.words.map((w,i)=>({w:w,i:i})).filter(o => !(state.quiz && state.quiz.i===o.i && !state.quiz.done)).sort((p,q)=> p.w[k]-q.w[k]);
   $('#glossGrid').innerHTML = order.map(o=>
     '<div class="gitem'+(state.sel===o.i?' sel':'')+'" data-i="'+o.i+'">'+
       '<p class="gw" style="color:'+connColor(o.w.x)+'">'+esc(wordLabel(o.w))+'</p>'+
@@ -1692,6 +1703,8 @@ function startQuiz(){
   if (state.flat < 0.5) animate({flat:1}, 620);
   $('#quizBar').classList.remove('hidden');
   renderQuizBar(); renderLessonChrome(); render();
+  const prompt = $('#promptBox');
+  if (prompt && prompt.scrollIntoView) prompt.scrollIntoView({block:'nearest', behavior: REDUCED ? 'auto' : 'smooth'});
 }
 
 function renderQuizBar(){
@@ -1733,7 +1746,8 @@ function answerQuiz(px,py){
     parts.push(describe(a[1], g1-w[KEYOF(a[1])], w[KEYOF(a[1])], g1, w.band));
   }
   q.msg = parts.join(' ');
-  renderQuizBar(); render();
+  state.sel = q.i;
+  renderQuizBar(); renderLessonChrome(); render();
 }
 
 function describe(name, err, truth, got, band){
