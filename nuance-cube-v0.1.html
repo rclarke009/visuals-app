@@ -70,6 +70,10 @@
   }
   .wrap{max-width:1060px;margin:0 auto;padding:28px 20px 60px}
 
+  .siteNote{font-family:var(--sans);font-size:12.5px;color:var(--muted);
+            background:var(--tintGold);border:1px solid var(--rule);border-left:3px solid var(--gold);
+            padding:8px 12px;border-radius:0 6px 6px 0;margin:0 0 18px}
+
   /* ---------- masthead ---------- */
   .mast{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;
         border-bottom:1px solid var(--rule);padding-bottom:14px;margin-bottom:26px}
@@ -134,6 +138,10 @@
   .stageWrap{position:relative;background:
       radial-gradient(760px 420px at 50% 34%, var(--stage1) 0%, var(--stage2) 72%, var(--stage3) 100%);
     border:1px solid var(--rule);border-radius:11px;overflow:hidden}
+  .quizCue{position:absolute;top:10px;left:12px;right:12px;z-index:2;text-align:center;
+           font-family:var(--sans);font-size:13px;color:var(--gold);pointer-events:none;
+           text-shadow:0 0 8px var(--halo), 0 0 8px var(--halo)}
+  .quizCue em{font-family:var(--serif);font-style:italic;font-size:17px;font-weight:normal}
   svg.stage{display:block;width:100%;height:auto;touch-action:none;cursor:grab}
   svg.stage.dragging{cursor:grabbing}
   svg.stage.locked{cursor:default}
@@ -210,6 +218,9 @@
   .quizBar .qres{font-family:var(--sans);font-size:13px;color:var(--ink2);margin:8px 0 0}
   .quizBar .qres b{color:var(--gold);font-weight:600}
   .quizBar .qhint{font-family:var(--sans);font-size:12px;color:var(--muted);margin:0}
+  .quizBar .quizActs{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0 0}
+  .quizBar .quizActs .lab{font-family:var(--sans);font-size:11px;letter-spacing:.9px;text-transform:uppercase;
+                         color:var(--faint);margin-right:2px}
 
   /* legend */
   .legend{display:flex;gap:18px;flex-wrap:wrap;margin:18px 0 0;padding-top:14px;
@@ -250,6 +261,8 @@
 </head>
 <body>
 <div class="wrap">
+
+  <p class="siteNote">Limited number of words unless we get funding for more.</p>
 
   <div class="mast">
     <div>
@@ -303,6 +316,7 @@
     </div>
 
     <div class="stageWrap">
+      <div id="quizCue" class="quizCue hidden"></div>
       <svg class="stage" id="stage" viewBox="0 0 1000 640" preserveAspectRatio="xMidYMid meet"></svg>
     </div>
 
@@ -960,9 +974,12 @@ function render(){
   if (state.quiz) s += quizOverlay(f);
 
   const bx = stageBox();
-  $('#stage').setAttribute('viewBox',
+  const stage = $('#stage');
+  stage.setAttribute('viewBox',
     bx.x.toFixed(1)+' '+bx.y.toFixed(1)+' '+bx.w.toFixed(1)+' '+bx.h.toFixed(1));
-  $('#stage').innerHTML = s;
+  stage.textContent = '';
+  stage.innerHTML = s;
+  paintQuizCue();
   $('#stage').querySelectorAll('.wordT').forEach(el=>{
     el.addEventListener('click', ev=>{
       ev.stopPropagation();
@@ -1185,24 +1202,26 @@ function stageBox(){
 /* ============================================================
    quiz overlay
    ============================================================ */
+function quizGuessVisible(){
+  const q = state.quiz;
+  return !!(q && q.done && q.placedLayout===state.layout && state.flat>0.5 &&
+    (state.layout!=='line' || q.placedAxis===state.lineAxis));
+}
+
 function quizOverlay(f){
   const q = state.quiz, w = f.words[q.i];
   let s = '';
   if (!q.done){
-    const name = wordLabel(w);
-    const cue = 'click where '+name+' belongs';
     if (state.layout==='line'){
       const b = LB();
       s += '<rect x="'+b[0]+'" y="'+(LY-46)+'" width="'+(b[1]-b[0])+'" height="92" fill="'+PAL.gold+'" opacity="'+PAL.quizTint+'" rx="6"/>';
-      s += '<text class="axEnd" font-size="'+fs(13)+'" x="500" y="'+(LY-56)+'" text-anchor="middle" fill="'+PAL.gold+'">'+esc(cue)+'</text>';
     } else {
       const b = FB();
-      s += '<text class="axEnd" font-size="'+fs(13)+'" x="'+((b[0]+b[1])/2)+'" y="'+(FY0-12)+'" text-anchor="middle" fill="'+PAL.gold+'">'+esc(cue)+'</text>';
       s += '<rect x="'+b[0]+'" y="'+FY0+'" width="'+(b[1]-b[0])+'" height="'+(FY1-FY0)+'" fill="'+PAL.gold+'" opacity="'+PAL.quizTint+'" rx="6"/>';
     }
     return s;
   }
-  // answered: show the guess, the truth, and the gap between them
+  if (!quizGuessVisible()) return s;
   const truth = flatPos(f,w), col = connColor(w.x);
   s += '<circle cx="'+q.px.toFixed(1)+'" cy="'+q.py.toFixed(1)+'" r="6" fill="none" stroke="'+PAL.gold+'" stroke-width="1.6"/>';
   // sits clear of the axis name, which shares the space just under the line
@@ -1462,17 +1481,8 @@ function renderLessonChrome(){
   const asking = state.phase==='ask';
   const quizzing = !!(state.quiz && !state.quiz.done);
 
-  if (quizzing){
-    const w = f.words[state.quiz.i];
-    const where = state.layout==='line' ? 'line' : 'field';
-    $('#promptQ').innerHTML = 'Place <em>'+esc(wordLabel(w))+'</em> on this '+where+'.';
-    $('#promptSub').textContent = w.gloss + ' Click the '+where+' where it belongs.';
-  } else {
-    $('#promptQ').textContent = asking ? f.prompt : f.insight;
-    $('#promptSub').textContent = asking
-      ? 'Drag the cube to look around. Pick one axis, or more than one if you think one line cannot hold them.'
-      : 'The panel under the meters is that word\u2019s origin, usage over time, and root. Click another word to compare.';
-  }
+  paintQuizPrompt(f, asking);
+  paintQuizCue();
   $('#axisPick').innerHTML = asking
     ? AXNAMES.map(n=>'<button data-ax="'+n+'"'+(state.guess.has(n)?' class="on"':'')+'>'+
         n+' <span style="opacity:.6">'+AXES[n].lo+' \u2192 '+AXES[n].hi+'</span></button>').join('') +
@@ -1494,8 +1504,12 @@ function renderLessonChrome(){
   // view bar
   const vb = $('#viewBar');
   if (state.phase==='ask'){
-    vb.innerHTML = '<span class="lab">view</span>' +
+    let html = '<span class="lab">view</span>' +
       VIEW_ORDER.map(v=>'<button data-v="'+v+'"'+(state.view===v?' class="on"':'')+'>'+VIEWS[v].label+'</button>').join('');
+    if (!state.quiz){
+      html += '<div class="spacer"></div><button class="primary" id="quizBtn">Quiz me</button>';
+    }
+    vb.innerHTML = html;
   } else {
     const a = orderedAnswer(f);
     let html = '<span class="lab">read as</span>';
@@ -1508,7 +1522,9 @@ function renderLessonChrome(){
       html += '<button data-read="__field"'+(on?' class="on"':'')+'>both at once</button>';
     }
     html += '<button data-read="__cube"'+(state.flat<0.5?' class="on"':'')+'>back to the cube</button>';
-    html += '<div class="spacer"></div><button class="primary" id="quizBtn">Quiz me</button>';
+    if (!state.quiz){
+      html += '<div class="spacer"></div><button class="primary" id="quizBtn">Quiz me</button>';
+    }
     vb.innerHTML = html;
   }
   vb.querySelectorAll('[data-v]').forEach(el=>{
@@ -1550,6 +1566,7 @@ function renderLessonChrome(){
   $('#detail').classList.toggle('hidden', state.phase==='ask' || quizzing);
   renderDetail();
   $('#stage').classList.toggle('locked', state.flat>0.5 || COARSE);
+  if (state.quiz) renderQuizBar();
 }
 
 function setRead(which){
@@ -1630,10 +1647,10 @@ function renderDetail(){
     '<p class="coords">connotation '+w.x.toFixed(2)+' &middot; intensity '+w.y.toFixed(2)+
       ' &middot; formality '+w.z.toFixed(2)+(w.band?' &middot; confidence \u00b1'+w.band.toFixed(2):'')+'</p>';
   if (w.from && w.from.length){
-    html += '<p class="trail">'+originTrail(w.from)+'</p>';
+    html += '<p class="trail" id="detailOrigin">'+originTrail(w.from)+'</p>';
   }
   if (w.usage && w.usage.length){
-    html += '<div class="sparkWrap">'+usageSpark(f, state.sel)+
+    html += '<div class="sparkWrap" id="detailUsage">'+usageSpark(f, state.sel)+
       '<p class="sparkCap">Google Books English, six hand-sampled years. Each curve is scaled to that word\u2019s own peak, so matching height does not mean matching commonness. A single bump can be noise. A dip every line shares around 1950 is the corpus, not the family. Gold is the word you picked; click a name or line to switch.</p>';
     if (w.usageNote) html += '<p class="usageNote">'+esc(w.usageNote)+'</p>';
     html += '</div>';
@@ -1642,7 +1659,7 @@ function renderDetail(){
     const hits = cognatesOf(w.root.id, f.hub, w.w);
     const here = hits.filter(h => h.hub === f.hub);
     const elsew = hits.filter(h => h.hub !== f.hub);
-    html += '<div class="rootRow"><span class="rootLab">Root</span>';
+    html += '<div id="detailRoot"><div class="rootRow"><span class="rootLab">Root</span>';
     if (hits.length){
       const jumpTo = here[0] || null;
       if (jumpTo){
@@ -1668,6 +1685,7 @@ function renderDetail(){
       html += '<p class="rootAlso">also in '+Object.keys(byHub).map(hub =>
         '<em>'+esc(hub)+'</em>: '+esc(byHub[hub].join(', '))).join('; ')+'</p>';
     }
+    html += '</div>';
   }
   d.innerHTML = html;
   d.querySelectorAll('[data-jump]').forEach(el => {
@@ -1692,24 +1710,70 @@ function select(i){
 /* ============================================================
    quiz — scored by which axis you were wrong about
    ============================================================ */
+function paintQuizPrompt(f, asking){
+  const q = state.quiz;
+  if (q){
+    const w = f.words[q.i];
+    const where = state.layout==='line' ? 'line' : 'field';
+    if (!q.done){
+      $('#promptQ').innerHTML = 'Place <em>'+esc(wordLabel(w))+'</em> on this '+where+'.';
+      $('#promptSub').textContent = w.gloss + ' Click the '+where+' where it belongs.';
+    } else {
+      $('#promptQ').innerHTML = 'You placed <em>'+esc(wordLabel(w))+'</em>.';
+      $('#promptSub').textContent = quizGuessVisible()
+        ? 'The gold ring is your guess; the solid dot is where it actually sits.'
+        : 'The word sits at its true place on this reading. Switch back to see your guess.';
+    }
+    return;
+  }
+  $('#promptQ').textContent = asking ? f.prompt : f.insight;
+  $('#promptSub').textContent = asking
+    ? 'Drag the cube to look around. Pick one axis, or more than one if you think one line cannot hold them.'
+    : 'The panel under the meters is that word\u2019s origin, usage over time, and root. Click another word to compare.';
+}
+
+function paintQuizCue(){
+  const cue = $('#quizCue');
+  if (!cue) return;
+  const q = state.quiz;
+  if (!q || q.done){
+    cue.classList.add('hidden');
+    cue.innerHTML = '';
+    return;
+  }
+  const w = fam().words[q.i];
+  const where = state.layout==='line' ? 'line' : 'field';
+  cue.classList.remove('hidden');
+  cue.innerHTML = 'Place <em>'+esc(wordLabel(w))+'</em> — click the '+where+' where it belongs';
+}
+
 function startQuiz(){
   const f = fam();
+  const prev = state.quiz ? state.quiz.i : -1;
   let i = Math.floor(Math.random()*f.words.length);
-  if (state.quiz && f.words.length>1){
-    while (i === state.quiz.i) i = Math.floor(Math.random()*f.words.length);
+  if (f.words.length > 1){
+    let guard = 0;
+    while (i === prev && guard++ < 24) i = Math.floor(Math.random()*f.words.length);
   }
   state.quiz = { i:i, done:false, px:0, py:0 };
   state.sel = null;
-  if (state.flat < 0.5) animate({flat:1}, 620);
+  if (state.flat < 0.5){
+    if (state.phase === 'ask') state.phase = 'read';
+    state.autoSpin = false;
+    const axis = orderedAnswer(f)[0];
+    state.layout = 'line';
+    state.lineAxis = axis;
+    const cam = axis === 'formality' ? VIEWS.formality.cam : VIEWS.connotation.cam;
+    animate({yaw:cam.yaw, pitch:cam.pitch}, 480, ()=> animate({flat:1}, 660, renderLessonChrome));
+  }
   $('#quizBar').classList.remove('hidden');
   renderQuizBar(); renderLessonChrome(); render();
-  const prompt = $('#promptBox');
-  if (prompt && prompt.scrollIntoView) prompt.scrollIntoView({block:'nearest', behavior: REDUCED ? 'auto' : 'smooth'});
 }
 
 function renderQuizBar(){
-  const q = state.quiz, f = fam(), w = f.words[q.i], bar = $('#quizBar');
+  const q = state.quiz, bar = $('#quizBar');
   if (!q){ bar.classList.add('hidden'); return; }
+  const f = fam(), w = f.words[q.i];
   const axesInPlay = state.layout==='line' ? [state.lineAxis] : orderedAnswer(f);
   let html = '<p class="qw">Place this word: <b>'+esc(wordLabel(w))+'</b></p>'+
              '<p class="qg">'+esc(w.gloss)+'</p>';
@@ -1717,11 +1781,26 @@ function renderQuizBar(){
     html += '<p class="qhint">Click on the '+(state.layout==='line'?'line':'field')+
             ' where it belongs. You are being scored on '+axesInPlay.join(' and ')+'.</p>';
   } else {
-    html += '<p class="qres">'+q.msg+'</p>'+
-            '<button class="primary" id="quizNext" style="margin-top:9px">Another word</button> '+
-            '<button class="ghost" id="quizDone">Stop quizzing</button>';
+    const a = orderedAnswer(f);
+    const lineOn = n => state.flat>0.5 && state.layout==='line' && state.lineAxis===n;
+    const fieldOn = state.flat>0.5 && state.layout==='field';
+    html += '<p class="qres">'+q.msg+'</p>';
+    html += '<div class="quizActs"><span class="lab">This word on</span>';
+    AXNAMES.forEach(n=>{
+      html += '<button type="button" data-read="'+n+'"'+(lineOn(n)?' class="on"':'')+'>'+n+' line</button>';
+    });
+    if (a.length>1){
+      html += '<button type="button" data-read="__field"'+(fieldOn?' class="on"':'')+'>both at once</button>';
+    }
+    html += '</div>';
+    html += '<div class="quizActs">'+
+            '<button class="primary" id="quizNext">Another word</button>'+
+            '<button class="ghost" id="quizDone">Stop quizzing</button></div>';
   }
   bar.innerHTML = html;
+  bar.querySelectorAll('[data-read]').forEach(el=>{
+    el.addEventListener('click', ()=> setRead(el.getAttribute('data-read')));
+  });
   const n = $('#quizNext'); if (n) n.addEventListener('click', startQuiz);
   const dn = $('#quizDone'); if (dn) dn.addEventListener('click', ()=>{
     state.quiz=null; $('#quizBar').classList.add('hidden'); renderLessonChrome(); render();
@@ -1729,36 +1808,73 @@ function renderQuizBar(){
 }
 
 const gradeWord = e => e<0.18 ? 'spot on' : e<0.42 ? 'close' : e<0.75 ? 'off' : 'well off';
+const gradeLead = e => { const g = gradeWord(e); return g.charAt(0).toUpperCase()+g.slice(1)+'.'; };
+
+function quizScoreAxes(){
+  return state.layout==='line' ? [state.lineAxis] : orderedAnswer(fam());
+}
+
+function clickOnAxes(px, py, axes){
+  const got = {};
+  if (state.layout==='line'){
+    got[KEYOF(axes[0])] = unLineX(px);
+  } else {
+    got[KEYOF(axes[0])] = unFieldX(px);
+    got[KEYOF(axes[1])] = unFieldY(py);
+  }
+  return got;
+}
+
+function distOnAxes(got, word, axes){
+  let s = 0;
+  for (const n of axes){
+    const k = KEYOF(n);
+    const d = got[k] - word[k];
+    s += d*d;
+  }
+  return Math.sqrt(s);
+}
 
 function answerQuiz(px,py){
   const q = state.quiz, f = fam(), w = f.words[q.i];
   q.px = px; q.py = py; q.done = true;
+  q.placedLayout = state.layout;
+  q.placedAxis = state.lineAxis;
 
-  const parts = [];
-  if (state.layout==='line'){
-    const n = state.lineAxis, k = KEYOF(n);
-    const got = unLineX(px), err = got - w[k];
-    parts.push(describe(n, err, w[k], got, w.band));
+  const axes = quizScoreAxes();
+  const got = clickOnAxes(px, py, axes);
+  const errs = axes.map(n => got[KEYOF(n)] - w[KEYOF(n)]);
+  const worst = Math.max(...errs.map(e => Math.abs(e)));
+
+  const dTarget = distOnAxes(got, w, axes);
+  let near = null, dNear = Infinity;
+  f.words.forEach((sib, i) => {
+    if (i === q.i) return;
+    const d = distOnAxes(got, sib, axes);
+    if (d < dNear){ dNear = d; near = sib; }
+  });
+
+  const closeEnough = worst < 0.42;
+  const nearerTarget = !near || dTarget <= dNear;
+  let lead;
+  if (nearerTarget || closeEnough){
+    lead = '<b>'+gradeLead(worst)+'</b>';
   } else {
-    const a = orderedAnswer(f);
-    const g0 = unFieldX(px), g1 = unFieldY(py);
-    parts.push(describe(a[0], g0-w[KEYOF(a[0])], w[KEYOF(a[0])], g0, w.band));
-    parts.push(describe(a[1], g1-w[KEYOF(a[1])], w[KEYOF(a[1])], g1, w.band));
+    lead = 'What you selected is closer to <i>'+esc(wordLabel(near))+'</i>.';
   }
-  q.msg = parts.join(' ');
+
+  const parts = axes.map((n,i) => describe(n, errs[i], w[KEYOF(n)], got[KEYOF(n)])).filter(Boolean);
+  q.msg = lead + (parts.length ? ' ('+parts.join(' ')+')' : '');
   state.sel = q.i;
   renderQuizBar(); renderLessonChrome(); render();
 }
 
-function describe(name, err, truth, got, band){
-  const e = Math.abs(err), ax = AXES[name];
+function describe(name, err, truth, got){
+  const e = Math.abs(err);
+  if (e < 0.18) return '';
+  const ax = AXES[name];
   const dir = err > 0 ? ax.hi : ax.lo;
-  const at = 'You put it at '+got.toFixed(2)+'; it sits at '+truth.toFixed(2)+'.';
-  if (band && e <= band)
-    return '<b>'+name+': spot on.</b> '+at+' That is inside its own confidence band of \u00b1'+band.toFixed(2)+'.';
-  if (e < 0.18) return '<b>'+name+': spot on.</b> '+at;
-  return '<b>'+name+': '+gradeWord(e)+'.</b> '+at+' You had it '+e.toFixed(2)+
-         ' too far toward <i>'+dir+'</i>.';
+  return name+': '+gradeWord(e)+'. You had it too far toward <i>'+dir+'</i>.';
 }
 
 /* ============================================================
