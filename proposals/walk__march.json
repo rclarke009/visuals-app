@@ -1,0 +1,125 @@
+{
+  "word": "march",
+  "hub": "walk",
+  "status": "pending",
+  "evidence": [
+    {
+      "source": "wiktionary",
+      "url": "https://en.wiktionary.org/wiki/march",
+      "quote": "{{dercat|en|ine-pro}} From {{inh|en|enm|marchen}}, from {{der|en|frm|marcher|t=to march, walk}}, from {{der|en|fro|marchier|t=to stride, to march, to trample}}, from {{der|en|frk|*markōn|t=to mark, mark out, to press with the foot}}, from {{der|en|gem-pro|*markōną|t=to mark}}. Akin to {{cog|ang|mearc}}, {{m|ang|ġemearc|t=mark, boundary}}. Compare {{m|en|mark}}, from {{inh|en|ang|mearcian}}. Compare typologically {{m+|ru|сле́довать}} (akin to {{m|ru|след}}). Also compare {{m|ru|пятно́}} (<~ {{m|ru|пята́}})."
+    },
+    {
+      "source": "etymonline",
+      "url": "https://www.etymonline.com/word/march",
+      "quote": "\"to walk with measured steps or a regular tread,\" either individually or as a body, early… See origin and meaning of march. from Old French marcher \"to stride, march, walk,\" originally \"to trample, tread underfoot,\" a word of uncertain origin."
+    },
+    {
+      "source": "ngrams",
+      "url": "https://books.google.com/ngrams/json?content=march&year_start=1800&year_end=2019&corpus=en-2019&smoothing=3",
+      "quote": "years [1800, 1850, 1900, 1950, 2000, 2019] scaled=[1.0, 0.9238, 0.5855, 0.236, 0.2076, 0.2921] raw=[4.0806154e-05, 3.769634e-05, 2.389293e-05, 9.629493e-06, 8.472776e-06, 1.1917966e-05]"
+    }
+  ],
+  "proposed_from": [
+    {
+      "lang": "Proto-Indo-European",
+      "form": "*móri",
+      "year": null
+    },
+    {
+      "lang": "Proto-West-Germanic",
+      "form": "*marik",
+      "year": null
+    },
+    {
+      "lang": "Old English",
+      "form": "merċe",
+      "year": null
+    },
+    {
+      "lang": "Middle English",
+      "form": "merche",
+      "year": null
+    },
+    {
+      "lang": "Proto-Indo-European",
+      "form": "*mórǵs",
+      "year": null
+    },
+    {
+      "lang": "Proto-Germanic",
+      "form": "*markō",
+      "year": null
+    },
+    {
+      "lang": "frk",
+      "form": "*marku",
+      "year": null
+    },
+    {
+      "lang": "Old French",
+      "form": "marche",
+      "year": null
+    },
+    {
+      "lang": "Middle English",
+      "form": "marche",
+      "year": null
+    },
+    {
+      "lang": "Old English",
+      "form": "mearcian",
+      "year": null
+    },
+    {
+      "lang": "Proto-Germanic",
+      "form": "*markōną",
+      "year": null
+    },
+    {
+      "lang": "frk",
+      "form": "*markōn",
+      "year": null
+    },
+    {
+      "lang": "Old French",
+      "form": "marchier",
+      "year": null
+    },
+    {
+      "lang": "frm",
+      "form": "marcher",
+      "year": null
+    },
+    {
+      "lang": "Middle English",
+      "form": "marchen",
+      "year": null
+    }
+  ],
+  "proposed_root": {
+    "id": "m-ri",
+    "form": "*móri",
+    "gloss": ""
+  },
+  "proposed_usage": [
+    1.0,
+    0.9238,
+    0.5855,
+    0.236,
+    0.2076,
+    0.2921
+  ],
+  "proposed_usageNote": "This surface form has other senses (3 English etymology sections). The usage curve may mix them.",
+  "proposed_gloss": null,
+  "proposed_ex": null,
+  "rank_suggestions": [],
+  "gloss_candidates": [],
+  "diffs": [
+    "from",
+    "root",
+    "usage",
+    "usageNote"
+  ],
+  "errors": [],
+  "wiki_roots": []
+}

@@ -1,0 +1,67 @@
+{
+  "word": "intelligent",
+  "hub": "smart",
+  "status": "pending",
+  "evidence": [
+    {
+      "source": "wiktionary",
+      "url": "https://en.wiktionary.org/wiki/intelligent",
+      "quote": "{{root|en|ine-pro|*leǵ-}} {{ety|en|:uder|frm:intelligent<ety:uder<la:intelligēns>>|id=smart|tree=1}} From {{der|en|frm|intelligent}}, from {{der|en|la|intelligens|intellegēns|discerning}}, present active participle of {{m|la|intellegō||understand, comprehend}}, itself from {{m|la|inter||between}} + {{m|la|legō||choose, pick out, read}}."
+    },
+    {
+      "source": "etymonline",
+      "url": "https://www.etymonline.com/word/intelligent",
+      "quote": "c. 1500, a back-formation from intelligence or else from Latin intelligentem (nominative intelligens), present participle of intelligere. In from intelligence or else from Latin intelligentem (nominative intelligens ), present participle of intelligere ."
+    },
+    {
+      "source": "ngrams",
+      "url": "https://books.google.com/ngrams/json?content=intelligent&year_start=1800&year_end=2019&corpus=en-2019&smoothing=3",
+      "quote": "years [1800, 1850, 1900, 1950, 2000, 2019] scaled=[0.6227, 1.0, 0.9199, 0.5401, 0.4247, 0.5274] raw=[1.7035783e-05, 2.7358539e-05, 2.516688e-05, 1.4776737e-05, 1.1619743e-05, 1.4427943e-05]"
+    }
+  ],
+  "proposed_from": [
+    {
+      "lang": "ru",
+      "form": "интеллиге́нт",
+      "year": null
+    },
+    {
+      "lang": "Latin",
+      "form": "intelligens",
+      "year": null
+    },
+    {
+      "lang": "frm",
+      "form": "intelligent",
+      "year": null
+    }
+  ],
+  "proposed_root": {
+    "id": "unknown",
+    "form": "интеллиге́нт",
+    "gloss": ""
+  },
+  "proposed_usage": [
+    0.6227,
+    1.0,
+    0.9199,
+    0.5401,
+    0.4247,
+    0.5274
+  ],
+  "proposed_usageNote": "This surface form has other senses (2 English etymology sections). The usage curve may mix them.",
+  "proposed_gloss": null,
+  "proposed_ex": null,
+  "rank_suggestions": [],
+  "gloss_candidates": [],
+  "diffs": [
+    "from",
+    "root",
+    "usage",
+    "usageNote"
+  ],
+  "errors": [],
+  "wiki_roots": [
+    "ine-pro|*leǵ-"
+  ]
+}

@@ -1,0 +1,1873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nuance Cube — what actually separates these words?</title>
+<style>
+  :root{
+    --bg:#0a0d14; --bg2:#111722; --bg3:#161d2b;
+    --ink:#e9e7e2; --ink2:#c3c8d2; --muted:#7f8899; --faint:#4a5365;
+    --rule:#212a3a; --rule2:#2c374a;
+    --gold:#e3b341; --teal:#5fc9b7; --tealHi:#79d9c9;
+    --cool:#5aa9e6; --warm:#f0a85c; --swatchMid:#d8d4cc;
+    --sans:'Helvetica Neue',Helvetica,Arial,sans-serif;
+    --serif:Georgia,'Times New Roman',serif;
+
+    /* surfaces and inks that used to be inline */
+    --field:#0d1219;            /* card gradient foot */
+    --glow1:#17203100; --glow2:#0a0d1400;
+    --edge:#3c4a63; --edgeCard:#3e4c66; --edgeItem:#41506b;
+    --track:#0c1017;            /* meter trough */
+    --tintGold:rgba(227,179,65,.07);
+    --onGold:#17120a; --onTeal:#07211d;
+
+    /* the stage: field, halo behind words, and everything drawn in SVG */
+    --stage1:#16202f; --stage2:#0b0f17; --stage3:#090c12;
+    --halo:#080b11;
+    --s-grid:#39455c; --s-frame:#2b3648; --s-drop:#46536c; --s-ruler:#4d5c78;
+    --s-tick:#293446; --s-card:#101724; --s-cardInk:#b9bfcb; --s-axis:#55658a;
+    --s-cardEdge:#263143; --s-leader:#36415a;
+    --s-axName:#6b7688; --s-axEnd:#7f8899; --s-sparkRule:#33405a; --s-sparkEnd:#5b657a;
+    --s-quizTint:0.045; --s-dim:0.42;
+    --ramp-cool:90,169,230; --ramp-mid:216,212,204; --ramp-warm:240,168,92;
+  }
+
+  /* Warm paper. Same page, lit from the other side. */
+  html[data-theme="light"]{
+    --bg:#f7f3ea; --bg2:#fffdf7; --bg3:#f1ebde;
+    --ink:#1c1a16; --ink2:#413c34; --muted:#6d6558; --faint:#9a9184;
+    --rule:#e2d9c8; --rule2:#cfc4ae;
+    --gold:#8f6508; --teal:#0f6d5e; --tealHi:#0b5c4f;
+    --cool:#1f6fb0; --warm:#a75c17; --swatchMid:#7c7466;
+
+    --field:#f3ecdd;
+    --glow1:#ffffff00; --glow2:#f7f3ea00;
+    --edge:#b6a893; --edgeCard:#c3b59a; --edgeItem:#c3b59a;
+    --track:#e7dfce;
+    --tintGold:rgba(143,101,8,.10);
+    --onGold:#fffdf7; --onTeal:#fffdf7;
+
+    --stage1:#fffdf7; --stage2:#f6f0e2; --stage3:#f2ebdb;
+    --halo:#f7f1e4;
+    --s-grid:#b5a68a; --s-frame:#bfb197; --s-drop:#9c9079; --s-ruler:#8a8070;
+    --s-tick:#ded4c1; --s-card:#fffdf7; --s-cardInk:#413c34; --s-axis:#8a8070;
+    --s-cardEdge:#ded4c1; --s-leader:#bfb39b;
+    --s-axName:#7d7466; --s-axEnd:#6d6558; --s-sparkRule:#c9bda7; --s-sparkEnd:#857c6d;
+    /* paper needs a stronger quiz wash and a gentler depth fade, since fading
+       toward a light field loses contrast faster than fading toward ink */
+    --s-quizTint:0.13; --s-dim:0.34;
+    --ramp-cool:31,111,176; --ramp-mid:124,116,102; --ramp-warm:167,92,23;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1200px 700px at 50% -10%, var(--glow1) 0%, var(--glow2) 60%),
+      var(--bg);
+    color:var(--ink); font-family:var(--serif); line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1060px;margin:0 auto;padding:28px 20px 60px}
+
+  /* ---------- masthead ---------- */
+  .mast{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;
+        border-bottom:1px solid var(--rule);padding-bottom:14px;margin-bottom:26px}
+  h1{font-family:var(--sans);font-size:19px;font-weight:600;letter-spacing:-.2px;margin:0}
+  h1 .dot{color:var(--gold)}
+  .tag{font-family:var(--sans);font-size:12.5px;color:var(--muted);margin:3px 0 0}
+  .mast .ver{font-family:var(--sans);font-size:11px;color:var(--faint);letter-spacing:.7px;
+             text-transform:uppercase;white-space:nowrap}
+  .mast .right{display:flex;flex-direction:column;align-items:flex-end;gap:9px}
+  .themePick{display:flex}
+  .themePick button{font-size:11px;padding:5px 10px;letter-spacing:.5px;border-radius:0;border-right-width:0}
+  .themePick button:first-child{border-radius:6px 0 0 6px}
+  .themePick button:last-child{border-radius:0 6px 6px 0;border-right-width:1px}
+
+  /* ---------- buttons ---------- */
+  button{font-family:var(--sans);font-size:13px;padding:7px 13px;border-radius:6px;
+         border:1px solid var(--rule2);background:var(--bg2);color:var(--ink2);
+         cursor:pointer;transition:background .16s,color .16s,border-color .16s}
+  button:hover{background:var(--bg3);color:var(--ink);border-color:var(--edge)}
+  button.on{background:var(--gold);border-color:var(--gold);color:var(--onGold);font-weight:600}
+  button.ghost{background:transparent;border-color:transparent;color:var(--muted)}
+  button.ghost:hover{color:var(--ink);background:var(--bg2)}
+  button.primary{background:var(--teal);border-color:var(--teal);color:var(--onTeal);font-weight:600}
+  button.primary:hover{background:var(--tealHi);border-color:var(--tealHi);color:var(--onTeal)}
+  button:disabled{opacity:.4;cursor:default}
+
+  /* ---------- home ---------- */
+  .lede{font-size:17px;color:var(--ink2);max-width:62ch;margin:0 0 22px}
+  .lede b{color:var(--ink);font-weight:normal;border-bottom:1px solid var(--gold)}
+  .searchRow{display:flex;gap:10px;align-items:center;margin:0 0 8px;flex-wrap:wrap}
+  input[type=search]{
+    font-family:var(--serif);font-size:16px;padding:11px 14px;flex:1 1 320px;min-width:220px;
+    background:var(--bg2);border:1px solid var(--rule2);border-radius:7px;color:var(--ink)}
+  input[type=search]:focus{outline:none;border-color:var(--gold);background:var(--bg3)}
+  input[type=search]::placeholder{color:var(--faint)}
+  .missNote{font-family:var(--sans);font-size:13px;color:var(--gold);
+            background:var(--tintGold);border-left:3px solid var(--gold);
+            padding:9px 12px;border-radius:0 5px 5px 0;margin:6px 0 18px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:16px}
+  .card{background:linear-gradient(180deg,var(--bg2),var(--field));border:1px solid var(--rule);
+        border-radius:10px;padding:16px 17px 14px;cursor:pointer;
+        transition:border-color .18s,transform .18s}
+  .card:hover{border-color:var(--edgeCard);transform:translateY(-2px)}
+  .card h3{font-family:var(--serif);font-size:23px;margin:0 0 2px;font-weight:normal}
+  .card .meta{font-family:var(--sans);font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+              color:var(--muted);margin:0 0 12px}
+  .card .words{font-size:13.5px;color:var(--muted);margin:10px 0 0;line-height:1.5}
+  .card svg{display:block;width:100%;height:46px;overflow:visible}
+
+  /* ---------- lesson ---------- */
+  .crumb{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+  .crumb .hub{font-size:26px}
+  .crumb .hub em{font-style:italic;color:var(--gold)}
+  .prompt{background:var(--bg2);border:1px solid var(--rule);border-left:3px solid var(--gold);
+          border-radius:0 8px 8px 0;padding:14px 17px;margin-bottom:14px}
+  .prompt .q{font-size:17px;margin:0 0 4px}
+  .prompt .sub{font-family:var(--sans);font-size:12.5px;color:var(--muted);margin:0}
+  .axisPick{display:flex;gap:9px;flex-wrap:wrap;margin:13px 0 0;align-items:center}
+  .axisPick .hintSmall{font-family:var(--sans);font-size:11.5px;color:var(--faint);margin-left:4px}
+
+  .stageWrap{position:relative;background:
+      radial-gradient(760px 420px at 50% 34%, var(--stage1) 0%, var(--stage2) 72%, var(--stage3) 100%);
+    border:1px solid var(--rule);border-radius:11px;overflow:hidden}
+  svg.stage{display:block;width:100%;height:auto;touch-action:none;cursor:grab}
+  svg.stage.dragging{cursor:grabbing}
+  svg.stage.locked{cursor:default}
+
+  .viewBar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0 0}
+  .viewBar .lab{font-family:var(--sans);font-size:11px;letter-spacing:.9px;text-transform:uppercase;
+                color:var(--faint);margin-right:2px}
+  .spacer{flex:1 1 auto}
+
+  .verdict{margin:14px 0 0;padding:13px 16px;border-radius:8px;font-size:16px;
+           background:var(--bg2);border:1px solid var(--rule);border-left:3px solid var(--teal)}
+  .verdict.miss{border-left-color:var(--gold)}
+  .verdict .tagline{font-family:var(--sans);font-size:11px;letter-spacing:1px;text-transform:uppercase;
+                    color:var(--teal);display:block;margin-bottom:5px}
+  .verdict.miss .tagline{color:var(--gold)}
+
+  /* spread meters */
+  .meters{margin:14px 0 0;background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:13px 16px}
+  .meters h4{font-family:var(--sans);font-size:11px;letter-spacing:1px;text-transform:uppercase;
+             color:var(--muted);margin:0 0 10px;font-weight:600}
+  .meter{display:grid;grid-template-columns:96px 1fr 44px;gap:10px;align-items:center;margin:7px 0}
+  .meter .mn{font-family:var(--sans);font-size:11.5px;color:var(--ink2);letter-spacing:.4px}
+  .meter .bar{height:7px;background:var(--track);border-radius:4px;overflow:hidden}
+  .meter .fill{height:100%;background:var(--faint);border-radius:4px;transition:width .5s ease}
+  .meter .mv{font-family:var(--sans);font-size:11.5px;color:var(--muted);text-align:right}
+  .meter.win .mn{color:var(--gold)}
+  .meter.win .fill{background:var(--gold)}
+  .meter.win .mv{color:var(--gold)}
+
+  /* detail / example */
+  .detail{margin:14px 0 0;background:var(--bg2);border:1px solid var(--rule);border-radius:8px;
+          padding:14px 16px;min-height:74px}
+  .detail .dw{font-size:21px;margin:0 0 3px}
+  .detail .dg{font-size:15px;color:var(--ink2);margin:0 0 9px}
+  .detail .dex{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--muted);
+               border-left:2px solid var(--rule2);padding-left:11px;margin:0}
+  .detail .empty{font-family:var(--sans);font-size:13px;color:var(--faint);margin:0}
+  .detail .coords{font-family:var(--sans);font-size:11px;color:var(--faint);margin:8px 0 0;letter-spacing:.3px}
+  .detail .trail{font-family:var(--sans);font-size:11px;letter-spacing:.6px;
+                 color:var(--muted);margin:11px 0 0;line-height:1.45}
+  .detail .trail .lang{letter-spacing:1px;color:var(--ink2)}
+  .detail .sparkWrap{margin:12px 0 0}
+  .detail .usageSvg{display:block;width:100%;height:180px}
+  .detail .usageSvg [data-jump]{cursor:pointer}
+  .detail .sparkCap{font-family:var(--sans);font-size:10.5px;color:var(--faint);margin:4px 0 0;max-width:62ch}
+  .detail .usageNote{font-family:var(--sans);font-size:10.5px;color:var(--muted);margin:6px 0 0;max-width:62ch}
+  .detail .rootRow{margin:12px 0 0;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .detail .rootLab{font-family:var(--sans);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;
+                   color:var(--faint);margin-right:2px}
+  a.rootChip,button.rootChip,span.rootChip{font-family:var(--sans);font-size:12px;font-weight:400;padding:4px 10px;
+                    border-radius:6px;border:1px solid var(--rule2);background:var(--bg3);color:var(--ink2);
+                    text-decoration:none;display:inline-block;cursor:pointer;letter-spacing:0}
+  a.rootChip:hover,button.rootChip:hover{border-color:var(--edge);color:var(--ink);background:var(--bg3)}
+  span.rootChip{cursor:default}
+  .detail .rootGloss{font-family:var(--sans);font-size:12px;color:var(--muted)}
+  .detail .rootAlso{font-family:var(--sans);font-size:12px;color:var(--muted);margin:8px 0 0}
+  .detail .rootAlso em{font-style:italic;color:var(--gold)}
+  .detail .rootAlso .jump{font-family:var(--sans);font-size:12px;padding:2px 8px;margin-left:4px}
+
+  /* gloss grid (field layout) */
+  .glossGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:11px;margin:14px 0 0}
+  .gitem{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:11px 13px;cursor:pointer;
+         transition:border-color .16s,background .16s}
+  .gitem:hover,.gitem.sel{border-color:var(--edgeItem);background:var(--bg3)}
+  .gitem .gw{font-size:17px;margin:0 0 3px}
+  .gitem .gg{font-size:13.5px;color:var(--ink2);margin:0}
+
+  /* quiz */
+  .quizBar{margin:14px 0 0;background:var(--bg2);border:1px solid var(--rule);
+           border-left:3px solid var(--teal);border-radius:0 8px 8px 0;padding:14px 17px}
+  .quizBar .qw{font-size:15px;margin:0 0 6px}
+  .quizBar .qw b{font-size:20px;font-weight:normal;color:var(--gold)}
+  .quizBar .qg{font-size:14.5px;color:var(--ink2);margin:0 0 8px}
+  .quizBar .qres{font-family:var(--sans);font-size:13px;color:var(--ink2);margin:8px 0 0}
+  .quizBar .qres b{color:var(--gold);font-weight:600}
+  .quizBar .qhint{font-family:var(--sans);font-size:12px;color:var(--muted);margin:0}
+
+  /* legend */
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin:18px 0 0;padding-top:14px;
+          border-top:1px solid var(--rule);font-family:var(--sans);font-size:11.5px;color:var(--muted)}
+  .legend span b{color:var(--ink2);font-weight:600}
+  .swatch{display:inline-block;width:26px;height:8px;border-radius:2px;vertical-align:-1px;margin-right:5px;
+          background:linear-gradient(90deg,var(--cool),var(--swatchMid),var(--warm))}
+
+  .foot{font-family:var(--sans);font-size:11.5px;color:var(--faint);text-align:center;margin:34px 0 0}
+
+  .hidden{display:none !important}
+
+  /* ---------- svg text classes ---------- */
+  .axName{font-family:var(--sans);font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;fill:var(--s-axName)}
+  /* Axis poles are uppercased in JS, not by text-transform, so the width the
+     de-collision code measures is the width that actually gets drawn. */
+  .axPole{font-family:var(--sans);font-size:10px;letter-spacing:1px;fill:var(--s-axEnd)}
+  .axEnd{font-family:var(--sans);font-size:11px;fill:var(--s-axEnd);letter-spacing:.4px}
+  .wordT{cursor:pointer;paint-order:stroke;stroke:var(--halo);stroke-width:3.5px;stroke-linejoin:round}
+  @media (max-width:700px){
+    .wrap{padding:18px 13px 44px}
+    .card h3{font-size:20px}
+    .crumb .hub{font-size:22px}
+  }
+</style>
+<script>
+/* Resolve the theme before the first paint, so a dark-mode reader never gets a
+   flash of paper while the rest of the page parses. */
+(function(){
+  var mode = 'auto';
+  try { mode = localStorage.getItem('nc-theme') || 'auto'; } catch(e){}
+  var dark = mode === 'auto'
+    ? window.matchMedia('(prefers-color-scheme: dark)').matches
+    : mode === 'dark';
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+})();
+</script>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="mast">
+    <div>
+      <h1>Nuance Cube<span class="dot">.</span></h1>
+      <p class="tag">Synonyms are not a list. They are positions.</p>
+    </div>
+    <div class="right">
+      <div class="ver">v0.1 &middot; 6 families</div>
+      <div class="themePick" id="themePick" role="group" aria-label="Colour theme">
+        <button type="button" data-mode="auto">Auto</button>
+        <button type="button" data-mode="light">Light</button>
+        <button type="button" data-mode="dark">Dark</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= HOME ================= -->
+  <section id="home">
+    <p class="lede">A thesaurus hands you a pile of words and lets you guess how they differ.
+      Here, every family lives in the same three-axis space, and the lesson is finding out
+      <b>which difference actually separates them</b>.</p>
+
+    <div class="searchRow">
+      <input type="search" id="q" placeholder="Try thin, angry, malodorous, stride&hellip;" autocomplete="off" spellcheck="false">
+      <button class="ghost" id="clearQ">Clear</button>
+    </div>
+    <div id="miss" class="missNote hidden"></div>
+    <div class="grid" id="cards"></div>
+
+    <div class="legend">
+      <span><span class="swatch"></span><b>Colour</b> repeats connotation</span>
+      <span><b>Size and weight</b> repeat intensity</span>
+      <span><b>Serif type</b> marks the formal words</span>
+      <span><b>Drop lines</b> tell you where a word really sits on the floor</span>
+    </div>
+  </section>
+
+  <!-- ================= LESSON ================= -->
+  <section id="lesson" class="hidden">
+    <div class="crumb">
+      <button class="ghost" id="back">&larr; All families</button>
+      <div class="hub">Words for <em id="hubWord">thin</em></div>
+      <div class="spacer"></div>
+      <button class="ghost" id="restart">Restart this family</button>
+    </div>
+
+    <div class="prompt" id="promptBox">
+      <p class="q" id="promptQ"></p>
+      <p class="sub" id="promptSub"></p>
+      <div class="axisPick" id="axisPick"></div>
+    </div>
+
+    <div class="stageWrap">
+      <svg class="stage" id="stage" viewBox="0 0 1000 640" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+
+    <div class="viewBar" id="viewBar"></div>
+
+    <div class="verdict hidden" id="verdict"></div>
+    <div class="meters hidden" id="meters"></div>
+    <div class="quizBar hidden" id="quizBar"></div>
+    <div class="detail hidden" id="detail"></div>
+    <div class="glossGrid hidden" id="glossGrid"></div>
+
+    <div class="legend">
+      <span><span class="swatch"></span><b>Colour</b> repeats connotation</span>
+      <span><b>Size and weight</b> repeat intensity</span>
+      <span><b>Serif type</b> marks the formal words</span>
+      <span><b>The bar under the line</b> is how sure the placement is</span>
+    </div>
+  </section>
+
+  <p class="foot">Hand-placed coordinates and hand-written definitions. Origins and usage curves are hand-sampled from dictionaries and Google Books. Nothing here is generated.</p>
+</div>
+
+<script>
+"use strict";
+
+/* ============================================================
+   AXES — one fixed space for every family
+   x: connotation  harsh        -> complimentary
+   y: intensity    mild         -> extreme
+   z: formality    casual       -> formal
+   ============================================================ */
+const AXES = {
+  connotation: { key:'x', lo:'harsh',  hi:'complimentary' },
+  intensity:   { key:'y', lo:'mild',   hi:'extreme' },
+  formality:   { key:'z', lo:'casual', hi:'formal' }
+};
+const AXNAMES = ['connotation','intensity','formality'];
+const KEYOF = n => AXES[n].key;
+const NAMEOF = k => AXNAMES.find(n => AXES[n].key === k);
+
+/* ============================================================
+   FAMILIES — 6 hand-curated groups.
+   Gloss rule: if two glosses could be swapped and both still
+   sound true, both are too weak. Every one below is contrastive.
+   `band` is an honest confidence half-width, not a decoration.
+   `from` is oldest → English. `usage` is 1800, 1850, 1900, 1950,
+   2000, 2019 from Google Books English, scaled to that word's peak.
+   `usageNote` flags a sense-mix in those counts, not a second series.
+   `usageMix` marks which of those six samples are sense-polluted (same
+   series, not a cleaned curve). `usageMixTag` names the other sense
+   at the lying peak. `sense` is an optional parenthetical on the
+   display label when one spelling has two points; `w` stays the lemma.
+   ============================================================ */
+const FAMILIES = [
+{
+  hub:'thin', answer:['connotation'],
+  prompt:'All seven of these mean thin. So what are you actually choosing between?',
+  insight:'Every word here reports the same width. What changes is how you feel about the person you are describing.',
+  words:[
+    {w:'emaciated', x:-0.95,y:0.92,z:0.50, band:0.06,
+     gloss:'Thin from starvation or disease. A medical alarm, never a description of a body anyone admires.',
+     ex:'Relief workers photographed the emaciated cattle.',
+     from:[{lang:'Latin', form:'macer'},{lang:'Latin', form:'emaciare'},{lang:'English', year:1620}],
+     root:{id:'macer', form:'macer', gloss:'lean, meagre'},
+     usage:[0.83,1,0.73,0.26,0.24,0.38]},
+    {w:'scrawny', x:-0.70,y:0.55,z:-0.35, band:0.11,
+     gloss:'Thin and underpowered, with the bones showing through. Suggests a weak build, not merely a small one.',
+     ex:'A scrawny rooster ruled the whole yard.',
+     from:[{lang:'English', form:'scranny'},{lang:'English', year:1833}],
+     root:{id:'scranny', form:'scranny', gloss:'thin, meagre (dialect)'},
+     usage:[0,0.01,0.1,0.23,0.49,1]},
+    {w:'skinny', x:-0.30,y:0.45,z:-0.45, band:0.13,
+     gloss:'Thin, said plainly and a little rudely. The word a sibling uses, never the word a doctor writes.',
+     ex:'He was a skinny kid who swam inside his father\u2019s coat.',
+     from:[{lang:'Old Norse', form:'skinn'},{lang:'English', year:1573}],
+     root:{id:'skin', form:'skin', gloss:'hide, pelt'},
+     usage:[0.09,0.06,0.06,0.11,0.45,1]},
+    {w:'thin', x:0.00,y:0.25,z:0.00, band:0.08,
+     gloss:'The flat, factual word. States the width of a thing and passes no judgment whatsoever.',
+     ex:'The ice was still thin near the reeds.',
+     from:[{lang:'Old English', form:'\u00feynne'},{lang:'English', form:'thin'}],
+     root:{id:'thunnuz', form:'*thunnuz', gloss:'stretched, not thick'},
+     usage:[0.73,0.8,0.97,1,0.82,0.97]},
+    {w:'slim', x:0.52,y:0.20,z:-0.05, band:0.10,
+     gloss:'Trim and attractively thin. The tailoring word, concerned with fit rather than delicacy.',
+     ex:'The jacket came in a slim cut.',
+     from:[{lang:'Dutch', form:'slim'},{lang:'English', year:1657}],
+     root:{id:'slembaz', form:'*slembaz', gloss:'oblique, crooked'},
+     usage:[0.07,0.12,0.3,0.38,0.56,1]},
+    {w:'slender', x:0.68,y:0.30,z:0.30, band:0.09,
+     gloss:'Thin in a way that looks graceful and fine. Used of stems, wrists and columns.',
+     ex:'She had the slender hands of a harpist.',
+     from:[{lang:'Anglo-French', form:'esclendre'},{lang:'English', year:1400}],
+     root:{id:'esclendre', form:'esclendre', gloss:'thin, lean'},
+     usage:[0.74,0.86,1,0.61,0.3,0.43]},
+    {w:'svelte', x:0.92,y:0.35,z:0.40, band:0.06,
+     gloss:'Slender in an elegant, fashionable way. Implies style and self-possession, not just size.',
+     ex:'He looked svelte in the borrowed tuxedo.',
+     from:[{lang:'Italian', form:'svelto'},{lang:'French', form:'svelte'},{lang:'English', year:1817}],
+     root:{id:'exvellere', form:'ex- + vellere', gloss:'pluck out, stretch'},
+     usage:[0,0.02,0.08,0.23,0.78,1]}
+  ]
+},
+{
+  hub:'angry', answer:['intensity'],
+  prompt:'These five all name the same emotion. What separates them?',
+  insight:'The feeling never changes from one end to the other. Only the temperature moves.',
+  words:[
+    {w:'annoyed', x:-0.15,y:-0.75,z:-0.10, band:0.10,
+     gloss:'Mildly bothered by something small. It fades the moment the cause stops.',
+     ex:'She was annoyed by the dripping tap.',
+     from:[{lang:'Latin', form:'inodiare'},{lang:'Old French', form:'anuier'},{lang:'English', year:1250}],
+     root:{id:'odium', form:'odium', gloss:'hatred'},
+     usage:[0.29,0.56,0.41,0.3,0.36,1]},
+    {w:'irritated', x:-0.25,y:-0.50,z:0.10, band:0.10,
+     gloss:'Worn thin by something repeated. Friction rather than heat.',
+     ex:'He grew irritated at the third interruption.',
+     from:[{lang:'Latin', form:'irritare'},{lang:'English', year:1530}],
+     root:{id:'irritare', form:'irritare', gloss:'excite, provoke'},
+     usage:[1,0.81,0.48,0.31,0.39,0.87]},
+    {w:'angry', x:-0.30,y:0.00,z:0.00, band:0.12,
+     gloss:'The plain word for real anger, making no claim about how hot it burns or how long it lasts.',
+     ex:'They were angry about the decision for weeks.',
+     from:[{lang:'Old Norse', form:'angr'},{lang:'English', year:1300}],
+     root:{id:'angr', form:'angr', gloss:'grief, affliction'},
+     usage:[0.47,0.47,0.35,0.21,0.44,1]},
+    {w:'furious', x:-0.45,y:0.70,z:0.05, band:0.09,
+     gloss:'Anger that has spilled into motion and volume. Almost impossible to sit still inside.',
+     ex:'He was furious, slamming drawers as he searched.',
+     from:[{lang:'Latin', form:'furia'},{lang:'English', year:1370}],
+     root:{id:'furia', form:'furia', gloss:'rage, the Furies'},
+     usage:[1,0.72,0.44,0.22,0.33,0.76]},
+    {w:'livid', x:-0.50,y:0.92,z:0.20, band:0.07,
+     gloss:'Anger the body gives away. Pale, shaking, past the point of speaking clearly.',
+     ex:'She went livid when she read the letter.',
+     from:[{lang:'Latin', form:'lividus'},{lang:'English', year:1620}],
+     root:{id:'lividus', form:'lividus', gloss:'bluish, leaden-coloured'},
+     usage:[1,0.97,0.49,0.13,0.17,0.53],
+     usageMix:[true,true,true,false,false,false], usageMixTag:'colour',
+     usageNote:'Until the early 1900s, livid mostly meant bluish-grey, like a bruise. The 1800 peak is that colour, not anger, so the line mixes two meanings.'}
+  ]
+},
+{
+  hub:'child', answer:['formality'],
+  prompt:'Four words for a person under eighteen. What is the difference?',
+  insight:'All four pick out exactly the same people. What changes is the room you are standing in when you say it.',
+  words:[
+    {w:'kid', x:0.25,y:0.00,z:-0.85, band:0.08,
+     gloss:'Warm and everyday. What you call your own children at the dinner table.',
+     ex:'The kids are out in the back yard.',
+     from:[{lang:'Old Norse', form:'ki\u00f0'},{lang:'English', year:1200}],
+     root:{id:'kid-goat', form:'ki\u00f0', gloss:'young goat'},
+     usage:[0.08,0.06,0.08,0.15,0.45,1],
+     usageMix:[true,true,false,false,false,false], usageMixTag:'goat',
+     usageNote:'Until the nineteenth century these counts are mostly the animal: a kid is a young goat. The child sense is later, so the early flat stretch is not how often people said kid of children.'},
+    {w:'child', x:0.10,y:0.00,z:0.00, band:0.10,
+     gloss:'The neutral standard word, equally at home in conversation and in print.',
+     ex:'Every child in the class got a copy.',
+     from:[{lang:'Old English', form:'cild'},{lang:'English', form:'child'}],
+     root:{id:'cild', form:'cild', gloss:'young person'},
+     usage:[0.5,0.67,0.71,0.68,1,0.96]},
+    {w:'minor', x:-0.05,y:0.10,z:0.75, band:0.07,
+     gloss:'A legal bracket. Someone under the age of majority, defined by statute rather than by affection.',
+     ex:'The contract is void because he was a minor.',
+     from:[{lang:'Latin', form:'minor'},{lang:'English', year:1520}],
+     root:{id:'minor', form:'minor', gloss:'lesser, smaller'},
+     usage:[0.17,0.37,0.56,1,0.74,0.47],
+     usageMix:[true,true,true,true,true,true], usageMixTag:'lesser',
+     usageNote:'Google Books is counting every minor: lesser, a music key, someone under age. The 1950 peak is not how often the legal sense was used.'},
+    {w:'juvenile', x:-0.55,y:0.20,z:0.65, band:0.09,
+     gloss:'Clinical and faintly criminal. Turned on an adult it stops describing and starts insulting.',
+     ex:'The case was moved to juvenile court.',
+     from:[{lang:'Latin', form:'iuvenis'},{lang:'English', year:1620}],
+     root:{id:'iuvenis', form:'iuvenis', gloss:'young'},
+     usage:[0.23,0.28,0.21,0.72,1,0.46]}
+  ]
+},
+{
+  hub:'smelly', answer:['formality','intensity'],
+  prompt:'Nine words for a bad smell. One axis will not hold them. Which two do?',
+  insight:'Formality and force come apart here. Malodorous is the most formal word in the group and the least physical; stinky is the most casual and the most vivid. A single line has to lie about one of those facts.',
+  words:[
+    {w:'musty', x:-0.35,y:-0.60,z:0.10, band:0.09,
+     gloss:'The stale, shut-in smell of damp paper and old closets. Mild, specific, and nothing to do with rot.',
+     ex:'The cabin smelled musty after the winter.',
+     from:[{lang:'English', form:'moisty'},{lang:'English', year:1520}],
+     root:{id:'musty', form:'musty', gloss:'damp, stale'},
+     usage:[0.79,0.72,0.73,0.47,0.51,1]},
+    {w:'stinky', x:-0.40,y:0.30,z:-0.90, band:0.10,
+     gloss:'Blunt and childlike, yet fiercely physical. The word a five-year-old reaches for first.',
+     ex:'Take those stinky socks off the table.',
+     from:[{lang:'Old English', form:'stincan'},{lang:'English', year:1888}],
+     root:{id:'stincan', form:'stincan', gloss:'to emit a smell'},
+     usage:[0,0,0,0.03,0.27,1]},
+    {w:'smelly', x:-0.45,y:0.00,z:-0.55, band:0.12,
+     gloss:'The plain informal word. Says a thing smells bad without saying how, or why, or how much.',
+     ex:'A smelly bin sat by the gate all August.',
+     from:[{lang:'Old English', form:'smyllan'},{lang:'English', year:1862}],
+     root:{id:'smell', form:'smell', gloss:'odour'},
+     usage:[0.01,0,0.03,0.21,0.57,1]},
+    {w:'rank', x:-0.70,y:0.60,z:-0.35, band:0.11,
+     gloss:'Offensively strong and a little coarse. Suggests sweat, mildew and standing water.',
+     ex:'The locker room air was rank.',
+     from:[{lang:'Old English', form:'ranc'},{lang:'English', form:'rank'}],
+     root:{id:'ranc', form:'ranc', gloss:'proud, overgrown, strong'},
+     usage:[1,0.75,0.55,0.38,0.26,0.27],
+     usageMix:[true,true,true,false,false,false], usageMixTag:'order',
+     usageNote:'Rank as military order and social standing drowns the smell sense in early counts. The 1800 peak is that order, not the smell.'},
+    {w:'reeking', x:-0.75,y:0.75,z:-0.10, band:0.10,
+     gloss:'Strong enough to travel. The smell arrives in the room before the thing does.',
+     ex:'He came in reeking of woodsmoke.',
+     from:[{lang:'Old English', form:'r\u0113c'},{lang:'English', form:'reek'}],
+     root:{id:'rec', form:'r\u0113c', gloss:'smoke, vapour'},
+     usage:[1,0.87,0.54,0.16,0.19,0.42]},
+    {w:'fetid', x:-0.80,y:0.70,z:0.65, band:0.08,
+     gloss:'Literary and heavy. Stagnant air, swamp water, decay with no way out.',
+     ex:'A fetid breath came off the marsh at low tide.',
+     from:[{lang:'Latin', form:'fetidus'},{lang:'English', year:1590}],
+     root:{id:'fetere', form:'fetere', gloss:'to stink'},
+     usage:[1,0.86,0.52,0.14,0.15,0.24]},
+    {w:'putrid', x:-0.90,y:0.92,z:0.45, band:0.07,
+     gloss:'The particular smell of rotting flesh or matter. The most extreme of the nine, and still clinical.',
+     ex:'The putrid remains had lain there for days.',
+     from:[{lang:'Latin', form:'putridus'},{lang:'English', year:1400}],
+     root:{id:'putrere', form:'putrere', gloss:'to rot'},
+     usage:[1,0.28,0.14,0.05,0.04,0.07]},
+    {w:'malodorous', x:-0.30,y:-0.35,z:0.95, band:0.06,
+     gloss:'The formal, bureaucratic term. Accurate, oddly bloodless, at home in an inspection report.',
+     ex:'Tenants reported a malodorous stairwell.',
+     from:[{lang:'Latin', form:'odor'},{lang:'English', year:1850}],
+     root:{id:'odor', form:'odor', gloss:'smell'},
+     usage:[0.03,0.03,1,0.71,0.7,0.89]},
+    {w:'pungent', x:0.20,y:0.45,z:0.35, band:0.14,
+     gloss:'Sharp and piercing, and not necessarily bad at all. The word for aged cheese, garlic and woodsmoke.',
+     ex:'A pungent wheel of cheese sat under glass.',
+     from:[{lang:'Latin', form:'pungere'},{lang:'English', year:1590}],
+     root:{id:'pungere', form:'pungere', gloss:'to prick'},
+     usage:[1,0.93,0.62,0.43,0.45,0.63]}
+  ]
+},
+{
+  hub:'walk', answer:['intensity'],
+  prompt:'Eight ways of going on foot. What is being measured?',
+  insight:'The axis is how much work the body is doing, not how fast it goes. Amble spends almost nothing; trudge and stomp spend a lot, in opposite moods. The two marches sit apart on mood, not on effort. Reading either as speed or as a stomp puts them on the wrong end: both keep a beat, and only the huff is sour.',
+  words:[
+    {w:'amble', x:0.35,y:-0.80,z:0.30, band:0.09,
+     gloss:'Walk slowly and without aim, in no hurry to arrive anywhere in particular.',
+     ex:'They ambled along the towpath until dusk.',
+     from:[{lang:'Latin', form:'ambulare'},{lang:'Old French', form:'ambler'},{lang:'English', year:1300}],
+     root:{id:'ambulare', form:'ambulare', gloss:'to walk'},
+     usage:[1,0.57,0.43,0.31,0.48,0.86]},
+    {w:'stroll', x:0.50,y:-0.60,z:-0.05, band:0.10,
+     gloss:'Walk for the pleasure of it, somewhere pleasant, usually with company.',
+     ex:'We strolled the promenade after dinner.',
+     from:[{lang:'German', form:'strollen'},{lang:'English', year:1600}],
+     root:{id:'strollen', form:'strollen', gloss:'to wander at leisure'},
+     usage:[0.22,0.43,0.4,0.22,0.54,1]},
+    {w:'walk', x:0.00,y:0.00,z:0.00, band:0.11,
+     gloss:'The neutral word. Movement on foot at no particular speed and in no particular mood.',
+     ex:'She walks to work most mornings.',
+     from:[{lang:'Old English', form:'wealcan'},{lang:'English', form:'walk'}],
+     root:{id:'wealcan', form:'wealcan', gloss:'to roll, toss'},
+     usage:[0.56,0.57,0.42,0.26,0.48,1]},
+    {w:'stride', x:0.40,y:0.45,z:0.15, band:0.10,
+     gloss:'Long, confident steps that cover ground. Purpose and self-assurance, without heaviness.',
+     ex:'He strode across the lobby without stopping.',
+     from:[{lang:'Old English', form:'stridan'},{lang:'English', form:'stride'}],
+     root:{id:'stridan', form:'stridan', gloss:'to straddle, mount'},
+     usage:[0.24,0.33,0.4,0.5,0.51,1]},
+    {w:'march', sense:'to a drum', x:0.05,y:0.40,z:0.45, band:0.08,
+     gloss:'Walk in measured rhythm toward a destination. Military, or determined enough to keep a beat.',
+     ex:'The column marched down the high street in even time.',
+     from:[{lang:'Old French', form:'marcher'},{lang:'English', year:1400}],
+     root:{id:'marcher', form:'marcher', gloss:'to walk, trample'},
+     usage:[1,0.92,0.59,0.24,0.21,0.29],
+     usageMix:[true,true,true,false,false,false], usageMixTag:'March',
+     usageNote:'The month and the military noun swamp the gait. Early height is March and a march, not how people walked.'},
+    {w:'march', sense:'in a huff', x:-0.35,y:0.50,z:-0.05, band:0.08,
+     gloss:'Leave stiffly, like a soldier off duty. The walk still keeps the beat and the destination; the force in each foot is stomp.',
+     ex:'He marched off to his room and slammed the door.',
+     from:[{lang:'Old French', form:'marcher'},{lang:'English', year:1400}],
+     root:{id:'marcher', form:'marcher', gloss:'to walk, trample'},
+     usage:[1,0.92,0.59,0.24,0.21,0.29],
+     usageMix:[true,true,true,false,false,false], usageMixTag:'March',
+     usageNote:'The month and the military noun swamp the gait. Early height is March and a march, not how people walked.'},
+    {w:'trudge', x:-0.45,y:0.70,z:-0.10, band:0.09,
+     gloss:'Walk as if the ground is resisting. Slow, heavy, and reluctant: effort without speed.',
+     ex:'They trudged back through the mud after the match.',
+     from:[{lang:'English', year:1547}],
+     root:{id:'trudge', form:'trudge', gloss:'walk laboriously (origin unknown)'},
+     usage:[0.72,0.51,0.53,0.32,0.46,1]},
+    {w:'stomp', x:-0.55,y:0.90,z:-0.30, band:0.08,
+     gloss:'Put each foot down hard, usually in anger. Force in the step, not a cadence and not a pace.',
+     ex:'She stomped up the stairs and slammed the bedroom door.',
+     from:[{lang:'Old English', form:'stempan'},{lang:'English', year:1803}],
+     root:{id:'stamp', form:'stamp', gloss:'to crush underfoot'},
+     usage:[0.01,0.01,0.03,0.09,0.43,1]}
+  ]
+},
+{
+  hub:'smart', answer:['intensity','connotation'],
+  prompt:'Five words of praise for a mind. Is one axis enough here?',
+  insight:'Two things move at once: how much intelligence, and how warmly it is meant. Shrewd and brilliant both sit high, and only one of them is a compliment you would want.',
+  words:[
+    {w:'clever', x:0.25,y:0.20,z:-0.25, band:0.12,
+     gloss:'Quick and inventive, with a faint hint of trickery. Good at finding the angle nobody else saw.',
+     ex:'That is a clever way around the rule.',
+     from:[{lang:'English', form:'cliver'},{lang:'English', year:1590}],
+     root:{id:'cliver', form:'cliver', gloss:'expert, ready (dialect)'},
+     usage:[0.24,0.77,1,0.45,0.48,0.95]},
+    {w:'bright', x:0.70,y:-0.20,z:-0.35, band:0.11,
+     gloss:'Naturally quick, said warmly and usually of the young. Promise more than proof.',
+     ex:'She is a bright student who reads ahead.',
+     from:[{lang:'Old English', form:'beorht'},{lang:'English', form:'bright'}],
+     root:{id:'beorht', form:'beorht', gloss:'shining'},
+     usage:[0.66,1,0.78,0.42,0.39,0.7],
+     usageMix:[true,true,true,true,true,true], usageMixTag:'light',
+     usageNote:'Almost all of this line is light: a bright day, a bright colour. The mind sense is a thin slice of the count.'},
+    {w:'intelligent', x:0.45,y:0.35,z:0.45, band:0.09,
+     gloss:'The neutral formal assessment. Capable of real reasoning, and unsentimental about saying so.',
+     ex:'An intelligent reply to a difficult question.',
+     from:[{lang:'Latin', form:'intellegere'},{lang:'English', year:1500}],
+     root:{id:'intellegere', form:'inter + legere', gloss:'choose between, understand'},
+     usage:[0.62,1,0.92,0.54,0.42,0.53]},
+    {w:'brilliant', x:0.85,y:0.95,z:0.15, band:0.07,
+     gloss:'Intelligence at a rare, dazzling level. Implies originality, not just capacity.',
+     ex:'A brilliant proof that nobody had seen coming.',
+     from:[{lang:'Italian', form:'brillare'},{lang:'French', form:'brillant'},{lang:'English', year:1680}],
+     root:{id:'brillare', form:'brillare', gloss:'to shine'},
+     usage:[0.6,1,0.88,0.48,0.33,0.52],
+     usageMix:[true,true,true,true,true,true], usageMixTag:'light',
+     usageNote:'Gems and light still dominate the count. Intelligence is only part of what this curve is measuring.'},
+    {w:'shrewd', x:-0.10,y:0.40,z:0.25, band:0.10,
+     gloss:'Sharp judgment about people and advantage. Admiring, but never quite warm.',
+     ex:'A shrewd negotiator who knew when to wait.',
+     from:[{lang:'English', form:'shrew'},{lang:'English', year:1300}],
+     root:{id:'shrew', form:'shrew', gloss:'wicked person (later: sharp)'},
+     usage:[0.5,0.94,1,0.59,0.35,0.59]}
+  ]
+}
+];
+
+/* ============================================================
+   small helpers
+   ============================================================ */
+const $  = s => document.querySelector(s);
+const clamp = (v,a,b) => v<a?a:(v>b?b:v);
+const lerp  = (a,b,t) => a+(b-a)*t;
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function wordLabel(w){
+  return w.sense ? w.w + ' (' + w.sense + ')' : w.w;
+}
+const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const COARSE  = window.matchMedia('(pointer: coarse)').matches;
+
+const SANS  = "'Helvetica Neue',Helvetica,Arial,sans-serif";
+const SERIF = "Georgia,'Times New Roman',serif";
+
+/* The stage is built as SVG strings, which cannot inherit CSS variables through
+   presentation attributes, so the theme tokens are read out of :root once per
+   theme change and handed to the drawing code as plain values. */
+const PAL = {};
+function readPalette(){
+  const cs = getComputedStyle(document.documentElement);
+  const v = n => cs.getPropertyValue(n).trim();
+  for (const k of ['grid','frame','drop','ruler','tick','card','cardEdge','cardInk',
+                   'axis','leader','axName','sparkRule','sparkEnd'])
+    PAL[k] = v('--s-'+k);
+  for (const k of ['cool','mid','warm'])
+    PAL[k] = v('--ramp-'+k).split(',').map(Number);
+  PAL.gold     = v('--gold');
+  PAL.halo     = v('--halo');
+  PAL.quizTint = parseFloat(v('--s-quizTint'));
+  PAL.dim      = parseFloat(v('--s-dim'));
+}
+
+/* On a phone the stage scales down hard, so everything drawn inside it has to
+   scale up to stay legible. TS is that multiplier, in viewBox units. */
+const NARROW = () => window.innerWidth < 760;
+const TS = () => NARROW() ? 1.65 : 1;
+const fs = n => (n * TS()).toFixed(1);
+
+/* text measuring, so SVG gloss cards can wrap honestly */
+const _meas = document.createElement('canvas').getContext('2d');
+function textWidth(t, font){ _meas.font = font; return _meas.measureText(t).width; }
+
+/* Axis pole and axis name labels are letterspaced, which measureText ignores,
+   so the tracking has to be added back by hand or de-collision under-measures
+   them and lets words drift on top. */
+const POLE_TRACK = 1;      // keep in sync with .axPole letter-spacing
+const NAME_TRACK = 1.5;    // keep in sync with .axName letter-spacing
+const pole = s => String(s).toUpperCase();
+function trackedWidth(s, px, track){
+  const t = String(s);
+  return textWidth(t, '400 '+px+'px '+SANS) + Math.max(0, t.length-1)*track;
+}
+const poleWidth = (s, px, track) => trackedWidth(pole(s), px, track);
+function wrapText(text, maxW, font){
+  const words = String(text).split(/\s+/), lines = [];
+  let line = '';
+  for (const w of words){
+    const test = line ? line+' '+w : w;
+    if (textWidth(test, font) > maxW && line){ lines.push(line); line = w; }
+    else line = test;
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
+/* connotation ramp: cool and harsh on the left, warm on the right */
+function connColor(x){
+  const cool = PAL.cool, mid = PAL.mid, warm = PAL.warm;
+  const t = clamp((x+1)/2, 0, 1);
+  const [a,b,u] = t < 0.5 ? [cool, mid, t/0.5] : [mid, warm, (t-0.5)/0.5];
+  const c = a.map((v,i)=> Math.round(lerp(v, b[i], u)));
+  return 'rgb('+c[0]+','+c[1]+','+c[2]+')';
+}
+/* intensity -> size and weight */
+const wordSize   = y => (15 + (clamp(y,-1,1)+1)/2 * 10) * TS();
+const wordWeight = y => y>0.55 ? 700 : y>0.15 ? 600 : y>-0.35 ? 500 : 400;
+/* formality -> typeface */
+const wordFace   = z => z > 0.30 ? SERIF : SANS;
+
+/* per-axis spread, which is the evidence behind every "answer" */
+function ranges(f){
+  const r = {};
+  for (const k of ['x','y','z']){
+    const vs = f.words.map(w => w[k]);
+    r[k] = Math.max.apply(null,vs) - Math.min.apply(null,vs);
+  }
+  return r;
+}
+/* answer axes, widest spread first */
+function orderedAnswer(f){
+  const r = ranges(f);
+  return f.answer.slice().sort((a,b)=> r[KEYOF(b)] - r[KEYOF(a)]);
+}
+
+/* ============================================================
+   projection — orthographic, so a word's apparent position is
+   never distorted by distance. Size is then free to mean intensity.
+   ============================================================ */
+const STAGE_W = 1000, STAGE_H = 640;
+const CX = 500, CY = 296, S = 172;
+
+function project(p, cam){
+  const cy = Math.cos(cam.yaw),  sy = Math.sin(cam.yaw);
+  const cp = Math.cos(cam.pitch), sp = Math.sin(cam.pitch);
+  const x1 =  p.x*cy + p.z*sy;
+  const z1 = -p.x*sy + p.z*cy;
+  const y1 =  p.y;
+  const y2 = y1*cp - z1*sp;
+  const z2 = y1*sp + z1*cp;          // larger = further from the viewer
+  return { x: CX + x1*S, y: CY - y2*S, d: z2 };
+}
+const P = (x,y,z,cam) => project({x:x,y:y,z:z}, cam);
+
+/* flat layouts. Bounds tighten on a phone so the zoomed viewBox still holds them. */
+const LY = 236, FY0 = 96, FY1 = 404;
+const LB = () => NARROW() ? [168,832] : [118,882];
+const FB = () => NARROW() ? [190,810] : [156,858];
+const lineX  = v => { const b=LB(); return b[0] + (clamp(v,-1,1)+1)/2 * (b[1]-b[0]); };
+const fieldX = v => { const b=FB(); return b[0] + (clamp(v,-1,1)+1)/2 * (b[1]-b[0]); };
+const fieldY = v => FY1 - (clamp(v,-1,1)+1)/2 * (FY1-FY0);
+const unLineX  = px => { const b=LB(); return clamp((px-b[0])/(b[1]-b[0])*2-1, -1, 1); };
+const unFieldX = px => { const b=FB(); return clamp((px-b[0])/(b[1]-b[0])*2-1, -1, 1); };
+const unFieldY = py => clamp((FY1-py)/(FY1-FY0)*2-1, -1, 1);
+const LANE_H = 92, CARD_W = 232;
+
+/* camera presets */
+const CUBE_CAM = { yaw:0.62, pitch:-0.42 };
+const VIEWS = {
+  cube:        { label:'Free rotate',            cam:{yaw:0.62,           pitch:-0.42} },
+  connotation: { label:'Connotation \u00d7 intensity', cam:{yaw:0,        pitch:0} },
+  formality:   { label:'Formality \u00d7 intensity',   cam:{yaw:Math.PI/2,pitch:0} },
+  top:         { label:'Connotation \u00d7 formality', cam:{yaw:0,        pitch:-Math.PI/2} }
+};
+const VIEW_ORDER = ['cube','connotation','formality','top'];
+
+/* the face that shows the answer axis spreading */
+function revealCam(f){
+  const a = orderedAnswer(f);
+  if (a.length > 1) return { yaw:0.95, pitch:-0.34 };      // angled: no single face will do
+  if (a[0] === 'formality') return VIEWS.formality.cam;
+  return VIEWS.connotation.cam;                             // connotation or intensity
+}
+
+/* ============================================================
+   state
+   ============================================================ */
+const state = {
+  screen:'home',
+  fi:null,
+  phase:'ask',          // ask | read | quiz
+  guess:new Set(),
+  cam:{ yaw:CUBE_CAM.yaw, pitch:CUBE_CAM.pitch },
+  flat:0,               // 0 = cube, 1 = flattened layout
+  layout:'line',        // line | field
+  lineAxis:null,        // which axis the line is showing
+  view:'cube',
+  sel:null,
+  correct:null,
+  quiz:null,            // {i, placed:{a,b}, done}
+  dragging:false,
+  autoSpin:!REDUCED
+};
+const fam = () => FAMILIES[state.fi];
+
+/* ============================================================
+   animation
+   ============================================================ */
+let anim = null;
+const ease = t => t<0.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2;
+
+function animate(target, dur, done){
+  if (REDUCED || !dur){
+    if ('yaw'   in target) state.cam.yaw   = target.yaw;
+    if ('pitch' in target) state.cam.pitch = target.pitch;
+    if ('flat'  in target) state.flat      = target.flat;
+    render(); if (done) done(); return;
+  }
+  anim = {
+    from:{ yaw:state.cam.yaw, pitch:state.cam.pitch, flat:state.flat },
+    to:{
+      yaw:   'yaw'   in target ? target.yaw   : state.cam.yaw,
+      pitch: 'pitch' in target ? target.pitch : state.cam.pitch,
+      flat:  'flat'  in target ? target.flat  : state.flat
+    },
+    t0: performance.now(), dur: dur, done: done
+  };
+}
+
+function tick(now){
+  if (anim){
+    const t = clamp((now - anim.t0)/anim.dur, 0, 1), e = ease(t);
+    state.cam.yaw   = lerp(anim.from.yaw,   anim.to.yaw,   e);
+    state.cam.pitch = lerp(anim.from.pitch, anim.to.pitch, e);
+    state.flat      = lerp(anim.from.flat,  anim.to.flat,  e);
+    render();
+    if (t >= 1){ const d = anim.done; anim = null; if (d) d(); }
+  } else if (state.screen==='lesson' && state.phase==='ask' && state.autoSpin && !state.dragging){
+    state.cam.yaw += 0.0019;
+    render();
+  }
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+
+/* ============================================================
+   stage rendering
+   ============================================================ */
+function render(){
+  if (state.screen !== 'lesson') return;
+  const f = fam(), cam = state.cam, t = state.flat;
+  const cubeOp = clamp(1 - t*1.35, 0, 1);      // frame retires as words flatten
+  const flatOp = clamp((t-0.35)/0.65, 0, 1);
+  let s = '';
+
+  /* ---- floor grid + cube frame + axes ---- */
+  if (cubeOp > 0.01){
+    s += '<g opacity="'+cubeOp.toFixed(3)+'">';
+
+    // floor grid on the y = -1 plane
+    const N = 8;
+    for (let i=0;i<=N;i++){
+      const u = -1 + 2*i/N;
+      const a1=P(u,-1,-1,cam), a2=P(u,-1,1,cam);
+      const b1=P(-1,-1,u,cam), b2=P(1,-1,u,cam);
+      const w = (i===0||i===N) ? 1 : 0.6;
+      const o = (i===0||i===N) ? 0.5 : 0.26;
+      s += line(a1,a2,PAL.grid,w,o) + line(b1,b2,PAL.grid,w,o);
+    }
+
+    // cube frame
+    const C = [];
+    for (const sx of [-1,1]) for (const sy of [-1,1]) for (const sz of [-1,1]) C.push([sx,sy,sz]);
+    const E = [[0,1],[0,2],[0,4],[1,3],[1,5],[2,3],[2,6],[3,7],[4,5],[4,6],[5,7],[6,7]];
+    for (const e of E){
+      const p = P(C[e[0]][0],C[e[0]][1],C[e[0]][2],cam);
+      const q = P(C[e[1]][0],C[e[1]][1],C[e[1]][2],cam);
+      s += line(p,q,PAL.frame,1,0.55);
+    }
+
+    // the three axes, drawn through the middle and labelled at their ends
+    s += axis3('x', cam) + axis3('y', cam) + axis3('z', cam);
+
+    // drop lines: this is what removes depth ambiguity
+    f.words.forEach((w,i)=>{
+      if (state.quiz && state.quiz.i===i && !state.quiz.done) return;
+      const a = P(w.x,w.y,w.z,cam), b = P(w.x,-1,w.z,cam);
+      const on = state.sel===i;
+      s += line(a,b, on?PAL.gold:PAL.drop, on?1.3:0.9, on?0.85:0.45);
+      s += '<circle cx="'+b.x.toFixed(1)+'" cy="'+b.y.toFixed(1)+'" r="'+(on?3:2)+'" fill="'+(on?PAL.gold:PAL.drop)+'" opacity="0.8"/>';
+    });
+
+    s += '</g>';
+  }
+
+  /* ---- flattened ruler or field ---- */
+  if (flatOp > 0.01){
+    s += '<g opacity="'+flatOp.toFixed(3)+'">' +
+         (state.layout==='line' ? rulerLine(f) : rulerField(f)) + '</g>';
+  }
+
+  /* ---- words ---- */
+  const items = [];
+  f.words.forEach((w,i)=>{
+    if (state.quiz && state.quiz.i===i && !state.quiz.done) return;
+    const pr = P(w.x,w.y,w.z,cam);
+    const fp = flatPos(f,w);
+    items.push({ i:i, w:w,
+      x: lerp(pr.x, fp.x, t), y: lerp(pr.y, fp.y, t),
+      d: pr.d * (1-t) });
+  });
+  items.sort((a,b)=> b.d - a.d);                 // far first
+
+  // keep labels off each other: two tidy rows on the line, free nudging elsewhere
+  if (state.layout==='line' && t > 0.55) stagger(items);
+  else decollide(items, t < 0.9 ? axisObstacles(cam) : null);
+
+  const bnd = LB();
+  for (const it of items){
+    const w = it.w, on = state.sel===it.i;
+    const depthOp = 1 - clamp((it.d+1)/2,0,1)*PAL.dim;
+    const op = state.flat>0.55 ? 1 : depthOp;
+    const size = wordSize(w.y), col = connColor(w.x);
+    const dotY = it.dotY !== undefined ? it.dotY : it.y;
+    const labY = (it.labelY !== undefined ? it.labelY : it.y) - 10*TS();
+
+    // honest confidence range, as a thin bar tucked under the ruler so it
+    // reads as uncertainty rather than as a smudge on the line itself
+    if (state.layout==='line' && state.flat>0.6 && w.band){
+      const k = KEYOF(state.lineAxis);
+      const x1 = lineX(w[k]-w.band), x2 = lineX(w[k]+w.band);
+      s += '<rect x="'+x1.toFixed(1)+'" y="'+(LY+9)+'" width="'+(x2-x1).toFixed(1)+'" height="3.5" rx="1.8" '+
+           'fill="'+col+'" opacity="'+(on?0.85:0.34)+'"/>';
+    }
+    // labels that would run off the edge get anchored inward instead
+    const anchor = it.x > (state.layout==='line' ? bnd[1] : FB()[1]) - 40 ? 'end'
+                 : it.x < (state.layout==='line' ? bnd[0] : FB()[0]) + 40 ? 'start' : 'middle';
+    const lx = anchor==='end' ? it.x + labelHalfW(w) : anchor==='start' ? it.x - labelHalfW(w) : it.x;
+
+    s += '<circle cx="'+it.x.toFixed(1)+'" cy="'+dotY.toFixed(1)+'" r="'+(on?5:3.4)+'" fill="'+col+'" opacity="'+(op*0.95).toFixed(2)+'"/>';
+    s += '<text class="wordT" x="'+lx.toFixed(1)+'" y="'+labY.toFixed(1)+'" '+
+         'text-anchor="'+anchor+'" data-i="'+it.i+'" '+
+         'font-family="'+wordFace(w.z)+'" font-size="'+size.toFixed(1)+'" font-weight="'+wordWeight(w.y)+'" '+
+         'fill="'+col+'" opacity="'+op.toFixed(2)+'"'+(on?' style="filter:drop-shadow(0 0 7px '+col+')"':'')+'>'+
+         esc(wordLabel(w))+'</text>';
+  }
+
+  /* ---- gloss cards under the line (on a phone these become an HTML list) ---- */
+  if (state.layout==='line' && state.phase!=='ask' && state.flat>0.9 && !NARROW()) s += glossCards(f);
+
+  /* ---- quiz overlay ---- */
+  if (state.quiz) s += quizOverlay(f);
+
+  const bx = stageBox();
+  $('#stage').setAttribute('viewBox',
+    bx.x.toFixed(1)+' '+bx.y.toFixed(1)+' '+bx.w.toFixed(1)+' '+bx.h.toFixed(1));
+  $('#stage').innerHTML = s;
+  $('#stage').querySelectorAll('.wordT').forEach(el=>{
+    el.addEventListener('click', ev=>{
+      ev.stopPropagation();
+      select(+el.getAttribute('data-i'));
+    });
+  });
+}
+
+function line(a,b,col,w,op){
+  return '<line x1="'+a.x.toFixed(1)+'" y1="'+a.y.toFixed(1)+'" x2="'+b.x.toFixed(1)+'" y2="'+b.y.toFixed(1)+
+         '" stroke="'+col+'" stroke-width="'+w+'" opacity="'+op+'"/>';
+}
+
+/* how much of an axis survives the projection: 1 when it lies flat across the
+   screen, 0 when it points straight at the camera and both ends land on the
+   same pixel. Below about a fifth of its length the labels are unreadable. */
+function axisLegibility(k, cam){
+  const o = {x:0,y:0,z:0}, e = {x:0,y:0,z:0};
+  o[k] = -1; e[k] = 1;
+  const a = P(o.x,o.y,o.z,cam), b = P(e.x,e.y,e.z,cam);
+  return clamp((Math.hypot(b.x-a.x, b.y-a.y)/(2*S) - 0.12) / 0.18, 0, 1);
+}
+
+/* one labelled axis inside the cube. The axis name rides just under its
+   "high" end label rather than mid-axis, where it used to sit behind words. */
+function axis3(k, cam){
+  const o = {x:0,y:0,z:0}, e = {x:0,y:0,z:0};
+  const lo = {x:0,y:0,z:0}, hi = {x:0,y:0,z:0};
+  lo[k] = -1.30; hi[k] = 1.30; o[k] = -1; e[k] = 1;   // outside the frame, clear of the words
+  const a = P(o.x,o.y,o.z,cam), b = P(e.x,e.y,e.z,cam);
+  const pl = P(lo.x,lo.y,lo.z,cam), ph = P(hi.x,hi.y,hi.z,cam);
+  const name = NAMEOF(k), ax = AXES[name], t = TS();
+  const lg = axisLegibility(k, cam);
+  let s = line(a,b,PAL.axis,1.4,0.7);
+  if (lg < 0.02) return s;                           // end-on: line collapses to the origin dot
+  const op = ' opacity="'+lg.toFixed(3)+'"';
+  // tracking is set inline rather than left to the stylesheet, because on a
+  // phone the type scales by TS and fixed CSS tracking would stop matching it
+  const pt = ' letter-spacing="'+(POLE_TRACK*t).toFixed(2)+'"';
+  const nt = ' letter-spacing="'+(NAME_TRACK*t).toFixed(2)+'"';
+  return s +
+    '<text class="axPole" font-size="'+fs(10)+'" x="'+pl.x.toFixed(1)+'" y="'+pl.y.toFixed(1)+'" text-anchor="middle"'+pt+op+'>'+pole(ax.lo)+'</text>' +
+    '<text class="axPole" font-size="'+fs(10)+'" x="'+ph.x.toFixed(1)+'" y="'+ph.y.toFixed(1)+'" text-anchor="middle"'+pt+op+'>'+pole(ax.hi)+'</text>' +
+    '<text class="axName" font-size="'+fs(10)+'" x="'+ph.x.toFixed(1)+'" y="'+(ph.y+13*t).toFixed(1)+'" text-anchor="middle"'+nt+op+'>'+name+'</text>';
+}
+
+/* flattened target position for one word */
+function flatPos(f,w){
+  if (state.layout==='line'){
+    return { x: lineX(w[KEYOF(state.lineAxis)]), y: LY };
+  }
+  const a = orderedAnswer(f);
+  return { x: fieldX(w[KEYOF(a[0])]), y: fieldY(w[KEYOF(a[1])]) };
+}
+
+/* the timeline ruler */
+function rulerLine(f){
+  const name = state.lineAxis, ax = AXES[name], b = LB(), t = TS();
+  let s = line({x:b[0],y:LY},{x:b[1],y:LY},PAL.ruler,1.5,0.9);
+  for (let i=0;i<=8;i++){
+    const x = b[0] + (b[1]-b[0])*i/8, big = (i%4===0);
+    s += '<line x1="'+x.toFixed(1)+'" y1="'+(LY-(big?7:4))+'" x2="'+x.toFixed(1)+'" y2="'+(LY+(big?7:4))+
+         '" stroke="'+PAL.ruler+'" stroke-width="1" opacity="0.8"/>';
+  }
+  // poles sit inside the ruler ends and share the axis name's baseline, so
+  // everything below the line reads as one band of chrome and nothing hangs
+  // past the viewBox on a phone
+  const by = LY + 32*t, pt = ' letter-spacing="'+(POLE_TRACK*t).toFixed(2)+'"';
+  s += '<text class="axPole" font-size="'+fs(10)+'" x="'+b[0]+'" y="'+by+'" text-anchor="start"'+pt+'>'+pole(ax.lo)+'</text>';
+  s += '<text class="axPole" font-size="'+fs(10)+'" x="'+b[1]+'" y="'+by+'" text-anchor="end"'+pt+'>'+pole(ax.hi)+'</text>';
+  s += '<text class="axName" font-size="'+fs(10.5)+'" x="500" y="'+by+'" text-anchor="middle" letter-spacing="'+(NAME_TRACK*t).toFixed(2)+'">'+name+'</text>';
+  return s;
+}
+
+/* the two-axis field */
+function rulerField(f){
+  const a = orderedAnswer(f), ah = AXES[a[0]], av = AXES[a[1]], b = FB(), t = TS();
+  let s = '';
+  for (let i=0;i<=8;i++){
+    const x = b[0]+(b[1]-b[0])*i/8, y = FY0+(FY1-FY0)*i/8;
+    s += '<line x1="'+x.toFixed(1)+'" y1="'+FY0+'" x2="'+x.toFixed(1)+'" y2="'+FY1+'" stroke="'+PAL.tick+'" stroke-width="1" opacity="0.7"/>';
+    s += '<line x1="'+b[0]+'" y1="'+y.toFixed(1)+'" x2="'+b[1]+'" y2="'+y.toFixed(1)+'" stroke="'+PAL.tick+'" stroke-width="1" opacity="0.7"/>';
+  }
+  s += line({x:b[0],y:FY1},{x:b[1],y:FY1},PAL.ruler,1.5,0.9);
+  s += line({x:b[0],y:FY0},{x:b[0],y:FY1},PAL.ruler,1.5,0.9);
+  const pt = ' letter-spacing="'+(POLE_TRACK*t).toFixed(2)+'"';
+  const nt = ' letter-spacing="'+(NAME_TRACK*t).toFixed(2)+'"';
+  s += '<text class="axPole" font-size="'+fs(10)+'" x="'+b[0]+'" y="'+(FY1+20*t)+'" text-anchor="start"'+pt+'>'+pole(ah.lo)+'</text>';
+  s += '<text class="axPole" font-size="'+fs(10)+'" x="'+b[1]+'" y="'+(FY1+20*t)+'" text-anchor="end"'+pt+'>'+pole(ah.hi)+'</text>';
+  s += '<text class="axName" font-size="'+fs(10.5)+'" x="'+((b[0]+b[1])/2)+'" y="'+(FY1+38*t)+'" text-anchor="middle"'+nt+'>'+a[0]+'</text>';
+  // The vertical poles are rotated to run up the left gutter beside the axis
+  // name. Horizontal, EXTREME set in caps overruns the left edge of the narrow
+  // viewBox, which starts at x=118 against a field that starts at x=190.
+  s += '<text class="axPole" font-size="'+fs(10)+'" transform="translate('+(b[0]-10*t)+','+(FY1-4)+') rotate(-90)" text-anchor="start"'+pt+'>'+pole(av.lo)+'</text>';
+  s += '<text class="axPole" font-size="'+fs(10)+'" transform="translate('+(b[0]-10*t)+','+(FY0+4)+') rotate(-90)" text-anchor="end"'+pt+'>'+pole(av.hi)+'</text>';
+  s += '<text class="axName" font-size="'+fs(10.5)+'" transform="translate('+(b[0]-28*t)+','+((FY0+FY1)/2)+') rotate(-90)" text-anchor="middle"'+nt+'>'+a[1]+'</text>';
+  return s;
+}
+
+const labelHalfW = w => textWidth(wordLabel(w), wordWeight(w.y)+' '+wordSize(w.y)+'px '+wordFace(w.z))/2;
+
+/* extra rows when a family is crowded on the line (eight walk words, long
+   sense labels). Two rows still cover thin. */
+function stagger(items){
+  const byX = items.slice().sort((a,b)=> a.x-b.x);
+  const maxRows = items.length > 6 ? 3 : 2;
+  const gap = (maxRows > 2 ? 36 : 27)*TS();
+  const rowEnd = [];
+  for (let r=0;r<maxRows;r++) rowEnd[r] = -1e9;
+  for (const it of byX){
+    const halfW = labelHalfW(it.w) + 9;
+    let row = rowEnd.findIndex(end => it.x - halfW >= end);
+    if (row < 0){
+      row = 0;
+      for (let r=1;r<maxRows;r++) if (rowEnd[r] < rowEnd[row]) row = r;
+    }
+    rowEnd[row] = it.x + halfW;
+    it.labelY = LY - row*gap;
+    it.dotY = LY;
+  }
+}
+
+/* the axis end labels sit at fixed points that a rotating cube will sooner or
+   later push a word onto, so de-collision has to treat them as obstacles */
+function axisObstacles(cam){
+  const out = [], t = TS();
+  for (const k of ['x','y','z']){
+    const name = NAMEOF(k);
+    if (axisLegibility(k, cam) < 0.02) continue;     // faded out, so it blocks nothing
+    for (const v of [-1.30, 1.30]){
+      const p = {x:0,y:0,z:0}; p[k] = v;
+      const pr = P(p.x,p.y,p.z,cam);
+      const txt = v < 0 ? AXES[name].lo : AXES[name].hi;
+      out.push({ x:pr.x, y:pr.y, hw: poleWidth(txt, 10*t, POLE_TRACK*t)/2 + 6 });
+      if (v > 0) out.push({ x:pr.x, y:pr.y + 13*t,
+                            hw: trackedWidth(pole(name), 10*t, NAME_TRACK*t)/2 + 6 });
+    }
+  }
+  return out;
+}
+
+/* generic vertical de-collision for the cube and the field, where words can
+   land anywhere. Nudges a clashing label above whatever it collided with. */
+function decollide(items, obstacles){
+  const placed = (obstacles || []).slice(), step = 16*TS();
+  for (const it of items.slice().sort((a,b)=> a.y-b.y)){
+    const halfW = labelHalfW(it.w) + 5;
+    let ly = it.y - 10*TS(), guard = 0;
+    while (guard++ < 16){
+      const hit = placed.find(p => Math.abs(p.x-it.x) < p.hw+halfW && Math.abs(p.y-ly) < step);
+      if (!hit) break;
+      ly = hit.y - step;
+    }
+    it.labelY = ly + 10*TS();      // render subtracts 10*TS again
+    placed.push({ x:it.x, y:ly, hw:halfW });
+  }
+}
+
+/* gloss cards in lanes below the ruler, each with a leader line.
+   Four wrapped lines, because truncating a definition mid-word is the one
+   thing a tool about precision cannot do. */
+function glossCards(f){
+  const CW = CARD_W, lanes = f.words.length > 7 ? 4 : 3, top0 = LY + 74;
+  const k = KEYOF(state.lineAxis);
+  const order = f.words.map((w,i)=>({w:w,i:i})).sort((a,b)=> a.w[k] - b.w[k]);
+  const gFont = '400 12.5px '+SERIF;
+  let s = '';
+  order.forEach((o,n)=>{
+    if (state.quiz && state.quiz.i===o.i && !state.quiz.done) return;
+    const topY = top0 + (n % lanes)*LANE_H;
+    const cx = lineX(o.w[k]);
+    const bx = clamp(cx - CW/2, 10, STAGE_W - CW - 10);
+    const lines = wrapText(o.w.gloss, CW-22, gFont).slice(0,4);
+    const h = 25 + lines.length*16;
+    const on = state.sel===o.i, col = connColor(o.w.x);
+
+    s += '<polyline points="'+cx.toFixed(1)+','+(LY+8)+' '+cx.toFixed(1)+','+(topY-11)+' '+
+         (bx+CW/2).toFixed(1)+','+(topY-11)+' '+(bx+CW/2).toFixed(1)+','+topY+'" fill="none" stroke="'+
+         (on?col:PAL.leader)+'" stroke-width="'+(on?1.3:0.9)+'" opacity="'+(on?0.9:0.5)+'"/>';
+    s += '<rect x="'+bx.toFixed(1)+'" y="'+topY+'" width="'+CW+'" height="'+h+'" rx="7" fill="'+PAL.card+'" '+
+         'stroke="'+(on?col:PAL.cardEdge)+'" stroke-width="1" opacity="'+(on?1:0.94)+'" '+
+         'data-card="'+o.i+'" style="cursor:pointer"/>';
+    s += '<text x="'+(bx+11)+'" y="'+(topY+17)+'" font-family="'+SERIF+'" font-size="14" fill="'+col+'" '+
+         'style="pointer-events:none">'+esc(wordLabel(o.w))+'</text>';
+    lines.forEach((ln,li)=>{
+      s += '<text x="'+(bx+11)+'" y="'+(topY+34+li*16)+'" font-family="'+SERIF+'" font-size="12.5" '+
+           'fill="'+PAL.cardInk+'" style="pointer-events:none">'+esc(ln)+'</text>';
+    });
+  });
+  return s;
+}
+
+/* how tall the stage needs to be right now, so there is never dead space */
+function stageBox(){
+  const f = fam(), t = state.flat, narrow = NARROW();
+  // a word can project as far as ~1.5 units off centre once the cube is tilted,
+  // and on a phone the scaled-up type needs more headroom still
+  const cubeTop = narrow ? 4 : 42, cubeH = narrow ? 592 : 528;
+  let flatTop, flatH;
+  if (state.layout === 'line'){
+    flatTop = LY - (f.words.length > 6 ? 118 : 62)*TS();
+    const lanes = f.words.length > 7 ? 4 : 3;
+    const bottom = (narrow || state.phase==='ask')
+      ? LY + 70*TS()
+      : LY + 74 + (lanes-1)*LANE_H + 108;
+    flatH = bottom - flatTop;
+  } else {
+    flatTop = FY0 - 44*TS();
+    flatH = (FY1 + 56*TS()) - flatTop;
+  }
+  const w = narrow ? 764 : 1000;
+  return {
+    x: (STAGE_W - w)/2,
+    w: w,
+    y: lerp(cubeTop, flatTop, t),
+    h: lerp(cubeH, flatH, t)
+  };
+}
+
+/* ============================================================
+   quiz overlay
+   ============================================================ */
+function quizOverlay(f){
+  const q = state.quiz, w = f.words[q.i];
+  let s = '';
+  if (!q.done){
+    if (state.layout==='line'){
+      const b = LB();
+      s += '<rect x="'+b[0]+'" y="'+(LY-46)+'" width="'+(b[1]-b[0])+'" height="92" fill="'+PAL.gold+'" opacity="'+PAL.quizTint+'" rx="6"/>';
+      s += '<text class="axEnd" font-size="'+fs(11)+'" x="500" y="'+(LY-56)+'" text-anchor="middle" fill="'+PAL.gold+'">click where it belongs</text>';
+    } else {
+      const b = FB();
+      s += '<rect x="'+b[0]+'" y="'+FY0+'" width="'+(b[1]-b[0])+'" height="'+(FY1-FY0)+'" fill="'+PAL.gold+'" opacity="'+PAL.quizTint+'" rx="6"/>';
+      s += '<text class="axEnd" font-size="'+fs(11)+'" x="'+((b[0]+b[1])/2)+'" y="'+(FY0-12)+'" text-anchor="middle" fill="'+PAL.gold+'">click where it belongs</text>';
+    }
+    return s;
+  }
+  // answered: show the guess, the truth, and the gap between them
+  const truth = flatPos(f,w), col = connColor(w.x);
+  s += '<circle cx="'+q.px.toFixed(1)+'" cy="'+q.py.toFixed(1)+'" r="6" fill="none" stroke="'+PAL.gold+'" stroke-width="1.6"/>';
+  // sits clear of the axis name, which shares the space just under the line
+  const gy = state.layout==='line' ? q.py + 52*TS() : q.py + 22*TS();
+  s += '<text class="axEnd" font-size="'+fs(11)+'" x="'+q.px.toFixed(1)+'" y="'+gy.toFixed(1)+
+       '" text-anchor="middle" fill="'+PAL.gold+'" style="paint-order:stroke;stroke:'+PAL.halo+';stroke-width:3px">your guess</text>';
+  s += '<line x1="'+q.px.toFixed(1)+'" y1="'+q.py.toFixed(1)+'" x2="'+truth.x.toFixed(1)+'" y2="'+truth.y.toFixed(1)+
+       '" stroke="'+PAL.gold+'" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.8"/>';
+  s += '<circle cx="'+truth.x.toFixed(1)+'" cy="'+truth.y.toFixed(1)+'" r="5" fill="'+col+'"/>';
+  return s;
+}
+
+/* ============================================================
+   home screen
+   ============================================================ */
+function familyMatches(f, q){
+  if (!q) return true;
+  q = q.trim().toLowerCase();
+  if (!q) return true;
+  if (f.hub.toLowerCase().indexOf(q) === 0) return true;
+  return f.words.some(w => w.w.toLowerCase().indexOf(q) === 0);
+}
+
+function originTrail(from){
+  return from.map(s => {
+    let bit = '<span class="lang">'+esc(pole(s.lang))+'</span>';
+    if (s.year) bit += ' '+s.year;
+    else if (s.form) bit += ' '+esc(s.form);
+    return bit;
+  }).join(' \u2192 ');
+}
+
+function cognatesOf(rootId, hub, word){
+  const hits = [];
+  FAMILIES.forEach((f, fi) => {
+    f.words.forEach((w, i) => {
+      if (!w.root || w.root.id !== rootId) return;
+      if (f.hub === hub && w.w === word) return;
+      hits.push({hub:f.hub, fi:fi, i:i, w:w.w});
+    });
+  });
+  return hits;
+}
+
+const USAGE_YEARS = [1800,1850,1900,1950,2000,2019];
+
+function usageSpark(f, sel){
+  const W = 640, H = 200, left = 16, right = 110, top = 14, bot = 168;
+  const inner = W - left - right;
+  const minGap = 14;
+  const xy = (series, i) => {
+    const x = left + i / Math.max(1, series.length-1) * inner;
+    const y = bot - (Number(series[i])||0) * (bot-top);
+    return [x, y];
+  };
+  const path = series => series.map((_,i) => {
+    const p = xy(series, i);
+    return (i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1);
+  }).join(' ');
+
+  const members = [];
+  f.words.forEach((w,i) => {
+    if (!w.usage || !w.usage.length) return;
+    members.push(i);
+  });
+  const gapAt = (idx, yearI) => {
+    const y = xy(f.words[idx].usage, yearI)[1];
+    let g = Infinity;
+    members.forEach(j => {
+      if (j === idx) return;
+      g = Math.min(g, Math.abs(y - xy(f.words[j].usage, yearI)[1]));
+    });
+    return g;
+  };
+
+  const sw = f.words[sel];
+  const mix = (sw && Array.isArray(sw.usageMix)) ? sw.usageMix : [];
+  let lieI = -1, lieV = -1;
+  if (sw && sw.usage){
+    sw.usage.forEach((v,i) => {
+      if (mix[i] && Number(v) > lieV){ lieV = Number(v); lieI = i; }
+    });
+  }
+  let mixTag = null;
+  if (lieI >= 0 && sw && sw.usageMixTag){
+    const p = xy(sw.usage, lieI);
+    const tagY = p[1] - 10;
+    mixTag = { i: lieI, x: p[0], y: tagY < 11 ? p[1] + 14 : tagY };
+  }
+  const hitsMix = (x, y) => mixTag && Math.abs(x - mixTag.x) < 36 && Math.abs(y - mixTag.y) < 12;
+
+  const labels = [];
+  members.forEach(i => {
+    const w = f.words[i];
+    const last = w.usage.length - 1;
+    let yearI = last;
+    if (gapAt(i, last) < minGap){
+      let bestI = last, bestClear = -1;
+      for (let yi = last; yi >= 0; yi--){
+        const g = gapAt(i, yi);
+        if (g > bestClear){ bestClear = g; bestI = yi; }
+      }
+      yearI = bestI;
+    }
+    let p = xy(w.usage, yearI);
+    let x = yearI === last ? left + inner + 8 : p[0] + 6;
+    let y = p[1];
+    if (yearI !== last && hitsMix(x, y)){
+      if (!hitsMix(x, p[1] + 12)) y = p[1] + 12;
+      else if (yearI > 0){
+        yearI -= 1;
+        p = xy(w.usage, yearI);
+        x = yearI === last ? left + inner + 8 : p[0] + 6;
+        y = p[1];
+      }
+    }
+    labels.push({
+      i:i,
+      w: wordLabel(w),
+      on: i===sel,
+      col: i===sel ? PAL.gold : connColor(w.x),
+      atEnd: yearI === last,
+      trueX: p[0],
+      trueY: p[1],
+      x:x,
+      y:y
+    });
+  });
+  labels.sort((a,b) => a.y - b.y);
+  const textW = L => L.w.length * (L.on ? 7 : 6.2) + 4;
+  const overlapX = (a,b) => a.x < b.x + textW(b) && b.x < a.x + textW(a);
+  const applyGap = () => {
+    for (let k = 1; k < labels.length; k++){
+      if (overlapX(labels[k], labels[k-1]) && labels[k].y - labels[k-1].y < minGap)
+        labels[k].y = labels[k-1].y + minGap;
+    }
+  };
+  applyGap();
+  labels.forEach(L => { if (L.y > bot) L.y = bot; if (L.y < top) L.y = top; });
+  labels.sort((a,b) => a.y - b.y);
+  applyGap();
+
+  let s = '<svg class="usageSvg" viewBox="0 0 '+W+' '+H+'" role="img">';
+  s += '<line x1="'+left+'" y1="'+bot+'" x2="'+(left+inner)+'" y2="'+bot+'" stroke="'+PAL.sparkRule+'" stroke-width="1"/>';
+  USAGE_YEARS.forEach((year,i) => {
+    const x = left + i / (USAGE_YEARS.length-1) * inner;
+    s += '<line x1="'+x.toFixed(1)+'" y1="'+bot+'" x2="'+x.toFixed(1)+'" y2="'+(bot+4)+'" stroke="'+PAL.sparkEnd+'" stroke-width="1"/>';
+    s += '<text x="'+x.toFixed(1)+'" y="'+(bot+16)+'" text-anchor="middle" font-family="'+SANS+
+         '" font-size="10" fill="'+PAL.sparkEnd+'">'+year+'</text>';
+  });
+
+  f.words.forEach((w,i) => {
+    if (!w.usage || i === sel) return;
+    const d = path(w.usage), col = connColor(w.x);
+    s += '<path d="'+d+'" fill="none" stroke="transparent" stroke-width="10" data-jump="'+i+'"/>';
+    s += '<path d="'+d+'" fill="none" stroke="'+col+'" stroke-width="1.3" opacity="0.7" data-jump="'+i+'"/>';
+  });
+  if (sw && sw.usage){
+    const d = path(sw.usage);
+    const mixAll = mix.length === sw.usage.length && mix.every(Boolean);
+    const dash = mixAll ? ' stroke-dasharray="5 4"' : '';
+    s += '<path d="'+d+'" fill="none" stroke="transparent" stroke-width="10" data-jump="'+sel+'"/>';
+    s += '<path d="'+d+'" fill="none" stroke="'+PAL.gold+'" stroke-width="2.4"'+dash+' data-jump="'+sel+'"/>';
+    sw.usage.forEach((v,i) => {
+      const p = xy(sw.usage, i);
+      if (mix[i]){
+        s += '<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="3.2" fill="var(--bg2)" stroke="'+PAL.gold+
+             '" stroke-width="1.6" data-jump="'+sel+'"/>';
+      } else {
+        s += '<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="3" fill="'+PAL.gold+'" data-jump="'+sel+'"/>';
+      }
+    });
+    if (mixTag){
+      s += '<text x="'+mixTag.x.toFixed(1)+'" y="'+mixTag.y.toFixed(1)+'" text-anchor="middle" font-family="'+SANS+
+           '" font-size="10" fill="'+PAL.sparkEnd+'" data-jump="'+sel+'">'+esc(sw.usageMixTag)+'</text>';
+    }
+  }
+  labels.forEach(L => {
+    if (Math.abs(L.y - L.trueY) > 3){
+      const midX = L.atEnd ? (left + inner) : (L.trueX + 4);
+      s += '<path d="M'+L.trueX.toFixed(1)+','+L.trueY.toFixed(1)+
+           ' L'+midX.toFixed(1)+','+L.trueY.toFixed(1)+
+           ' L'+midX.toFixed(1)+','+L.y.toFixed(1)+
+           ' L'+L.x.toFixed(1)+','+L.y.toFixed(1)+'" fill="none" stroke="'+L.col+
+           '" stroke-width="1" opacity="0.55" data-jump="'+L.i+'"/>';
+    }
+    s += '<text x="'+L.x.toFixed(1)+'" y="'+(L.y+4).toFixed(1)+'" font-family="'+SANS+
+         '" font-size="'+(L.on?12:11)+'" font-weight="'+(L.on?600:400)+'" fill="'+L.col+
+         '" data-jump="'+L.i+'">'+esc(L.w)+'</text>';
+  });
+  return s+'</svg>';
+}
+
+function sparkline(f){
+  const a = orderedAnswer(f)[0], k = KEYOF(a);
+  let s = '<line x1="6" y1="30" x2="294" y2="30" stroke="'+PAL.sparkRule+'" stroke-width="1"/>';
+  f.words.forEach(w=>{
+    const x = 6 + (w[k]+1)/2 * 288;
+    const r = 2.2 + (w.y+1)/2 * 2.4;
+    s += '<circle cx="'+x.toFixed(1)+'" cy="30" r="'+r.toFixed(1)+'" fill="'+connColor(w.x)+'" opacity="0.92"/>';
+  });
+  s += '<text x="6" y="14" font-family="'+SANS+'" font-size="9.5" letter-spacing="1.2" fill="'+PAL.axName+'">'+
+       a.toUpperCase()+'</text>';
+  s += '<text x="6" y="46" font-family="'+SANS+'" font-size="9" letter-spacing="1" fill="'+PAL.sparkEnd+'">'+pole(AXES[a].lo)+'</text>';
+  s += '<text x="294" y="46" text-anchor="end" font-family="'+SANS+'" font-size="9" letter-spacing="1" fill="'+PAL.sparkEnd+'">'+pole(AXES[a].hi)+'</text>';
+  return s;
+}
+
+function renderHome(){
+  const q = $('#q').value;
+  const shown = FAMILIES.filter(f => familyMatches(f,q));
+  const miss = $('#miss');
+  if (q.trim() && !shown.length){
+    miss.classList.remove('hidden');
+    miss.innerHTML = '&ldquo;'+esc(q.trim())+'&rdquo; is not in the prototype yet. Only these six families are hand-built, '+
+                     'and nothing here is invented to fill a gap. All six are below.';
+  } else miss.classList.add('hidden');
+
+  const list = shown.length ? shown : FAMILIES;
+  $('#cards').innerHTML = list.map(f=>{
+    const gi = FAMILIES.indexOf(f), ax = orderedAnswer(f);
+    return '<div class="card" data-f="'+gi+'">'+
+      '<h3>'+esc(f.hub)+'</h3>'+
+      '<p class="meta">'+f.words.length+' words &middot; '+ax.length+' '+(ax.length>1?'axes':'axis')+' in play</p>'+
+      '<svg viewBox="0 0 300 52">'+sparkline(f)+'</svg>'+
+      '<p class="words">'+f.words.map(w=>esc(wordLabel(w))).join(', ')+'</p>'+
+    '</div>';
+  }).join('');
+
+  $('#cards').querySelectorAll('.card').forEach(el=>{
+    el.addEventListener('click', ()=> openFamily(+el.getAttribute('data-f')));
+  });
+}
+
+/* ============================================================
+   lesson flow
+   ============================================================ */
+function openFamily(i){
+  state.screen='lesson'; state.fi=i; state.phase='ask';
+  state.guess=new Set(); state.correct=null; state.sel=null; state.quiz=null;
+  state.flat=0; state.view='cube'; state.autoSpin=!REDUCED;
+  state.cam.yaw=CUBE_CAM.yaw; state.cam.pitch=CUBE_CAM.pitch;
+  const f = fam(), a = orderedAnswer(f);
+  state.layout = a.length===1 ? 'line' : 'field';
+  state.lineAxis = a[0];
+
+  $('#home').classList.add('hidden');
+  $('#lesson').classList.remove('hidden');
+  $('#hubWord').textContent = f.hub;
+  window.scrollTo({top:0, behavior: REDUCED ? 'auto' : 'smooth'});
+  renderLessonChrome();
+  render();
+}
+
+function renderLessonChrome(){
+  const f = fam();
+  const asking = state.phase==='ask';
+
+  $('#promptQ').textContent = asking ? f.prompt : f.insight;
+  $('#promptSub').textContent = asking
+    ? 'Drag the cube to look around. Pick one axis, or more than one if you think one line cannot hold them.'
+    : 'The panel under the meters is that word\u2019s origin, usage over time, and root. Click another word to compare.';
+  $('#axisPick').innerHTML = asking
+    ? AXNAMES.map(n=>'<button data-ax="'+n+'"'+(state.guess.has(n)?' class="on"':'')+'>'+
+        n+' <span style="opacity:.6">'+AXES[n].lo+' \u2192 '+AXES[n].hi+'</span></button>').join('') +
+      '<button class="primary" id="reveal"'+(state.guess.size?'':' disabled')+'>Show me</button>' +
+      '<span class="hintSmall">'+(state.guess.size?'':'pick at least one')+'</span>'
+    : '';
+
+  if (asking){
+    $('#axisPick').querySelectorAll('[data-ax]').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        const n = el.getAttribute('data-ax');
+        if (state.guess.has(n)) state.guess.delete(n); else state.guess.add(n);
+        renderLessonChrome();
+      });
+    });
+    const rv = $('#reveal'); if (rv) rv.addEventListener('click', doReveal);
+  }
+
+  // view bar
+  const vb = $('#viewBar');
+  if (state.phase==='ask'){
+    vb.innerHTML = '<span class="lab">view</span>' +
+      VIEW_ORDER.map(v=>'<button data-v="'+v+'"'+(state.view===v?' class="on"':'')+'>'+VIEWS[v].label+'</button>').join('');
+  } else {
+    const a = orderedAnswer(f);
+    let html = '<span class="lab">read as</span>';
+    a.forEach(n=>{
+      const on = state.flat>0.5 && state.layout==='line' && state.lineAxis===n;
+      html += '<button data-read="'+n+'"'+(on?' class="on"':'')+'>'+n+' line</button>';
+    });
+    if (a.length>1){
+      const on = state.flat>0.5 && state.layout==='field';
+      html += '<button data-read="__field"'+(on?' class="on"':'')+'>both at once</button>';
+    }
+    html += '<button data-read="__cube"'+(state.flat<0.5?' class="on"':'')+'>back to the cube</button>';
+    html += '<div class="spacer"></div><button class="primary" id="quizBtn">Quiz me</button>';
+    vb.innerHTML = html;
+  }
+  vb.querySelectorAll('[data-v]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      state.view = el.getAttribute('data-v'); state.autoSpin=false;
+      animate(VIEWS[state.view].cam, 620);
+      renderLessonChrome();
+    });
+  });
+  vb.querySelectorAll('[data-read]').forEach(el=>{
+    el.addEventListener('click', ()=> setRead(el.getAttribute('data-read')));
+  });
+  const qb = $('#quizBtn'); if (qb) qb.addEventListener('click', startQuiz);
+
+  // meters
+  const mt = $('#meters');
+  if (state.phase==='ask'){ mt.classList.add('hidden'); }
+  else {
+    const r = ranges(f), max = Math.max(r.x,r.y,r.z);
+    mt.classList.remove('hidden');
+    mt.innerHTML = '<h4>How far the words actually spread on each axis</h4>' +
+      AXNAMES.map(n=>{
+        const v = r[KEYOF(n)], win = f.answer.indexOf(n)>=0;
+        return '<div class="meter'+(win?' win':'')+'">'+
+          '<div class="mn">'+n+'</div>'+
+          '<div class="bar"><div class="fill" style="width:'+(v/max*100).toFixed(1)+'%"></div></div>'+
+          '<div class="mv">'+v.toFixed(2)+'</div></div>';
+      }).join('') +
+      '<p style="font-family:var(--sans);font-size:11.5px;color:var(--faint);margin:9px 0 0">'+
+      'Spread is the plain range between the lowest and highest word on that axis. It is the only evidence behind the answer.</p>';
+  }
+
+  // the field always needs the written list; on a phone the line does too,
+  // because SVG gloss cards are unreadable at that width
+  const wantGrid = state.phase!=='ask' && (state.layout==='field' || NARROW());
+  $('#glossGrid').classList.toggle('hidden', !wantGrid);
+  if (wantGrid) renderGlossGrid();
+
+  $('#detail').classList.toggle('hidden', state.phase==='ask');
+  renderDetail();
+  $('#stage').classList.toggle('locked', state.flat>0.5 || COARSE);
+}
+
+function setRead(which){
+  const f = fam();
+  state.autoSpin = false;
+  if (which==='__cube'){
+    state.view='cube';
+    animate({flat:0, yaw:CUBE_CAM.yaw, pitch:CUBE_CAM.pitch}, 700, renderLessonChrome);
+    return;
+  }
+  const cam = which==='__field' ? revealCam(f)
+            : which==='formality' ? VIEWS.formality.cam
+            : VIEWS.connotation.cam;
+
+  // collapse onto the chosen reading, lifting back through the cube first if
+  // we are already flat. Seeing it reassemble is half the lesson.
+  const collapse = ()=>{
+    if (which==='__field') state.layout='field';
+    else { state.layout='line'; state.lineAxis=which; }
+    animate({yaw:cam.yaw, pitch:cam.pitch}, 480, ()=> animate({flat:1}, 660, renderLessonChrome));
+  };
+  if (state.flat > 0.5) animate({flat:0}, 380, collapse);
+  else collapse();
+}
+
+function doReveal(){
+  const f = fam(), truth = f.answer, guess = state.guess;
+  const right = truth.length===guess.size && truth.every(n=>guess.has(n));
+  state.correct = right;
+  state.autoSpin = false;
+  state.phase = 'read';
+  const hubI = f.words.findIndex(w => w.w === f.hub);
+  state.sel = hubI >= 0 ? hubI : Math.floor(f.words.length/2);
+
+  const v = $('#verdict');
+  v.classList.remove('hidden');
+  v.classList.toggle('miss', !right);
+  const guessed = Array.from(guess).join(' and ');
+  const answer  = orderedAnswer(f).join(' and ');
+  v.innerHTML = '<span class="tagline">'+(right?'that is the one':'not quite, and the near miss is the lesson')+'</span>' +
+    (right
+      ? 'You said <b>'+guessed+'</b>, and the words agree. '+esc(f.insight)
+      : 'You said <b>'+guessed+'</b>. The words spread furthest on <b>'+answer+'</b>. '+esc(f.insight));
+
+  // camera to the face that shows it, then collapse to the layout
+  const cam = revealCam(f);
+  animate({yaw:cam.yaw, pitch:cam.pitch}, 700, ()=>{
+    animate({flat:1}, 760, ()=>{ renderLessonChrome(); render(); });
+  });
+  renderLessonChrome();
+}
+
+function renderGlossGrid(){
+  const f = fam();
+  const k = KEYOF(state.layout==='line' ? state.lineAxis : orderedAnswer(f)[0]);
+  const order = f.words.map((w,i)=>({w:w,i:i})).sort((p,q)=> p.w[k]-q.w[k]);
+  $('#glossGrid').innerHTML = order.map(o=>
+    '<div class="gitem'+(state.sel===o.i?' sel':'')+'" data-i="'+o.i+'">'+
+      '<p class="gw" style="color:'+connColor(o.w.x)+'">'+esc(wordLabel(o.w))+'</p>'+
+      '<p class="gg">'+esc(o.w.gloss)+'</p></div>').join('');
+  $('#glossGrid').querySelectorAll('.gitem').forEach(el=>{
+    el.addEventListener('click', ()=> select(+el.getAttribute('data-i')));
+  });
+}
+
+function renderDetail(){
+  const d = $('#detail');
+  if (state.phase==='ask'){ d.innerHTML=''; return; }
+  if (state.sel===null){
+    d.innerHTML = '<p class="empty">Click a word on the '+(state.layout==='line'?'line':'field')+' for its gloss, where it came from, and how often it has been used.</p>';
+    return;
+  }
+  const f = fam(), w = f.words[state.sel];
+  let html =
+    '<p class="dw" style="color:'+connColor(w.x)+';font-family:'+(w.z>0.3?'var(--serif)':'var(--sans)')+'">'+esc(wordLabel(w))+'</p>'+
+    '<p class="dg">'+esc(w.gloss)+'</p>'+
+    '<p class="dex">'+esc(w.ex)+'</p>'+
+    '<p class="coords">connotation '+w.x.toFixed(2)+' &middot; intensity '+w.y.toFixed(2)+
+      ' &middot; formality '+w.z.toFixed(2)+(w.band?' &middot; confidence \u00b1'+w.band.toFixed(2):'')+'</p>';
+  if (w.from && w.from.length){
+    html += '<p class="trail">'+originTrail(w.from)+'</p>';
+  }
+  if (w.usage && w.usage.length){
+    html += '<div class="sparkWrap">'+usageSpark(f, state.sel)+
+      '<p class="sparkCap">Google Books English, six hand-sampled years. Each curve is scaled to that word\u2019s own peak, so matching height does not mean matching commonness. A single bump can be noise. A dip every line shares around 1950 is the corpus, not the family. Gold is the word you picked; click a name or line to switch.</p>';
+    if (w.usageNote) html += '<p class="usageNote">'+esc(w.usageNote)+'</p>';
+    html += '</div>';
+  }
+  if (w.root){
+    const hits = cognatesOf(w.root.id, f.hub, w.w);
+    const here = hits.filter(h => h.hub === f.hub);
+    const elsew = hits.filter(h => h.hub !== f.hub);
+    html += '<div class="rootRow"><span class="rootLab">Root</span>';
+    if (hits.length){
+      const jumpTo = here[0] || null;
+      if (jumpTo){
+        html += '<button type="button" class="rootChip" data-jump="'+jumpTo.i+'">'+esc(w.root.form)+'</button>';
+      } else {
+        html += '<span class="rootChip" style="cursor:default">'+esc(w.root.form)+'</span>';
+      }
+    } else {
+      const wiki = 'https://en.wiktionary.org/wiki/'+encodeURIComponent(w.w);
+      const ety  = 'https://www.etymonline.com/word/'+encodeURIComponent(w.w);
+      html += '<a class="rootChip" href="'+wiki+'" target="_blank" rel="noopener">'+esc(w.root.form)+'</a>';
+      html += '<a class="rootChip" href="'+ety+'" target="_blank" rel="noopener">Etymonline</a>';
+    }
+    if (w.root.gloss) html += '<span class="rootGloss">'+esc(w.root.gloss)+'</span>';
+    html += '</div>';
+    if (here.length){
+      html += '<p class="rootAlso">also in this family: '+here.map(h =>
+        '<button type="button" class="ghost jump" data-jump="'+h.i+'">'+esc(h.w)+'</button>').join(' ')+'</p>';
+    }
+    if (elsew.length){
+      const byHub = {};
+      elsew.forEach(h => { (byHub[h.hub] = byHub[h.hub] || []).push(h.w); });
+      html += '<p class="rootAlso">also in '+Object.keys(byHub).map(hub =>
+        '<em>'+esc(hub)+'</em>: '+esc(byHub[hub].join(', '))).join('; ')+'</p>';
+    }
+  }
+  d.innerHTML = html;
+  d.querySelectorAll('[data-jump]').forEach(el => {
+    el.addEventListener('click', () => {
+      const i = +el.getAttribute('data-jump');
+      if (state.sel === i) return;
+      state.sel = i;
+      renderDetail();
+      if (state.layout==='field') renderGlossGrid();
+      render();
+    });
+  });
+}
+
+function select(i){
+  state.sel = (state.sel===i) ? null : i;
+  renderDetail();
+  if (state.layout==='field') renderGlossGrid();
+  render();
+}
+
+/* ============================================================
+   quiz — scored by which axis you were wrong about
+   ============================================================ */
+function startQuiz(){
+  const f = fam();
+  let i = Math.floor(Math.random()*f.words.length);
+  if (state.quiz && f.words.length>1){
+    while (i === state.quiz.i) i = Math.floor(Math.random()*f.words.length);
+  }
+  state.quiz = { i:i, done:false, px:0, py:0 };
+  state.sel = null;
+  if (state.flat < 0.5) animate({flat:1}, 620);
+  $('#quizBar').classList.remove('hidden');
+  renderQuizBar(); renderLessonChrome(); render();
+}
+
+function renderQuizBar(){
+  const q = state.quiz, f = fam(), w = f.words[q.i], bar = $('#quizBar');
+  if (!q){ bar.classList.add('hidden'); return; }
+  const axesInPlay = state.layout==='line' ? [state.lineAxis] : orderedAnswer(f);
+  let html = '<p class="qw">Place this word: <b>'+esc(wordLabel(w))+'</b></p>'+
+             '<p class="qg">'+esc(w.gloss)+'</p>';
+  if (!q.done){
+    html += '<p class="qhint">Click on the '+(state.layout==='line'?'line':'field')+
+            ' where it belongs. You are being scored on '+axesInPlay.join(' and ')+'.</p>';
+  } else {
+    html += '<p class="qres">'+q.msg+'</p>'+
+            '<button class="primary" id="quizNext" style="margin-top:9px">Another word</button> '+
+            '<button class="ghost" id="quizDone">Stop quizzing</button>';
+  }
+  bar.innerHTML = html;
+  const n = $('#quizNext'); if (n) n.addEventListener('click', startQuiz);
+  const dn = $('#quizDone'); if (dn) dn.addEventListener('click', ()=>{
+    state.quiz=null; $('#quizBar').classList.add('hidden'); renderLessonChrome(); render();
+  });
+}
+
+const gradeWord = e => e<0.18 ? 'spot on' : e<0.42 ? 'close' : e<0.75 ? 'off' : 'well off';
+
+function answerQuiz(px,py){
+  const q = state.quiz, f = fam(), w = f.words[q.i];
+  q.px = px; q.py = py; q.done = true;
+
+  const parts = [];
+  if (state.layout==='line'){
+    const n = state.lineAxis, k = KEYOF(n);
+    const got = unLineX(px), err = got - w[k];
+    parts.push(describe(n, err, w[k], got, w.band));
+  } else {
+    const a = orderedAnswer(f);
+    const g0 = unFieldX(px), g1 = unFieldY(py);
+    parts.push(describe(a[0], g0-w[KEYOF(a[0])], w[KEYOF(a[0])], g0, w.band));
+    parts.push(describe(a[1], g1-w[KEYOF(a[1])], w[KEYOF(a[1])], g1, w.band));
+  }
+  q.msg = parts.join(' ');
+  renderQuizBar(); render();
+}
+
+function describe(name, err, truth, got, band){
+  const e = Math.abs(err), ax = AXES[name];
+  const dir = err > 0 ? ax.hi : ax.lo;
+  const at = 'You put it at '+got.toFixed(2)+'; it sits at '+truth.toFixed(2)+'.';
+  if (band && e <= band)
+    return '<b>'+name+': spot on.</b> '+at+' That is inside its own confidence band of \u00b1'+band.toFixed(2)+'.';
+  if (e < 0.18) return '<b>'+name+': spot on.</b> '+at;
+  return '<b>'+name+': '+gradeWord(e)+'.</b> '+at+' You had it '+e.toFixed(2)+
+         ' too far toward <i>'+dir+'</i>.';
+}
+
+/* ============================================================
+   pointer: drag to rotate, swipe on touch, click to place
+   ============================================================ */
+(function(){
+  const st = $('#stage');
+  let down=false, lx=0, ly=0, moved=0, sx0=0;
+
+  // the viewBox moves and resizes with the layout, so clicks must be mapped
+  // through whatever it currently is, not through a fixed stage size
+  const svgPt = ev => {
+    const r = st.getBoundingClientRect();
+    const vb = (st.getAttribute('viewBox') || '0 0 '+STAGE_W+' '+STAGE_H).split(/\s+/).map(Number);
+    return { x: vb[0] + (ev.clientX-r.left)/r.width  * vb[2],
+             y: vb[1] + (ev.clientY-r.top) /r.height * vb[3] };
+  };
+
+  st.addEventListener('pointerdown', ev=>{
+    down=true; moved=0; lx=ev.clientX; ly=ev.clientY; sx0=ev.clientX;
+    if (!COARSE && state.flat<0.5){ state.dragging=true; state.autoSpin=false; st.classList.add('dragging'); }
+    st.setPointerCapture(ev.pointerId);
+  });
+
+  st.addEventListener('pointermove', ev=>{
+    if (!down) return;
+    const dx=ev.clientX-lx, dy=ev.clientY-ly;
+    moved += Math.abs(dx)+Math.abs(dy);
+    lx=ev.clientX; ly=ev.clientY;
+    if (state.dragging && !anim){
+      state.cam.yaw   += dx*0.0085;
+      state.cam.pitch  = clamp(state.cam.pitch - dy*0.0065, -1.5, 0.55);
+      state.view='free';
+      render();
+    }
+  });
+
+  st.addEventListener('pointerup', ev=>{
+    if (!down) return;
+    down=false; state.dragging=false; st.classList.remove('dragging');
+
+    // touch: swipe between snapped faces instead of free rotation
+    if (COARSE && state.flat<0.5 && Math.abs(ev.clientX-sx0) > 40){
+      const dir = ev.clientX < sx0 ? 1 : -1;
+      let i = VIEW_ORDER.indexOf(state.view); if (i<0) i=0;
+      state.view = VIEW_ORDER[(i+dir+VIEW_ORDER.length)%VIEW_ORDER.length];
+      animate(VIEWS[state.view].cam, 520);
+      renderLessonChrome();
+      return;
+    }
+
+    if (moved > 8) return;                      // that was a drag, not a click
+    const p = svgPt(ev);
+    if (state.quiz && !state.quiz.done){ answerQuiz(p.x, p.y); return; }
+
+    // clicking a gloss card selects its word
+    const card = ev.target && ev.target.getAttribute && ev.target.getAttribute('data-card');
+    if (card !== null && card !== undefined && card !== '') { select(+card); return; }
+  });
+})();
+
+/* ============================================================
+   wiring
+   ============================================================ */
+$('#q').addEventListener('input', renderHome);
+$('#clearQ').addEventListener('click', ()=>{ $('#q').value=''; renderHome(); $('#q').focus(); });
+$('#back').addEventListener('click', ()=>{
+  state.screen='home'; state.quiz=null;
+  $('#lesson').classList.add('hidden');
+  $('#verdict').classList.add('hidden');
+  $('#quizBar').classList.add('hidden');
+  $('#home').classList.remove('hidden');
+  window.scrollTo({top:0, behavior: REDUCED?'auto':'smooth'});
+});
+$('#restart').addEventListener('click', ()=>{
+  $('#verdict').classList.add('hidden');
+  $('#quizBar').classList.add('hidden');
+  openFamily(state.fi);
+});
+
+/* crossing the narrow breakpoint changes text scale, bounds and gloss mode */
+let lastNarrow = NARROW();
+window.addEventListener('resize', ()=>{
+  const n = NARROW();
+  if (state.screen==='lesson'){
+    if (n !== lastNarrow) renderLessonChrome();
+    render();
+  }
+  lastNarrow = n;
+});
+
+/* ============================================================
+   theme: follow the operating system by default, or override it
+   ============================================================ */
+const DARKQ = window.matchMedia('(prefers-color-scheme: dark)');
+
+function themeMode(){
+  try { return localStorage.getItem('nc-theme') || 'auto'; } catch(e){ return 'auto'; }
+}
+function applyTheme(){
+  const mode = themeMode();
+  const dark = mode === 'auto' ? DARKQ.matches : mode === 'dark';
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  readPalette();
+  for (const b of $('#themePick').children){
+    const on = b.dataset.mode === mode;
+    b.classList.toggle('on', on);
+    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+  }
+  // both screens are SVG built as strings, so nothing repaints without this
+  renderHome();
+  render();
+  renderDetail();
+}
+$('#themePick').addEventListener('click', ev=>{
+  const b = ev.target.closest('button');
+  if (!b) return;
+  try { localStorage.setItem('nc-theme', b.dataset.mode); } catch(e){}
+  applyTheme();
+});
+DARKQ.addEventListener('change', ()=>{ if (themeMode() === 'auto') applyTheme(); });
+
+applyTheme();
+</script>
+</body>
+</html>

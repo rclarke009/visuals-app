@@ -1,0 +1,85 @@
+{
+  "word": "kid",
+  "hub": "child",
+  "status": "pending",
+  "evidence": [
+    {
+      "source": "wiktionary",
+      "url": "https://en.wiktionary.org/wiki/kid",
+      "quote": "[[Image:Goat kid444.jpg|thumb|right|A goat kid.]] From {{inh|en|enm|kide}}, from {{der|en|non|kið||young goat}}, from {{der|en|gem-pro|*kidją}}, {{m|gem-pro|*kittīną||goatling, kid}}, perhaps from {{der|en|ine-pro|*gʰaydn-}}, {{m|ine-pro|*ǵʰaydn-||goat}} or {{der|en|ine-pro|*gidʰ-||kid, goatling, little goat}}. Compare {{cog|sv|-}} and {{cog|da|kid}}, {{cog|de|Kitz}} and {{m|de|Kitze}}, {{cog|sq|kedh}} and {{m|sq|kec}}. The sense of {{m|en|child}} has been in use since the 1590s as [[slang]], and since the 1840s in informal use.<ref>{{R:Online Etymology Dictionary}}</ref><ref>{{R:Grose Vulgar Tongue|page=124|passage='''{{smallcaps|Kid}}''', a child.|nodot=1}}</ref>"
+    },
+    {
+      "source": "etymonline",
+      "url": "https://www.etymonline.com/word/kid",
+      "quote": "\"the young of a goat,\" from a Scandinavian source such as Old Norse kið \"young goat,\"… See origin and meaning of kid. from a Scandinavian source such as Old Norse kið \"young goat,\" from Proto-Germanic *kidjom (source also of Old High German kizzi , German kitze , Danish and Swedish kid ), a word of uncertain origin."
+    },
+    {
+      "source": "ngrams",
+      "url": "https://books.google.com/ngrams/json?content=kid&year_start=1800&year_end=2019&corpus=en-2019&smoothing=3",
+      "quote": "years [1800, 1850, 1900, 1950, 2000, 2019] scaled=[0.0752, 0.0647, 0.0755, 0.1546, 0.4474, 1.0] raw=[1.827201e-06, 1.571538e-06, 1.834176e-06, 3.75653e-06, 1.0872995e-05, 2.4302948e-05]"
+    }
+  ],
+  "proposed_from": [
+    {
+      "lang": "Proto-Germanic",
+      "form": "*kuddô",
+      "year": null
+    },
+    {
+      "lang": "Proto-West-Germanic",
+      "form": "*kuddijā",
+      "year": null
+    },
+    {
+      "lang": "Old English",
+      "form": "*cydde",
+      "year": null
+    },
+    {
+      "lang": "Middle English",
+      "form": "*kidde",
+      "year": null
+    },
+    {
+      "lang": "Proto-Germanic",
+      "form": "*kidją",
+      "year": null
+    },
+    {
+      "lang": "Old Norse",
+      "form": "kið",
+      "year": null
+    },
+    {
+      "lang": "Middle English",
+      "form": "kide",
+      "year": null
+    }
+  ],
+  "proposed_root": {
+    "id": "kudd",
+    "form": "*kuddô",
+    "gloss": ""
+  },
+  "proposed_usage": [
+    0.0752,
+    0.0647,
+    0.0755,
+    0.1546,
+    0.4474,
+    1.0
+  ],
+  "proposed_usageNote": "This surface form has other senses (3 English etymology sections, young goat). The usage curve may mix them.",
+  "proposed_gloss": null,
+  "proposed_ex": null,
+  "rank_suggestions": [],
+  "gloss_candidates": [],
+  "diffs": [
+    "from",
+    "root",
+    "usage",
+    "usageNote"
+  ],
+  "errors": [],
+  "wiki_roots": []
+}

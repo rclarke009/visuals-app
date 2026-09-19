@@ -1,0 +1,54 @@
+{
+  "word": "skinny",
+  "hub": "thin",
+  "status": "pending",
+  "evidence": [
+    {
+      "source": "wiktionary",
+      "url": "https://en.wiktionary.org/wiki/skinny",
+      "quote": "From {{inh|en|enm|skinny|t=resembling skin}}, equivalent to {{suf|en|skin|y|id2=adjectival}}. The meaning associated with lack of fat or muscle possibly derives from the phrase {{m|en|skin and bones}}; the meaning associated with nudity refers to the exposed skin."
+    },
+    {
+      "source": "etymonline",
+      "url": "https://www.etymonline.com/word/skinny",
+      "quote": "\"resembling skin,\" from skin (n.) + -y (2). The meaning \"lean, emaciated, showing skin… See origin and meaning of skinny. from the notion of the \"naked\" truth."
+    },
+    {
+      "source": "ngrams",
+      "url": "https://books.google.com/ngrams/json?content=skinny&year_start=1800&year_end=2019&corpus=en-2019&smoothing=3",
+      "quote": "years [1800, 1850, 1900, 1950, 2000, 2019] scaled=[0.0877, 0.0619, 0.0604, 0.1096, 0.4485, 1.0] raw=[3.3359e-07, 2.35424e-07, 2.29774e-07, 4.16979e-07, 1.706575e-06, 3.804745e-06]"
+    }
+  ],
+  "proposed_from": [
+    {
+      "lang": "Middle English",
+      "form": "skinny",
+      "year": null
+    }
+  ],
+  "proposed_root": {
+    "id": "skinny",
+    "form": "skinny",
+    "gloss": ""
+  },
+  "proposed_usage": [
+    0.0877,
+    0.0619,
+    0.0604,
+    0.1096,
+    0.4485,
+    1.0
+  ],
+  "proposed_usageNote": null,
+  "proposed_gloss": null,
+  "proposed_ex": null,
+  "rank_suggestions": [],
+  "gloss_candidates": [],
+  "diffs": [
+    "from",
+    "root",
+    "usage"
+  ],
+  "errors": [],
+  "wiki_roots": []
+}

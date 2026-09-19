@@ -1,0 +1,42 @@
+{
+  "word": "juvenile",
+  "hub": "child",
+  "status": "pending",
+  "evidence": [
+    {
+      "source": "wiktionary",
+      "url": "https://en.wiktionary.org/wiki/juvenile",
+      "quote": "{{ety|en|:lbor|la:iuvenīlis<t:youthful; juvenile>|:afeq|-ile|tree=1|text=++}}"
+    },
+    {
+      "source": "etymonline",
+      "url": "https://www.etymonline.com/word/juvenile",
+      "quote": "\"young, youthful,\" from Latin iuvenilis \"of or belonging to youth, youthful,\" from… See origin and meaning of juvenile. from Latin iuvenilis \"of or belonging to youth, youthful,\" from iuvenis \"young man, one in the flower of his age\" (in Roman use, the period just beyond adolescence, from age 21 or 25 to 40), noun use of an adjective meaning \"young\" (source also of French jeune ; see young (adj."
+    },
+    {
+      "source": "ngrams",
+      "url": "https://books.google.com/ngrams/json?content=juvenile&year_start=1800&year_end=2019&corpus=en-2019&smoothing=3",
+      "quote": "years [1800, 1850, 1900, 1950, 2000, 2019] scaled=[0.227, 0.2847, 0.2053, 0.7182, 1.0, 0.4583] raw=[3.306141e-06, 4.145578e-06, 2.989136e-06, 1.045888e-05, 1.4562788e-05, 6.674814e-06]"
+    }
+  ],
+  "proposed_from": null,
+  "proposed_root": null,
+  "proposed_usage": [
+    0.227,
+    0.2847,
+    0.2053,
+    0.7182,
+    1.0,
+    0.4583
+  ],
+  "proposed_usageNote": null,
+  "proposed_gloss": null,
+  "proposed_ex": null,
+  "rank_suggestions": [],
+  "gloss_candidates": [],
+  "diffs": [
+    "usage"
+  ],
+  "errors": [],
+  "wiki_roots": []
+}

@@ -1,0 +1,92 @@
+{
+  "word": "walk",
+  "hub": "walk",
+  "status": "pending",
+  "evidence": [
+    {
+      "source": "wiktionary",
+      "url": "https://en.wiktionary.org/wiki/walk",
+      "quote": "{{root|en|ine-pro|*welH-}} From {{inh|en|enm|walk}}, {{m|enm|walke}}, {{m|enm|walken}}, {{m|enm|walkyn}}, {{m|enm|wolken|t=to roll, toss, or turn; to walk; to move; to be living; to beat or full; to perform}}, a conflation of {{inh|en|ang|wealcan|t=to move around; to revolve; to roll; to fluctuate; to discuss}} ({{m|ang|ġewealcan|t=to go, traverse; to roll}}) and {{inh|en|ang|wealcian|t=to curl, roll up, twist; to wrinkle}}; both from {{inh|en|gmw-pro|*walkan}}, from {{inh|en|gem-pro|*walkaną|t=to roll, toss, turn, wind; to walk, wander, wend; to full, trample}}, {{m|gem-pro|*walkōną|t=to roll about; to full}}, from {{der|en|ine-pro|*walg-|t=to twist, turn, move}}. {{col-top|2|cog}} Cognate "
+    },
+    {
+      "source": "etymonline",
+      "url": "https://www.etymonline.com/word/walk",
+      "quote": "\"travel on foot,\" c. 1200, walken, a merging and sense-shift of two verbs: 1. Old English… See origin and meaning of walk. from Proto-Germanic *welk- (source also of Old Norse valka \"to drag about,\" Danish valke \"to full\" (cloth), Middle Dutch walken \"to knead, press, full\" (cloth), Old High German walchan \"to knead,\" German walken \"to full\"), and perhaps ultimately from PIE root *wel- (3) \"to turn, revolve."
+    },
+    {
+      "source": "ngrams",
+      "url": "https://books.google.com/ngrams/json?content=walk&year_start=1800&year_end=2019&corpus=en-2019&smoothing=3",
+      "quote": "years [1800, 1850, 1900, 1950, 2000, 2019] scaled=[0.5574, 0.5676, 0.4204, 0.2557, 0.4819, 1.0] raw=[4.5756336e-05, 4.6596986e-05, 3.4508163e-05, 2.0987932e-05, 3.9560903e-05, 8.2089429e-05]"
+    }
+  ],
+  "proposed_from": [
+    {
+      "lang": "Proto-Germanic",
+      "form": "*walką",
+      "year": null
+    },
+    {
+      "lang": "Old English",
+      "form": "*wealc",
+      "year": null
+    },
+    {
+      "lang": "Middle English",
+      "form": "walc",
+      "year": null
+    },
+    {
+      "lang": "Proto-Germanic",
+      "form": "*walkaną",
+      "year": null
+    },
+    {
+      "lang": "Proto-West-Germanic",
+      "form": "*walkan",
+      "year": null
+    },
+    {
+      "lang": "Old English",
+      "form": "wealcian",
+      "year": null
+    },
+    {
+      "lang": "Old English",
+      "form": "wealcan",
+      "year": null
+    },
+    {
+      "lang": "Middle English",
+      "form": "walk",
+      "year": null
+    }
+  ],
+  "proposed_root": {
+    "id": "walk",
+    "form": "*walką",
+    "gloss": ""
+  },
+  "proposed_usage": [
+    0.5574,
+    0.5676,
+    0.4204,
+    0.2557,
+    0.4819,
+    1.0
+  ],
+  "proposed_usageNote": "This surface form has other senses (2 English etymology sections). The usage curve may mix them.",
+  "proposed_gloss": null,
+  "proposed_ex": null,
+  "rank_suggestions": [],
+  "gloss_candidates": [],
+  "diffs": [
+    "from",
+    "root",
+    "usage",
+    "usageNote"
+  ],
+  "errors": [],
+  "wiki_roots": [
+    "ine-pro|*welH-"
+  ]
+}

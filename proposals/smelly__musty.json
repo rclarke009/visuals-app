@@ -1,0 +1,92 @@
+{
+  "word": "musty",
+  "hub": "smelly",
+  "status": "pending",
+  "evidence": [
+    {
+      "source": "wiktionary",
+      "url": "https://en.wiktionary.org/wiki/musty",
+      "quote": "{{root|en|ine-pro|*mews-|id=moss}} The {{glossary|adjective}} is derived from Late {{inh|en|enm|musty}}; further origin {{uncertain|en|nocap=1}}, possibly from one of the following:<ref>{{R:OED Online|pos=''adj.''{{sup|2}}|noformat=1|id=124278|date=June 2022|nodot=1}}; {{R:Lexico|pos=adj}}</ref> * From {{der|en|xno|muste}}, {{m|xno|moste}}, variants of {{m|xno|moiste}}, {{m|xno|muiste|t=moist}}, from {{der|en|fro|moiste|t=clammy, damp, moist, wet}} (modern {{cog|fr|moite|t=muggy; sticky, sweaty}}), from a {{glossary|blend}} of {{der|en|la-vul|*mucidus}} (from {{der|en|la|mūcidus|t=mouldy, musty}}, from Old {{der|en|la|mūceō|t=to be mouldy or musty}} + {{m|la|-idus|pos={{glossary|suffix}} mea"
+    },
+    {
+      "source": "etymonline",
+      "url": "https://www.etymonline.com/word/musty",
+      "quote": "\"moldy, sour,\" perhaps a variant of moisty \"moist, damp\" (see moist), but musty, of… See origin and meaning of musty. from Old French moiste \"damp, wet, soaked\" (13c."
+    },
+    {
+      "source": "ngrams",
+      "url": "https://books.google.com/ngrams/json?content=musty&year_start=1800&year_end=2019&corpus=en-2019&smoothing=3",
+      "quote": "years [1800, 1850, 1900, 1950, 2000, 2019] scaled=[0.787, 0.7207, 0.7278, 0.4687, 0.5104, 1.0] raw=[8.97189e-07, 8.21543e-07, 8.29657e-07, 5.34345e-07, 5.81869e-07, 1.13998e-06]"
+    }
+  ],
+  "proposed_from": [
+    {
+      "lang": "Middle English",
+      "form": "mosty",
+      "year": null
+    },
+    {
+      "lang": "Latin",
+      "form": "mustum",
+      "year": null
+    },
+    {
+      "lang": "Latin",
+      "form": "mūceō",
+      "year": null
+    },
+    {
+      "lang": "Latin",
+      "form": "mūcidus",
+      "year": null
+    },
+    {
+      "lang": "la-vul",
+      "form": "*mucidus",
+      "year": null
+    },
+    {
+      "lang": "Old French",
+      "form": "moiste",
+      "year": null
+    },
+    {
+      "lang": "Anglo-Norman",
+      "form": "muste",
+      "year": null
+    },
+    {
+      "lang": "Middle English",
+      "form": "musty",
+      "year": null
+    }
+  ],
+  "proposed_root": {
+    "id": "mosty",
+    "form": "mosty",
+    "gloss": ""
+  },
+  "proposed_usage": [
+    0.787,
+    0.7207,
+    0.7278,
+    0.4687,
+    0.5104,
+    1.0
+  ],
+  "proposed_usageNote": "This surface form has other senses (2 English etymology sections). The usage curve may mix them.",
+  "proposed_gloss": null,
+  "proposed_ex": null,
+  "rank_suggestions": [],
+  "gloss_candidates": [],
+  "diffs": [
+    "from",
+    "root",
+    "usage",
+    "usageNote"
+  ],
+  "errors": [],
+  "wiki_roots": [
+    "ine-pro|*mews-"
+  ]
+}

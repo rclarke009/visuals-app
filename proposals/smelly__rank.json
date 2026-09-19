@@ -1,0 +1,87 @@
+{
+  "word": "rank",
+  "hub": "smelly",
+  "status": "pending",
+  "evidence": [
+    {
+      "source": "wiktionary",
+      "url": "https://en.wiktionary.org/wiki/rank",
+      "quote": "{{root|en|ine-pro|*h₃reǵ-}} From {{inh|en|enm|rank|t=strong, proud}}, from {{inh|en|ang|ranc|t=proud, haughty, arrogant, insolent, forward, overbearing, showy, ostentatious, splendid, bold, valiant, noble, brave, strong, full-grown, mature}}, from {{inh|en|gmw-pro|*rank}}, from {{inh|en|gem-pro|*rankaz|t=straight}}, from {{der|en|ine-pro|*h₃reǵ-|t=straight, direct}}. Cognate with {{cog|nl|rank|t=slender, slim}}, {{cog|nds|rank|t=slender, projecting, lank}}, {{cog|da|rank|t=straight, erect, slender}}, {{cog|sv|rank|t=slender, shaky, wonky}}, {{cog|is|rakkur|t=straight, slender, bold, valiant}}. The sense referring to taste or odor is possibly influenced by {{m|en|rancor}}."
+    },
+    {
+      "source": "etymonline",
+      "url": "https://www.etymonline.com/word/rank",
+      "quote": "\"row, line, or series;\" c. 1400, a row of an army, from Old French renc, ranc \"row, line\"… See origin and meaning of rank. from Old French renc , ranc \"row, line\" (Modern French rang ), from Frankish *hring or some other Germanic source (compare Old High German hring \"circle, ring\"), from Proto-Germanic *hringaz \"circle, ring, something curved\" (from nasalized form of PIE root *sker- (2) \"to turn, bend\")."
+    },
+    {
+      "source": "ngrams",
+      "url": "https://books.google.com/ngrams/json?content=rank&year_start=1800&year_end=2019&corpus=en-2019&smoothing=3",
+      "quote": "years [1800, 1850, 1900, 1950, 2000, 2019] scaled=[1.0, 0.754, 0.5537, 0.3765, 0.2614, 0.2681] raw=[7.5670474e-05, 5.7054767e-05, 4.1901208e-05, 2.8487338e-05, 1.9777938e-05, 2.0287742e-05]"
+    }
+  ],
+  "proposed_from": [
+    {
+      "lang": "Proto-Germanic",
+      "form": "*hringaz",
+      "year": null
+    },
+    {
+      "lang": "frk",
+      "form": "*hring",
+      "year": null
+    },
+    {
+      "lang": "Old French",
+      "form": "ranc",
+      "year": null
+    },
+    {
+      "lang": "Proto-Germanic",
+      "form": "*rankaz",
+      "year": null
+    },
+    {
+      "lang": "Proto-West-Germanic",
+      "form": "*rank",
+      "year": null
+    },
+    {
+      "lang": "Old English",
+      "form": "ranc",
+      "year": null
+    },
+    {
+      "lang": "Middle English",
+      "form": "rank",
+      "year": null
+    }
+  ],
+  "proposed_root": {
+    "id": "hringaz",
+    "form": "*hringaz",
+    "gloss": ""
+  },
+  "proposed_usage": [
+    1.0,
+    0.754,
+    0.5537,
+    0.3765,
+    0.2614,
+    0.2681
+  ],
+  "proposed_usageNote": "This surface form has other senses (2 English etymology sections). The usage curve may mix them.",
+  "proposed_gloss": null,
+  "proposed_ex": null,
+  "rank_suggestions": [],
+  "gloss_candidates": [],
+  "diffs": [
+    "from",
+    "root",
+    "usage",
+    "usageNote"
+  ],
+  "errors": [],
+  "wiki_roots": [
+    "ine-pro|*h₃reǵ-"
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "word": "livid",
+  "hub": "angry",
+  "status": "pending",
+  "evidence": [
+    {
+      "source": "wiktionary",
+      "url": "https://en.wiktionary.org/wiki/livid",
+      "quote": "{{etymon|en|:inh|enm:livid|tree=1}} {{root|en|ine-pro|*(s)leh₃y-}} From {{inh|en|enm|livid}}, {{m|enm|livide}}, from {{der|en|fro|livide}}, from {{der|en|la|līvidus||bluish, livid; envious}}, from {{m|la|līveō||be of a bluish color or livid; envy}}, from {{der|en|itc-pro|*sliwēō}}, from {{der|en|ine-pro|*sliwo-}}, suffixed form of {{m|ine-pro|*(s)leh₃y-||bluish}}. See also {{cog|ang|slā||sloe}}, {{cog|cy|lliw||splendor, color}}, {{cog|sga|li}}, {{cog|lt|slyvas||plum}}, and {{cog|ru|-}} and {{cog|cu|-}} {{m|ru|слива||plum}}."
+    },
+    {
+      "source": "etymonline",
+      "url": "https://www.etymonline.com/word/livid",
+      "quote": "\"of a bluish-leaden color,\" from Old French livide (13c.) and directly from Latin lividus… See origin and meaning of livid. from Old French livide (13c."
+    },
+    {
+      "source": "ngrams",
+      "url": "https://books.google.com/ngrams/json?content=livid&year_start=1800&year_end=2019&corpus=en-2019&smoothing=3",
+      "quote": "years [1800, 1850, 1900, 1950, 2000, 2019] scaled=[1.0, 0.9723, 0.4901, 0.1339, 0.1735, 0.53] raw=[2.463871e-06, 2.395684e-06, 1.207539e-06, 3.29946e-07, 4.27377e-07, 1.305886e-06]"
+    }
+  ],
+  "proposed_from": [
+    {
+      "lang": "Proto-Italic",
+      "form": "*sliwēō",
+      "year": null
+    },
+    {
+      "lang": "Latin",
+      "form": "līvidus",
+      "year": null
+    },
+    {
+      "lang": "Old French",
+      "form": "livide",
+      "year": null
+    },
+    {
+      "lang": "Middle English",
+      "form": "livid",
+      "year": null
+    }
+  ],
+  "proposed_root": {
+    "id": "sliw",
+    "form": "*sliwēō",
+    "gloss": ""
+  },
+  "proposed_usage": [
+    1.0,
+    0.9723,
+    0.4901,
+    0.1339,
+    0.1735,
+    0.53
+  ],
+  "proposed_usageNote": "This surface form has other senses (colour). The usage curve may mix them.",
+  "proposed_gloss": null,
+  "proposed_ex": null,
+  "rank_suggestions": [],
+  "gloss_candidates": [],
+  "diffs": [
+    "from",
+    "root",
+    "usage",
+    "usageNote"
+  ],
+  "errors": [],
+  "wiki_roots": [
+    "ine-pro|*(s)leh₃y-"
+  ]
+}

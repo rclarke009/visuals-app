@@ -1,0 +1,59 @@
+{
+  "word": "irritated",
+  "hub": "angry",
+  "status": "pending",
+  "evidence": [
+    {
+      "source": "wiktionary",
+      "url": "https://en.wiktionary.org/wiki/irritated",
+      "quote": "{{bor+|en|la|irrītātus|id=excite}}, {{glossary|perfect}} {{glossary|passive}} {{glossary|participle}} of {{m|la|irrītō|t=excite, irritate, incite, stimulate|id=excite}}, see {{af|en|-ate|id1=verb|pos1=verb-forming suffix}}."
+    },
+    {
+      "source": "etymonline",
+      "url": "https://www.etymonline.com/word/irritated",
+      "quote": "The online etymology dictionary (etymonline) is the internet's go-to source for quick and reliable accounts of the origin and history of English words, phrases, and idioms."
+    },
+    {
+      "source": "ngrams",
+      "url": "https://books.google.com/ngrams/json?content=irritated&year_start=1800&year_end=2019&corpus=en-2019&smoothing=3",
+      "quote": "years [1800, 1850, 1900, 1950, 2000, 2019] scaled=[1.0, 0.8144, 0.4808, 0.3081, 0.3939, 0.8734] raw=[5.318044e-06, 4.330821e-06, 2.556941e-06, 1.638349e-06, 2.094814e-06, 4.644661e-06]"
+    }
+  ],
+  "proposed_from": [
+    {
+      "lang": "Latin",
+      "form": "irritātus",
+      "year": null
+    },
+    {
+      "lang": "Latin",
+      "form": "irrītātus",
+      "year": null
+    }
+  ],
+  "proposed_root": {
+    "id": "irrit-tus",
+    "form": "irritātus",
+    "gloss": ""
+  },
+  "proposed_usage": [
+    1.0,
+    0.8144,
+    0.4808,
+    0.3081,
+    0.3939,
+    0.8734
+  ],
+  "proposed_usageNote": null,
+  "proposed_gloss": null,
+  "proposed_ex": null,
+  "rank_suggestions": [],
+  "gloss_candidates": [],
+  "diffs": [
+    "from",
+    "root",
+    "usage"
+  ],
+  "errors": [],
+  "wiki_roots": []
+}

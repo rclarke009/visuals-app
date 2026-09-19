@@ -1,0 +1,69 @@
+{
+  "word": "slender",
+  "hub": "thin",
+  "status": "pending",
+  "evidence": [
+    {
+      "source": "wiktionary",
+      "url": "https://en.wiktionary.org/wiki/slender",
+      "quote": "From {{inh|en|enm|slendre}}, {{m|enm|sclendre}}, from {{der|en|fro|esclendre||thin, slender}}, from {{der|en|dum|slinder||thin, lank}}, from {{der|en|gem-pro|*slindraz||sliding, slippery}}, from {{der|en|ine-pro|*h₃sleydʰ-||to slip}}. Cognate with {{cog|bar|Schlenderling||that which dangles}}, {{cog|de|schlendern||to saunter, stroll}}, {{cog|nl|slidderen}}, {{m|nl|slinderen||to wriggle, creep like a serpent}}, {{cog|nds|slindern||to slide on ice}}. More at {{l|en|slide}}, {{l|en|slither}}."
+    },
+    {
+      "source": "etymonline",
+      "url": "https://www.etymonline.com/word/slender",
+      "quote": "\"thin, lean, not fat or fleshy,\" earlier sclendre (late 14c.), Anglo-French esclendre,… See origin and meaning of slender. from Old French esclendre \"thin, slender,\" which could be from Old Dutch slinder , but according to OED the connection is doubtful."
+    },
+    {
+      "source": "ngrams",
+      "url": "https://books.google.com/ngrams/json?content=slender&year_start=1800&year_end=2019&corpus=en-2019&smoothing=3",
+      "quote": "years [1800, 1850, 1900, 1950, 2000, 2019] scaled=[0.7392, 0.8588, 1.0, 0.6124, 0.3005, 0.4281] raw=[1.3132263e-05, 1.5255863e-05, 1.7764774e-05, 1.0879187e-05, 5.338782e-06, 7.604611e-06]"
+    }
+  ],
+  "proposed_from": [
+    {
+      "lang": "Proto-Germanic",
+      "form": "*slindraz",
+      "year": null
+    },
+    {
+      "lang": "dum",
+      "form": "slinder",
+      "year": null
+    },
+    {
+      "lang": "Old French",
+      "form": "esclendre",
+      "year": null
+    },
+    {
+      "lang": "Middle English",
+      "form": "slendre",
+      "year": null
+    }
+  ],
+  "proposed_root": {
+    "id": "slindraz",
+    "form": "*slindraz",
+    "gloss": ""
+  },
+  "proposed_usage": [
+    0.7392,
+    0.8588,
+    1.0,
+    0.6124,
+    0.3005,
+    0.4281
+  ],
+  "proposed_usageNote": null,
+  "proposed_gloss": null,
+  "proposed_ex": null,
+  "rank_suggestions": [],
+  "gloss_candidates": [],
+  "diffs": [
+    "from",
+    "root",
+    "usage"
+  ],
+  "errors": [],
+  "wiki_roots": []
+}

@@ -1,0 +1,59 @@
+{
+  "word": "shrewd",
+  "hub": "smart",
+  "status": "pending",
+  "evidence": [
+    {
+      "source": "wiktionary",
+      "url": "https://en.wiktionary.org/wiki/shrewd",
+      "quote": "From {{inh|en|enm|schrewed|t=depraved; wicked|lit=accursed}}, from {{m|enm|schrewen|t=to curse; beshrew}}, from {{m|enm|schrewe}}, {{m|enm|schrowe}}, {{m|enm|screwe|t=evil or wicked person/thing}}, from {{inh|en|ang|sċrēawa|t=wicked person|lit=biter}}. Equivalent to {{suf|en|shrew|ed}}. More at [[shrew]]. The sense of \"cunning\" developed in early 16<sup>th</sup> c., gradually gaining a positive connotation by 17<sup>th</sup> c."
+    },
+    {
+      "source": "etymonline",
+      "url": "https://www.etymonline.com/word/shrewd",
+      "quote": "\"wicked, depraved, malicious, evil,\" from shrewe \"wicked man\" (see shrew) + -ed. Compare… See origin and meaning of shrewd. from shrewe \"wicked man\" (see shrew ) + -ed ."
+    },
+    {
+      "source": "ngrams",
+      "url": "https://books.google.com/ngrams/json?content=shrewd&year_start=1800&year_end=2019&corpus=en-2019&smoothing=3",
+      "quote": "years [1800, 1850, 1900, 1950, 2000, 2019] scaled=[0.4969, 0.9354, 1.0, 0.5924, 0.3456, 0.5889] raw=[2.201671e-06, 4.144488e-06, 4.430875e-06, 2.624765e-06, 1.531204e-06, 2.609161e-06]"
+    }
+  ],
+  "proposed_from": [
+    {
+      "lang": "Old English",
+      "form": "sċrēawa",
+      "year": null
+    },
+    {
+      "lang": "Middle English",
+      "form": "schrewed",
+      "year": null
+    }
+  ],
+  "proposed_root": {
+    "id": "s-r-awa",
+    "form": "sċrēawa",
+    "gloss": ""
+  },
+  "proposed_usage": [
+    0.4969,
+    0.9354,
+    1.0,
+    0.5924,
+    0.3456,
+    0.5889
+  ],
+  "proposed_usageNote": null,
+  "proposed_gloss": null,
+  "proposed_ex": null,
+  "rank_suggestions": [],
+  "gloss_candidates": [],
+  "diffs": [
+    "from",
+    "root",
+    "usage"
+  ],
+  "errors": [],
+  "wiki_roots": []
+}

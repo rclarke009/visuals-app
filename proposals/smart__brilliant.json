@@ -1,0 +1,70 @@
+{
+  "word": "brilliant",
+  "hub": "smart",
+  "status": "pending",
+  "evidence": [
+    {
+      "source": "wiktionary",
+      "url": "https://en.wiktionary.org/wiki/brilliant",
+      "quote": "{{ety|en|id=shining|:bor|fr:brillant<id:shining>|tree=1}} {{bor+|en|fr|brillant}} (late 17th century), present participle of the verb {{m|fr|briller}}, from {{der|en|it|brillare}}, possibly from {{der|en|la|berillus}}, {{m|la|beryllus||a beryl, gem, eyeglass}}, from {{der|en|grc|βήρυλλος||beryl}}. {{surf|en|fr:briller|alt1=brill(er)|-i-|-ant}}."
+    },
+    {
+      "source": "etymonline",
+      "url": "https://www.etymonline.com/word/brilliant",
+      "quote": "\"sparkling with light or luster,\" 1680s, from French brilliant \"sparkling, shining\"… See origin and meaning of brilliant. from French brilliant \"sparkling, shining\" present participle of briller \"to shine\" (16c."
+    },
+    {
+      "source": "ngrams",
+      "url": "https://books.google.com/ngrams/json?content=brilliant&year_start=1800&year_end=2019&corpus=en-2019&smoothing=3",
+      "quote": "years [1800, 1850, 1900, 1950, 2000, 2019] scaled=[0.6028, 1.0, 0.8846, 0.4799, 0.3298, 0.5185] raw=[1.8408899e-05, 3.053928e-05, 2.7014414e-05, 1.4654967e-05, 1.007069e-05, 1.5834755e-05]"
+    }
+  ],
+  "proposed_from": [
+    {
+      "lang": "Ancient Greek",
+      "form": "βήρυλλος",
+      "year": null
+    },
+    {
+      "lang": "Latin",
+      "form": "berillus",
+      "year": null
+    },
+    {
+      "lang": "Italian",
+      "form": "brillare",
+      "year": null
+    },
+    {
+      "lang": "French",
+      "form": "brillant",
+      "year": null
+    }
+  ],
+  "proposed_root": {
+    "id": "unknown",
+    "form": "βήρυλλος",
+    "gloss": ""
+  },
+  "proposed_usage": [
+    0.6028,
+    1.0,
+    0.8846,
+    0.4799,
+    0.3298,
+    0.5185
+  ],
+  "proposed_usageNote": "This surface form has other senses (light / shine). The usage curve may mix them.",
+  "proposed_gloss": null,
+  "proposed_ex": null,
+  "rank_suggestions": [],
+  "gloss_candidates": [],
+  "diffs": [
+    "from",
+    "root",
+    "usage",
+    "usageNote"
+  ],
+  "errors": [],
+  "wiki_roots": []
+}

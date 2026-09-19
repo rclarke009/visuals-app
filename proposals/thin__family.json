@@ -1,0 +1,6 @@
+{
+  "hub": "thin",
+  "swap_failures": [],
+  "rank_suggestions": [],
+  "note": "Rank suggested_xyz is advisory. Queue accept never writes x/y/z/band."
+}

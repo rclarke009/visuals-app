@@ -1,0 +1,43 @@
+{
+  "word": "smelly",
+  "hub": "smelly",
+  "status": "pending",
+  "evidence": [
+    {
+      "source": "wiktionary",
+      "url": "https://en.wiktionary.org/wiki/smelly",
+      "quote": "{{ety|en|:af|smell|-y|text=+|tree=1}}"
+    },
+    {
+      "source": "etymonline",
+      "url": "https://www.etymonline.com/word/smelly",
+      "quote": "\"having an offensive odor,\" 1854, from smell (n.) + -y (2). Related: Smelliness. See origin and meaning of smelly. from Old English -ig , from Proto-Germanic *-iga- , from PIE -(i)ko- , adjectival suffix, cognate with elements in Greek -ikos , Latin -icus (see -ic )."
+    },
+    {
+      "source": "ngrams",
+      "url": "https://books.google.com/ngrams/json?content=smelly&year_start=1800&year_end=2019&corpus=en-2019&smoothing=3",
+      "quote": "years [1800, 1850, 1900, 1950, 2000, 2019] scaled=[0.0059, 0.0023, 0.032, 0.2081, 0.573, 1.0] raw=[5.799e-09, 2.233e-09, 3.1483e-08, 2.05043e-07, 5.64544e-07, 9.8532e-07]"
+    }
+  ],
+  "proposed_from": null,
+  "proposed_root": null,
+  "proposed_usage": [
+    0.0059,
+    0.0023,
+    0.032,
+    0.2081,
+    0.573,
+    1.0
+  ],
+  "proposed_usageNote": "This surface form has other senses (2 English etymology sections). The usage curve may mix them.",
+  "proposed_gloss": null,
+  "proposed_ex": null,
+  "rank_suggestions": [],
+  "gloss_candidates": [],
+  "diffs": [
+    "usage",
+    "usageNote"
+  ],
+  "errors": [],
+  "wiki_roots": []
+}

@@ -1,0 +1,92 @@
+{
+  "word": "bright",
+  "hub": "smart",
+  "status": "pending",
+  "evidence": [
+    {
+      "source": "wiktionary",
+      "url": "https://en.wiktionary.org/wiki/bright",
+      "quote": "{{root|en|ine-pro|*bʰerHǵ-}} The {{glossary|adjective}} is from {{inh|en|enm|bright}}, from {{inh|en|ang|berht}}, {{m|ang|beorht}}, {{m|ang|bryht}}, {{m|ang|byrht}}, from {{inh|en|gmw-pro|*berht}}, from {{inh|en|gem-pro|*berhtaz|t=bright}}, ultimately from {{der|en|ine-pro|*bʰerHǵ-|t=to gleam, shine, whiten}}. The {{glossary|noun}} is derived from {{inh|en|enm|bright|t=brightness, brilliance; daylight; light}}, from {{m|enm|bright|pos=adjective}}:<ref>{{R:MED Online|pos=n|id=MED6030}}</ref> see above. {{col-top|2|cog}} Cognate with {{cog|sco|bricht|t=bright}}, {{cog|da|bjært|t=bright}}, {{cog|fo,is|bjartur|t=bright}}, {{cog|nn|bjart|t=bright}}, {{cog|sv|bjärt|t=bright}}, {{cog|got|𐌱𐌰𐌹𐍂𐌷𐍄𐍃|t="
+    },
+    {
+      "source": "etymonline",
+      "url": "https://www.etymonline.com/word/bright",
+      "quote": "\"radiating or reflecting light,\" Old English bryht, metathesis of beorht \"bright;… See origin and meaning of bright. from Proto-Germanic *berhtaz \"bright\" (source also of Old Saxon berht , Old Norse bjartr , Old High German beraht , Gothic bairhts \"bright\"), from PIE root *bhereg- \"to shine; bright, white."
+    },
+    {
+      "source": "ngrams",
+      "url": "https://books.google.com/ngrams/json?content=bright&year_start=1800&year_end=2019&corpus=en-2019&smoothing=3",
+      "quote": "years [1800, 1850, 1900, 1950, 2000, 2019] scaled=[0.6599, 1.0, 0.7837, 0.4198, 0.3886, 0.6995] raw=[4.047228e-05, 6.1330696e-05, 4.8062569e-05, 2.5744445e-05, 2.3834155e-05, 4.2899075e-05]"
+    }
+  ],
+  "proposed_from": [
+    {
+      "lang": "Old English",
+      "form": "beorhtian",
+      "year": null
+    },
+    {
+      "lang": "Middle English",
+      "form": "brighten",
+      "year": null
+    },
+    {
+      "lang": "Old English",
+      "form": "breohte",
+      "year": null
+    },
+    {
+      "lang": "Middle English",
+      "form": "brighte",
+      "year": null
+    },
+    {
+      "lang": "Proto-Germanic",
+      "form": "*berhtaz",
+      "year": null
+    },
+    {
+      "lang": "Proto-West-Germanic",
+      "form": "*berht",
+      "year": null
+    },
+    {
+      "lang": "Old English",
+      "form": "berht",
+      "year": null
+    },
+    {
+      "lang": "Middle English",
+      "form": "bright",
+      "year": null
+    }
+  ],
+  "proposed_root": {
+    "id": "beorhtian",
+    "form": "beorhtian",
+    "gloss": ""
+  },
+  "proposed_usage": [
+    0.6599,
+    1.0,
+    0.7837,
+    0.4198,
+    0.3886,
+    0.6995
+  ],
+  "proposed_usageNote": "This surface form has other senses (3 English etymology sections, colour, light / shine). The usage curve may mix them.",
+  "proposed_gloss": null,
+  "proposed_ex": null,
+  "rank_suggestions": [],
+  "gloss_candidates": [],
+  "diffs": [
+    "from",
+    "root",
+    "usage",
+    "usageNote"
+  ],
+  "errors": [],
+  "wiki_roots": [
+    "ine-pro|*bʰerHǵ-"
+  ]
+}

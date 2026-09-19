@@ -1,0 +1,42 @@
+{
+  "word": "trudge",
+  "hub": "walk",
+  "status": "pending",
+  "evidence": [
+    {
+      "source": "wiktionary",
+      "url": "https://en.wiktionary.org/wiki/trudge",
+      "quote": "Mid-16th century. Original meaning was somewhat idiomatic, meaning \"to walk using snowshoes.\" Probably of Scandinavian origin, compare {{cog|is|þrúga||snowshoe}}, {{cog|no|truga||snowshoe}} and dialectal Swedish {{m|sv|trudja||snowshoe}}."
+    },
+    {
+      "source": "etymonline",
+      "url": "https://www.etymonline.com/word/trudge",
+      "quote": "\"make one's way on foot,\" especially \"walk wearily or laboriously,\" 1540s, a word of… See origin and meaning of trudge. from or related to Low German or obsolete Flemish pad \"sole of the foot,\" which is perhaps from PIE *pent- \"to tread, go\" (see find (v."
+    },
+    {
+      "source": "ngrams",
+      "url": "https://books.google.com/ngrams/json?content=trudge&year_start=1800&year_end=2019&corpus=en-2019&smoothing=3",
+      "quote": "years [1800, 1850, 1900, 1950, 2000, 2019] scaled=[0.725, 0.5085, 0.5286, 0.3218, 0.4571, 1.0] raw=[3.0111e-07, 2.11182e-07, 2.19563e-07, 1.33653e-07, 1.89837e-07, 4.15337e-07]"
+    }
+  ],
+  "proposed_from": null,
+  "proposed_root": null,
+  "proposed_usage": [
+    0.725,
+    0.5085,
+    0.5286,
+    0.3218,
+    0.4571,
+    1.0
+  ],
+  "proposed_usageNote": null,
+  "proposed_gloss": null,
+  "proposed_ex": null,
+  "rank_suggestions": [],
+  "gloss_candidates": [],
+  "diffs": [
+    "usage"
+  ],
+  "errors": [],
+  "wiki_roots": []
+}

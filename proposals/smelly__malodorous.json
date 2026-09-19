@@ -1,0 +1,42 @@
+{
+  "word": "malodorous",
+  "hub": "smelly",
+  "status": "pending",
+  "evidence": [
+    {
+      "source": "wiktionary",
+      "url": "https://en.wiktionary.org/wiki/malodorous",
+      "quote": "{{ety|en|:af|mal-|odorous|text=+|tree=1}}"
+    },
+    {
+      "source": "etymonline",
+      "url": "https://www.etymonline.com/word/malodorous",
+      "quote": "\"having a bad or offensive odor,\" 1832, from mal- \"bad\" + odorous. Related: Malodorously;… See origin and meaning of malodorous. from mal- \"bad\" + odorous ."
+    },
+    {
+      "source": "ngrams",
+      "url": "https://books.google.com/ngrams/json?content=malodorous&year_start=1800&year_end=2019&corpus=en-2019&smoothing=3",
+      "quote": "years [1800, 1850, 1900, 1950, 2000, 2019] scaled=[0.0264, 0.0326, 1.0, 0.7063, 0.704, 0.8937] raw=[4.961e-09, 6.132e-09, 1.87975e-07, 1.32775e-07, 1.32343e-07, 1.67997e-07]"
+    }
+  ],
+  "proposed_from": null,
+  "proposed_root": null,
+  "proposed_usage": [
+    0.0264,
+    0.0326,
+    1.0,
+    0.7063,
+    0.704,
+    0.8937
+  ],
+  "proposed_usageNote": null,
+  "proposed_gloss": null,
+  "proposed_ex": null,
+  "rank_suggestions": [],
+  "gloss_candidates": [],
+  "diffs": [
+    "usage"
+  ],
+  "errors": [],
+  "wiki_roots": []
+}

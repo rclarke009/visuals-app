@@ -1,0 +1,75 @@
+{
+  "word": "child",
+  "hub": "child",
+  "status": "pending",
+  "evidence": [
+    {
+      "source": "wiktionary",
+      "url": "https://en.wiktionary.org/wiki/child",
+      "quote": "From {{inh|en|enm|child}}, from {{inh|en|ang|ċild}}, from {{inh|en|gmw-pro|*kilþ}}, {{m|gmw-pro|*kelþ}}, from {{inh|en|gem-pro|*kelþaz||[[womb]]; [[fetus]]}}, from {{der|en|ine-pro|*ǵelt-||[[womb]]}}, perhaps from {{der|en|ine-pro|*gel-||to ball up, amass}}. Cognate with {{cog|da|kuld||[[brood]], [[litter]]}}, {{cog|sv|kull||[[brood]], [[litter]]}}, {{cog|is|kelta}}, {{m|is|kjalta||[[lap]]}}, {{cog|got|𐌺𐌹𐌻𐌸𐌴𐌹||[[womb]]}}, {{cog|sa|जर्त}}, {{m|sa|जर्तु||tr=jártu|[[vulva]]}}."
+    },
+    {
+      "source": "etymonline",
+      "url": "https://www.etymonline.com/word/child",
+      "quote": "\"fetus, infant, unborn or newly born person,\" from Proto-Germanic *kiltham (source also… See origin and meaning of child. from Proto-Germanic *kiltham (source also of Gothic kilþei \"womb,\" inkilþo \"pregnant;\" Danish kuld \"children of the same marriage;\" Old Swedish kulder \"litter;\" Old English cildhama \"womb,\" lit."
+    },
+    {
+      "source": "ngrams",
+      "url": "https://books.google.com/ngrams/json?content=child&year_start=1800&year_end=2019&corpus=en-2019&smoothing=3",
+      "quote": "years [1800, 1850, 1900, 1950, 2000, 2019] scaled=[0.4963, 0.6737, 0.7086, 0.6762, 1.0, 0.9647] raw=[9.6019317e-05, 0.000130355593, 0.000137097483, 0.000130830112, 0.000193484568, 0.000186649027]"
+    }
+  ],
+  "proposed_from": [
+    {
+      "lang": "Middle English",
+      "form": "childen",
+      "year": null
+    },
+    {
+      "lang": "Proto-Germanic",
+      "form": "*kelþaz",
+      "year": null
+    },
+    {
+      "lang": "Proto-West-Germanic",
+      "form": "*kilþ",
+      "year": null
+    },
+    {
+      "lang": "Old English",
+      "form": "ċild",
+      "year": null
+    },
+    {
+      "lang": "Middle English",
+      "form": "child",
+      "year": null
+    }
+  ],
+  "proposed_root": {
+    "id": "childen",
+    "form": "childen",
+    "gloss": ""
+  },
+  "proposed_usage": [
+    0.4963,
+    0.6737,
+    0.7086,
+    0.6762,
+    1.0,
+    0.9647
+  ],
+  "proposed_usageNote": "This surface form has other senses (2 English etymology sections). The usage curve may mix them.",
+  "proposed_gloss": null,
+  "proposed_ex": null,
+  "rank_suggestions": [],
+  "gloss_candidates": [],
+  "diffs": [
+    "from",
+    "root",
+    "usage",
+    "usageNote"
+  ],
+  "errors": [],
+  "wiki_roots": []
+}

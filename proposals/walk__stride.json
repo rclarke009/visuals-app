@@ -1,0 +1,80 @@
+{
+  "word": "stride",
+  "hub": "walk",
+  "status": "pending",
+  "evidence": [
+    {
+      "source": "wiktionary",
+      "url": "https://en.wiktionary.org/wiki/stride",
+      "quote": "From {{inh|en|enm|striden}}, from {{inh|en|ang|strīdan|t= stride}}, from {{inh|en|gmw-pro|*strīdan}}, from {{der|en|gem-pro|*strīdaną}}.<ref>{{R:Etymonline}}</ref> Cognate with {{cog|nds|striden||to fight, to stride}}, {{cog|nl|strijden||to fight}}, {{cog|de|streiten||to fight, to quarrel}}."
+    },
+    {
+      "source": "etymonline",
+      "url": "https://www.etymonline.com/word/stride",
+      "quote": "\"to straddle, mount\" (a horse), from Proto-Germanic *stridanan (source also of Middle Low… See origin and meaning of stride. from Old English stridan (past tense strad , past participle striden ), \"to straddle, mount\" (a horse), from Proto-Germanic *stridanan (source also of Middle Low German strede \"stride, strive;\" Old Saxon stridian , Danish stride , Swedish strida \"to fight,\" Dutch strijden , Old High German stritan , German s treiten \"to fight, contend, struggle,\" Old Norse striðr \"strong, hard, stubborn, severe\")."
+    },
+    {
+      "source": "ngrams",
+      "url": "https://books.google.com/ngrams/json?content=stride&year_start=1800&year_end=2019&corpus=en-2019&smoothing=3",
+      "quote": "years [1800, 1850, 1900, 1950, 2000, 2019] scaled=[0.2442, 0.3263, 0.3992, 0.4957, 0.5103, 1.0] raw=[9.41172e-07, 1.257642e-06, 1.538471e-06, 1.910628e-06, 1.966644e-06, 3.854062e-06]"
+    }
+  ],
+  "proposed_from": [
+    {
+      "lang": "Old English",
+      "form": "stride",
+      "year": null
+    },
+    {
+      "lang": "Middle English",
+      "form": "stride",
+      "year": null
+    },
+    {
+      "lang": "Proto-Germanic",
+      "form": "*strīdaną",
+      "year": null
+    },
+    {
+      "lang": "Proto-West-Germanic",
+      "form": "*strīdan",
+      "year": null
+    },
+    {
+      "lang": "Old English",
+      "form": "strīdan",
+      "year": null
+    },
+    {
+      "lang": "Middle English",
+      "form": "striden",
+      "year": null
+    }
+  ],
+  "proposed_root": {
+    "id": "stride",
+    "form": "stride",
+    "gloss": ""
+  },
+  "proposed_usage": [
+    0.2442,
+    0.3263,
+    0.3992,
+    0.4957,
+    0.5103,
+    1.0
+  ],
+  "proposed_usageNote": "This surface form has other senses (2 English etymology sections). The usage curve may mix them.",
+  "proposed_gloss": null,
+  "proposed_ex": null,
+  "rank_suggestions": [],
+  "gloss_candidates": [],
+  "diffs": [
+    "from",
+    "root",
+    "usage",
+    "usageNote"
+  ],
+  "errors": [],
+  "wiki_roots": []
+}

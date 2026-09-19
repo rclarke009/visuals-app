@@ -1,0 +1,5 @@
+{
+  "status": "pending",
+  "note": "No two words in the current 37 share a grounded ancestor form or Wiktionary {{root}} id. Root chips will keep falling through to Wiktionary until you assign a shared root.id by hand. Re-run after accepting etymology proposals.",
+  "links": []
+}

@@ -1,0 +1,1321 @@
+{
+  "schema_version": "1.0.0",
+  "usage_years": [
+    1800,
+    1850,
+    1900,
+    1950,
+    2000,
+    2019
+  ],
+  "families": [
+    {
+      "hub": "thin",
+      "answer": [
+        "connotation"
+      ],
+      "prompt": "All seven of these mean thin. So what are you actually choosing between?",
+      "insight": "Every word here reports the same width. What changes is how you feel about the person you are describing.",
+      "words": [
+        {
+          "w": "emaciated",
+          "x": -0.95,
+          "y": 0.92,
+          "z": 0.5,
+          "band": 0.06,
+          "gloss": "Thin from starvation or disease. A medical alarm, never a description of a body anyone admires.",
+          "ex": "Relief workers photographed the emaciated cattle.",
+          "from": [
+            {
+              "lang": "Latin",
+              "form": "macer"
+            },
+            {
+              "lang": "Latin",
+              "form": "emaciare"
+            },
+            {
+              "lang": "English",
+              "year": 1620
+            }
+          ],
+          "root": {
+            "id": "macer",
+            "form": "macer",
+            "gloss": "lean, meagre"
+          },
+          "usage": [
+            0.83,
+            1.0,
+            0.73,
+            0.26,
+            0.24,
+            0.38
+          ]
+        },
+        {
+          "w": "scrawny",
+          "x": -0.7,
+          "y": 0.55,
+          "z": -0.35,
+          "band": 0.11,
+          "gloss": "Thin and underpowered, with the bones showing through. Suggests a weak build, not merely a small one.",
+          "ex": "A scrawny rooster ruled the whole yard.",
+          "from": [
+            {
+              "lang": "English",
+              "form": "scranny"
+            },
+            {
+              "lang": "English",
+              "year": 1833
+            }
+          ],
+          "root": {
+            "id": "scranny",
+            "form": "scranny",
+            "gloss": "thin, meagre (dialect)"
+          },
+          "usage": [
+            0.0,
+            0.01,
+            0.1,
+            0.23,
+            0.49,
+            1.0
+          ]
+        },
+        {
+          "w": "skinny",
+          "x": -0.3,
+          "y": 0.45,
+          "z": -0.45,
+          "band": 0.13,
+          "gloss": "Thin, said plainly and a little rudely. The word a sibling uses, never the word a doctor writes.",
+          "ex": "He was a skinny kid who swam inside his father’s coat.",
+          "from": [
+            {
+              "lang": "Old Norse",
+              "form": "skinn"
+            },
+            {
+              "lang": "English",
+              "year": 1573
+            }
+          ],
+          "root": {
+            "id": "skin",
+            "form": "skin",
+            "gloss": "hide, pelt"
+          },
+          "usage": [
+            0.09,
+            0.06,
+            0.06,
+            0.11,
+            0.45,
+            1.0
+          ]
+        },
+        {
+          "w": "thin",
+          "x": 0.0,
+          "y": 0.25,
+          "z": 0.0,
+          "band": 0.08,
+          "gloss": "The flat, factual word. States the width of a thing and passes no judgment whatsoever.",
+          "ex": "The ice was still thin near the reeds.",
+          "from": [
+            {
+              "lang": "Old English",
+              "form": "þynne"
+            },
+            {
+              "lang": "English",
+              "form": "thin"
+            }
+          ],
+          "root": {
+            "id": "thunnuz",
+            "form": "*thunnuz",
+            "gloss": "stretched, not thick"
+          },
+          "usage": [
+            0.73,
+            0.8,
+            0.97,
+            1.0,
+            0.82,
+            0.97
+          ]
+        },
+        {
+          "w": "slim",
+          "x": 0.52,
+          "y": 0.2,
+          "z": -0.05,
+          "band": 0.1,
+          "gloss": "Trim and attractively thin. The tailoring word, concerned with fit rather than delicacy.",
+          "ex": "The jacket came in a slim cut.",
+          "from": [
+            {
+              "lang": "Dutch",
+              "form": "slim"
+            },
+            {
+              "lang": "English",
+              "year": 1657
+            }
+          ],
+          "root": {
+            "id": "slembaz",
+            "form": "*slembaz",
+            "gloss": "oblique, crooked"
+          },
+          "usage": [
+            0.07,
+            0.12,
+            0.3,
+            0.38,
+            0.56,
+            1.0
+          ]
+        },
+        {
+          "w": "slender",
+          "x": 0.68,
+          "y": 0.3,
+          "z": 0.3,
+          "band": 0.09,
+          "gloss": "Thin in a way that looks graceful and fine. Used of stems, wrists and columns.",
+          "ex": "She had the slender hands of a harpist.",
+          "from": [
+            {
+              "lang": "Anglo-French",
+              "form": "esclendre"
+            },
+            {
+              "lang": "English",
+              "year": 1400
+            }
+          ],
+          "root": {
+            "id": "esclendre",
+            "form": "esclendre",
+            "gloss": "thin, lean"
+          },
+          "usage": [
+            0.74,
+            0.86,
+            1.0,
+            0.61,
+            0.3,
+            0.43
+          ]
+        },
+        {
+          "w": "svelte",
+          "x": 0.92,
+          "y": 0.35,
+          "z": 0.4,
+          "band": 0.06,
+          "gloss": "Slender in an elegant, fashionable way. Implies style and self-possession, not just size.",
+          "ex": "He looked svelte in the borrowed tuxedo.",
+          "from": [
+            {
+              "lang": "Italian",
+              "form": "svelto"
+            },
+            {
+              "lang": "French",
+              "form": "svelte"
+            },
+            {
+              "lang": "English",
+              "year": 1817
+            }
+          ],
+          "root": {
+            "id": "exvellere",
+            "form": "ex- + vellere",
+            "gloss": "pluck out, stretch"
+          },
+          "usage": [
+            0.0,
+            0.02,
+            0.08,
+            0.23,
+            0.78,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "hub": "angry",
+      "answer": [
+        "intensity"
+      ],
+      "prompt": "These five all name the same emotion. What separates them?",
+      "insight": "The feeling never changes from one end to the other. Only the temperature moves.",
+      "words": [
+        {
+          "w": "annoyed",
+          "x": -0.15,
+          "y": -0.75,
+          "z": -0.1,
+          "band": 0.1,
+          "gloss": "Mildly bothered by something small. It fades the moment the cause stops.",
+          "ex": "She was annoyed by the dripping tap.",
+          "from": [
+            {
+              "lang": "Latin",
+              "form": "inodiare"
+            },
+            {
+              "lang": "Old French",
+              "form": "anuier"
+            },
+            {
+              "lang": "English",
+              "year": 1250
+            }
+          ],
+          "root": {
+            "id": "odium",
+            "form": "odium",
+            "gloss": "hatred"
+          },
+          "usage": [
+            0.29,
+            0.56,
+            0.41,
+            0.3,
+            0.36,
+            1.0
+          ]
+        },
+        {
+          "w": "irritated",
+          "x": -0.25,
+          "y": -0.5,
+          "z": 0.1,
+          "band": 0.1,
+          "gloss": "Worn thin by something repeated. Friction rather than heat.",
+          "ex": "He grew irritated at the third interruption.",
+          "from": [
+            {
+              "lang": "Latin",
+              "form": "irritare"
+            },
+            {
+              "lang": "English",
+              "year": 1530
+            }
+          ],
+          "root": {
+            "id": "irritare",
+            "form": "irritare",
+            "gloss": "excite, provoke"
+          },
+          "usage": [
+            1.0,
+            0.81,
+            0.48,
+            0.31,
+            0.39,
+            0.87
+          ]
+        },
+        {
+          "w": "angry",
+          "x": -0.3,
+          "y": 0.0,
+          "z": 0.0,
+          "band": 0.12,
+          "gloss": "The plain word for real anger, making no claim about how hot it burns or how long it lasts.",
+          "ex": "They were angry about the decision for weeks.",
+          "from": [
+            {
+              "lang": "Old Norse",
+              "form": "angr"
+            },
+            {
+              "lang": "English",
+              "year": 1300
+            }
+          ],
+          "root": {
+            "id": "angr",
+            "form": "angr",
+            "gloss": "grief, affliction"
+          },
+          "usage": [
+            0.47,
+            0.47,
+            0.35,
+            0.21,
+            0.44,
+            1.0
+          ]
+        },
+        {
+          "w": "furious",
+          "x": -0.45,
+          "y": 0.7,
+          "z": 0.05,
+          "band": 0.09,
+          "gloss": "Anger that has spilled into motion and volume. Almost impossible to sit still inside.",
+          "ex": "He was furious, slamming drawers as he searched.",
+          "from": [
+            {
+              "lang": "Latin",
+              "form": "furia"
+            },
+            {
+              "lang": "English",
+              "year": 1370
+            }
+          ],
+          "root": {
+            "id": "furia",
+            "form": "furia",
+            "gloss": "rage, the Furies"
+          },
+          "usage": [
+            1.0,
+            0.72,
+            0.44,
+            0.22,
+            0.33,
+            0.76
+          ]
+        },
+        {
+          "w": "livid",
+          "x": -0.5,
+          "y": 0.92,
+          "z": 0.2,
+          "band": 0.07,
+          "gloss": "Anger the body gives away. Pale, shaking, past the point of speaking clearly.",
+          "ex": "She went livid when she read the letter.",
+          "from": [
+            {
+              "lang": "Latin",
+              "form": "lividus"
+            },
+            {
+              "lang": "English",
+              "year": 1620
+            }
+          ],
+          "root": {
+            "id": "lividus",
+            "form": "lividus",
+            "gloss": "bluish, leaden-coloured"
+          },
+          "usage": [
+            1.0,
+            0.97,
+            0.49,
+            0.13,
+            0.17,
+            0.53
+          ],
+          "usageNote": "Until the early 1900s, livid mostly meant bluish-grey, like a bruise. The 1800 peak is that colour, not anger, so the line mixes two meanings."
+        }
+      ]
+    },
+    {
+      "hub": "child",
+      "answer": [
+        "formality"
+      ],
+      "prompt": "Four words for a person under eighteen. What is the difference?",
+      "insight": "All four pick out exactly the same people. What changes is the room you are standing in when you say it.",
+      "words": [
+        {
+          "w": "kid",
+          "x": 0.25,
+          "y": 0.0,
+          "z": -0.85,
+          "band": 0.08,
+          "gloss": "Warm and everyday. What you call your own children at the dinner table.",
+          "ex": "The kids are out in the back yard.",
+          "from": [
+            {
+              "lang": "Old Norse",
+              "form": "kið"
+            },
+            {
+              "lang": "English",
+              "year": 1200
+            }
+          ],
+          "root": {
+            "id": "kid-goat",
+            "form": "kið",
+            "gloss": "young goat"
+          },
+          "usage": [
+            0.08,
+            0.06,
+            0.08,
+            0.15,
+            0.45,
+            1.0
+          ],
+          "usageNote": "Until the nineteenth century these counts are mostly the animal: a kid is a young goat. The child sense is later, so the early flat stretch is not how often people said kid of children."
+        },
+        {
+          "w": "child",
+          "x": 0.1,
+          "y": 0.0,
+          "z": 0.0,
+          "band": 0.1,
+          "gloss": "The neutral standard word, equally at home in conversation and in print.",
+          "ex": "Every child in the class got a copy.",
+          "from": [
+            {
+              "lang": "Old English",
+              "form": "cild"
+            },
+            {
+              "lang": "English",
+              "form": "child"
+            }
+          ],
+          "root": {
+            "id": "cild",
+            "form": "cild",
+            "gloss": "young person"
+          },
+          "usage": [
+            0.5,
+            0.67,
+            0.71,
+            0.68,
+            1.0,
+            0.96
+          ]
+        },
+        {
+          "w": "minor",
+          "x": -0.05,
+          "y": 0.1,
+          "z": 0.75,
+          "band": 0.07,
+          "gloss": "A legal bracket. Someone under the age of majority, defined by statute rather than by affection.",
+          "ex": "The contract is void because he was a minor.",
+          "from": [
+            {
+              "lang": "Latin",
+              "form": "minor"
+            },
+            {
+              "lang": "English",
+              "year": 1520
+            }
+          ],
+          "root": {
+            "id": "minor",
+            "form": "minor",
+            "gloss": "lesser, smaller"
+          },
+          "usage": [
+            0.17,
+            0.37,
+            0.56,
+            1.0,
+            0.74,
+            0.47
+          ],
+          "usageNote": "Google Books is counting every minor: lesser, a music key, someone under age. The 1950 peak is not how often the legal sense was used."
+        },
+        {
+          "w": "juvenile",
+          "x": -0.55,
+          "y": 0.2,
+          "z": 0.65,
+          "band": 0.09,
+          "gloss": "Clinical and faintly criminal. Turned on an adult it stops describing and starts insulting.",
+          "ex": "The case was moved to juvenile court.",
+          "from": [
+            {
+              "lang": "Latin",
+              "form": "iuvenis"
+            },
+            {
+              "lang": "English",
+              "year": 1620
+            }
+          ],
+          "root": {
+            "id": "iuvenis",
+            "form": "iuvenis",
+            "gloss": "young"
+          },
+          "usage": [
+            0.23,
+            0.28,
+            0.21,
+            0.72,
+            1.0,
+            0.46
+          ]
+        }
+      ]
+    },
+    {
+      "hub": "smelly",
+      "answer": [
+        "formality",
+        "intensity"
+      ],
+      "prompt": "Nine words for a bad smell. One axis will not hold them. Which two do?",
+      "insight": "Formality and force come apart here. Malodorous is the most formal word in the group and the least physical; stinky is the most casual and the most vivid. A single line has to lie about one of those facts.",
+      "words": [
+        {
+          "w": "musty",
+          "x": -0.35,
+          "y": -0.6,
+          "z": 0.1,
+          "band": 0.09,
+          "gloss": "The stale, shut-in smell of damp paper and old closets. Mild, specific, and nothing to do with rot.",
+          "ex": "The cabin smelled musty after the winter.",
+          "from": [
+            {
+              "lang": "English",
+              "form": "moisty"
+            },
+            {
+              "lang": "English",
+              "year": 1520
+            }
+          ],
+          "root": {
+            "id": "musty",
+            "form": "musty",
+            "gloss": "damp, stale"
+          },
+          "usage": [
+            0.79,
+            0.72,
+            0.73,
+            0.47,
+            0.51,
+            1.0
+          ]
+        },
+        {
+          "w": "stinky",
+          "x": -0.4,
+          "y": 0.3,
+          "z": -0.9,
+          "band": 0.1,
+          "gloss": "Blunt and childlike, yet fiercely physical. The word a five-year-old reaches for first.",
+          "ex": "Take those stinky socks off the table.",
+          "from": [
+            {
+              "lang": "Old English",
+              "form": "stincan"
+            },
+            {
+              "lang": "English",
+              "year": 1888
+            }
+          ],
+          "root": {
+            "id": "stincan",
+            "form": "stincan",
+            "gloss": "to emit a smell"
+          },
+          "usage": [
+            0.0,
+            0.0,
+            0.0,
+            0.03,
+            0.27,
+            1.0
+          ]
+        },
+        {
+          "w": "smelly",
+          "x": -0.45,
+          "y": 0.0,
+          "z": -0.55,
+          "band": 0.12,
+          "gloss": "The plain informal word. Says a thing smells bad without saying how, or why, or how much.",
+          "ex": "A smelly bin sat by the gate all August.",
+          "from": [
+            {
+              "lang": "Old English",
+              "form": "smyllan"
+            },
+            {
+              "lang": "English",
+              "year": 1862
+            }
+          ],
+          "root": {
+            "id": "smell",
+            "form": "smell",
+            "gloss": "odour"
+          },
+          "usage": [
+            0.01,
+            0.0,
+            0.03,
+            0.21,
+            0.57,
+            1.0
+          ]
+        },
+        {
+          "w": "rank",
+          "x": -0.7,
+          "y": 0.6,
+          "z": -0.35,
+          "band": 0.11,
+          "gloss": "Offensively strong and a little coarse. Suggests sweat, mildew and standing water.",
+          "ex": "The locker room air was rank.",
+          "from": [
+            {
+              "lang": "Old English",
+              "form": "ranc"
+            },
+            {
+              "lang": "English",
+              "form": "rank"
+            }
+          ],
+          "root": {
+            "id": "ranc",
+            "form": "ranc",
+            "gloss": "proud, overgrown, strong"
+          },
+          "usage": [
+            1.0,
+            0.75,
+            0.55,
+            0.38,
+            0.26,
+            0.27
+          ],
+          "usageNote": "Rank as military order and social standing drowns the smell sense in early counts. The 1800 peak is that order, not the smell."
+        },
+        {
+          "w": "reeking",
+          "x": -0.75,
+          "y": 0.75,
+          "z": -0.1,
+          "band": 0.1,
+          "gloss": "Strong enough to travel. The smell arrives in the room before the thing does.",
+          "ex": "He came in reeking of woodsmoke.",
+          "from": [
+            {
+              "lang": "Old English",
+              "form": "rēc"
+            },
+            {
+              "lang": "English",
+              "form": "reek"
+            }
+          ],
+          "root": {
+            "id": "rec",
+            "form": "rēc",
+            "gloss": "smoke, vapour"
+          },
+          "usage": [
+            1.0,
+            0.87,
+            0.54,
+            0.16,
+            0.19,
+            0.42
+          ]
+        },
+        {
+          "w": "fetid",
+          "x": -0.8,
+          "y": 0.7,
+          "z": 0.65,
+          "band": 0.08,
+          "gloss": "Literary and heavy. Stagnant air, swamp water, decay with no way out.",
+          "ex": "A fetid breath came off the marsh at low tide.",
+          "from": [
+            {
+              "lang": "Latin",
+              "form": "fetidus"
+            },
+            {
+              "lang": "English",
+              "year": 1590
+            }
+          ],
+          "root": {
+            "id": "fetere",
+            "form": "fetere",
+            "gloss": "to stink"
+          },
+          "usage": [
+            1.0,
+            0.86,
+            0.52,
+            0.14,
+            0.15,
+            0.24
+          ]
+        },
+        {
+          "w": "putrid",
+          "x": -0.9,
+          "y": 0.92,
+          "z": 0.45,
+          "band": 0.07,
+          "gloss": "The particular smell of rotting flesh or matter. The most extreme of the nine, and still clinical.",
+          "ex": "The putrid remains had lain there for days.",
+          "from": [
+            {
+              "lang": "Latin",
+              "form": "putridus"
+            },
+            {
+              "lang": "English",
+              "year": 1400
+            }
+          ],
+          "root": {
+            "id": "putrere",
+            "form": "putrere",
+            "gloss": "to rot"
+          },
+          "usage": [
+            1.0,
+            0.28,
+            0.14,
+            0.05,
+            0.04,
+            0.07
+          ]
+        },
+        {
+          "w": "malodorous",
+          "x": -0.3,
+          "y": -0.35,
+          "z": 0.95,
+          "band": 0.06,
+          "gloss": "The formal, bureaucratic term. Accurate, oddly bloodless, at home in an inspection report.",
+          "ex": "Tenants reported a malodorous stairwell.",
+          "from": [
+            {
+              "lang": "Latin",
+              "form": "odor"
+            },
+            {
+              "lang": "English",
+              "year": 1850
+            }
+          ],
+          "root": {
+            "id": "odor",
+            "form": "odor",
+            "gloss": "smell"
+          },
+          "usage": [
+            0.03,
+            0.03,
+            1.0,
+            0.71,
+            0.7,
+            0.89
+          ]
+        },
+        {
+          "w": "pungent",
+          "x": 0.2,
+          "y": 0.45,
+          "z": 0.35,
+          "band": 0.14,
+          "gloss": "Sharp and piercing, and not necessarily bad at all. The word for aged cheese, garlic and woodsmoke.",
+          "ex": "A pungent wheel of cheese sat under glass.",
+          "from": [
+            {
+              "lang": "Latin",
+              "form": "pungere"
+            },
+            {
+              "lang": "English",
+              "year": 1590
+            }
+          ],
+          "root": {
+            "id": "pungere",
+            "form": "pungere",
+            "gloss": "to prick"
+          },
+          "usage": [
+            1.0,
+            0.93,
+            0.62,
+            0.43,
+            0.45,
+            0.63
+          ]
+        }
+      ]
+    },
+    {
+      "hub": "walk",
+      "answer": [
+        "intensity"
+      ],
+      "prompt": "Eight ways of going on foot. What is being measured?",
+      "insight": "The axis is how much work the body is doing, not how fast it goes. Amble spends almost nothing; trudge and stomp spend a lot, in opposite moods. The two marches sit apart on mood, not on effort. Reading either as speed or as a stomp puts them on the wrong end: both keep a beat, and only the huff is sour.",
+      "words": [
+        {
+          "w": "amble",
+          "x": 0.35,
+          "y": -0.8,
+          "z": 0.3,
+          "band": 0.09,
+          "gloss": "Walk slowly and without aim, in no hurry to arrive anywhere in particular.",
+          "ex": "They ambled along the towpath until dusk.",
+          "from": [
+            {
+              "lang": "Latin",
+              "form": "ambulare"
+            },
+            {
+              "lang": "Old French",
+              "form": "ambler"
+            },
+            {
+              "lang": "English",
+              "year": 1300
+            }
+          ],
+          "root": {
+            "id": "ambulare",
+            "form": "ambulare",
+            "gloss": "to walk"
+          },
+          "usage": [
+            1.0,
+            0.57,
+            0.43,
+            0.31,
+            0.48,
+            0.86
+          ]
+        },
+        {
+          "w": "stroll",
+          "x": 0.5,
+          "y": -0.6,
+          "z": -0.05,
+          "band": 0.1,
+          "gloss": "Walk for the pleasure of it, somewhere pleasant, usually with company.",
+          "ex": "We strolled the promenade after dinner.",
+          "from": [
+            {
+              "lang": "German",
+              "form": "strollen"
+            },
+            {
+              "lang": "English",
+              "year": 1600
+            }
+          ],
+          "root": {
+            "id": "strollen",
+            "form": "strollen",
+            "gloss": "to wander at leisure"
+          },
+          "usage": [
+            0.22,
+            0.43,
+            0.4,
+            0.22,
+            0.54,
+            1.0
+          ]
+        },
+        {
+          "w": "walk",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "band": 0.11,
+          "gloss": "The neutral word. Movement on foot at no particular speed and in no particular mood.",
+          "ex": "She walks to work most mornings.",
+          "from": [
+            {
+              "lang": "Old English",
+              "form": "wealcan"
+            },
+            {
+              "lang": "English",
+              "form": "walk"
+            }
+          ],
+          "root": {
+            "id": "wealcan",
+            "form": "wealcan",
+            "gloss": "to roll, toss"
+          },
+          "usage": [
+            0.56,
+            0.57,
+            0.42,
+            0.26,
+            0.48,
+            1.0
+          ]
+        },
+        {
+          "w": "stride",
+          "x": 0.4,
+          "y": 0.45,
+          "z": 0.15,
+          "band": 0.1,
+          "gloss": "Long, confident steps that cover ground. Purpose and self-assurance, without heaviness.",
+          "ex": "He strode across the lobby without stopping.",
+          "from": [
+            {
+              "lang": "Old English",
+              "form": "stridan"
+            },
+            {
+              "lang": "English",
+              "form": "stride"
+            }
+          ],
+          "root": {
+            "id": "stridan",
+            "form": "stridan",
+            "gloss": "to straddle, mount"
+          },
+          "usage": [
+            0.24,
+            0.33,
+            0.4,
+            0.5,
+            0.51,
+            1.0
+          ]
+        },
+        {
+          "w": "march",
+          "sense": "to a drum",
+          "x": 0.05,
+          "y": 0.4,
+          "z": 0.45,
+          "band": 0.08,
+          "gloss": "Walk in measured rhythm toward a destination. Military, or determined enough to keep a beat.",
+          "ex": "The column marched down the high street in even time.",
+          "from": [
+            {
+              "lang": "Old French",
+              "form": "marcher"
+            },
+            {
+              "lang": "English",
+              "year": 1400
+            }
+          ],
+          "root": {
+            "id": "marcher",
+            "form": "marcher",
+            "gloss": "to walk, trample"
+          },
+          "usage": [
+            1.0,
+            0.92,
+            0.59,
+            0.24,
+            0.21,
+            0.29
+          ],
+          "usageMix": [true, true, true, false, false, false],
+          "usageMixTag": "March",
+          "usageNote": "The month and the military noun swamp the gait. Early height is March and a march, not how people walked."
+        },
+        {
+          "w": "march",
+          "sense": "in a huff",
+          "x": -0.35,
+          "y": 0.5,
+          "z": -0.05,
+          "band": 0.08,
+          "gloss": "Leave stiffly, like a soldier off duty. The walk still keeps the beat and the destination; the force in each foot is stomp.",
+          "ex": "He marched off to his room and slammed the door.",
+          "from": [
+            {
+              "lang": "Old French",
+              "form": "marcher"
+            },
+            {
+              "lang": "English",
+              "year": 1400
+            }
+          ],
+          "root": {
+            "id": "marcher",
+            "form": "marcher",
+            "gloss": "to walk, trample"
+          },
+          "usage": [
+            1.0,
+            0.92,
+            0.59,
+            0.24,
+            0.21,
+            0.29
+          ],
+          "usageMix": [true, true, true, false, false, false],
+          "usageMixTag": "March",
+          "usageNote": "The month and the military noun swamp the gait. Early height is March and a march, not how people walked."
+        },
+        {
+          "w": "trudge",
+          "x": -0.45,
+          "y": 0.7,
+          "z": -0.1,
+          "band": 0.09,
+          "gloss": "Walk as if the ground is resisting. Slow, heavy, and reluctant: effort without speed.",
+          "ex": "They trudged back through the mud after the match.",
+          "from": [
+            {
+              "lang": "English",
+              "year": 1547
+            }
+          ],
+          "root": {
+            "id": "trudge",
+            "form": "trudge",
+            "gloss": "walk laboriously (origin unknown)"
+          },
+          "usage": [
+            0.72,
+            0.51,
+            0.53,
+            0.32,
+            0.46,
+            1.0
+          ]
+        },
+        {
+          "w": "stomp",
+          "x": -0.55,
+          "y": 0.9,
+          "z": -0.3,
+          "band": 0.08,
+          "gloss": "Put each foot down hard, usually in anger. Force in the step, not a cadence and not a pace.",
+          "ex": "She stomped up the stairs and slammed the bedroom door.",
+          "from": [
+            {
+              "lang": "Old English",
+              "form": "stempan"
+            },
+            {
+              "lang": "English",
+              "year": 1803
+            }
+          ],
+          "root": {
+            "id": "stamp",
+            "form": "stamp",
+            "gloss": "to crush underfoot"
+          },
+          "usage": [
+            0.01,
+            0.01,
+            0.03,
+            0.09,
+            0.43,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "hub": "smart",
+      "answer": [
+        "intensity",
+        "connotation"
+      ],
+      "prompt": "Five words of praise for a mind. Is one axis enough here?",
+      "insight": "Two things move at once: how much intelligence, and how warmly it is meant. Shrewd and brilliant both sit high, and only one of them is a compliment you would want.",
+      "words": [
+        {
+          "w": "clever",
+          "x": 0.25,
+          "y": 0.2,
+          "z": -0.25,
+          "band": 0.12,
+          "gloss": "Quick and inventive, with a faint hint of trickery. Good at finding the angle nobody else saw.",
+          "ex": "That is a clever way around the rule.",
+          "from": [
+            {
+              "lang": "English",
+              "form": "cliver"
+            },
+            {
+              "lang": "English",
+              "year": 1590
+            }
+          ],
+          "root": {
+            "id": "cliver",
+            "form": "cliver",
+            "gloss": "expert, ready (dialect)"
+          },
+          "usage": [
+            0.24,
+            0.77,
+            1.0,
+            0.45,
+            0.48,
+            0.95
+          ]
+        },
+        {
+          "w": "bright",
+          "x": 0.7,
+          "y": -0.2,
+          "z": -0.35,
+          "band": 0.11,
+          "gloss": "Naturally quick, said warmly and usually of the young. Promise more than proof.",
+          "ex": "She is a bright student who reads ahead.",
+          "from": [
+            {
+              "lang": "Old English",
+              "form": "beorht"
+            },
+            {
+              "lang": "English",
+              "form": "bright"
+            }
+          ],
+          "root": {
+            "id": "beorht",
+            "form": "beorht",
+            "gloss": "shining"
+          },
+          "usage": [
+            0.66,
+            1.0,
+            0.78,
+            0.42,
+            0.39,
+            0.7
+          ],
+          "usageNote": "Almost all of this line is light: a bright day, a bright colour. The mind sense is a thin slice of the count."
+        },
+        {
+          "w": "intelligent",
+          "x": 0.45,
+          "y": 0.35,
+          "z": 0.45,
+          "band": 0.09,
+          "gloss": "The neutral formal assessment. Capable of real reasoning, and unsentimental about saying so.",
+          "ex": "An intelligent reply to a difficult question.",
+          "from": [
+            {
+              "lang": "Latin",
+              "form": "intellegere"
+            },
+            {
+              "lang": "English",
+              "year": 1500
+            }
+          ],
+          "root": {
+            "id": "intellegere",
+            "form": "inter + legere",
+            "gloss": "choose between, understand"
+          },
+          "usage": [
+            0.62,
+            1.0,
+            0.92,
+            0.54,
+            0.42,
+            0.53
+          ]
+        },
+        {
+          "w": "brilliant",
+          "x": 0.85,
+          "y": 0.95,
+          "z": 0.15,
+          "band": 0.07,
+          "gloss": "Intelligence at a rare, dazzling level. Implies originality, not just capacity.",
+          "ex": "A brilliant proof that nobody had seen coming.",
+          "from": [
+            {
+              "lang": "Italian",
+              "form": "brillare"
+            },
+            {
+              "lang": "French",
+              "form": "brillant"
+            },
+            {
+              "lang": "English",
+              "year": 1680
+            }
+          ],
+          "root": {
+            "id": "brillare",
+            "form": "brillare",
+            "gloss": "to shine"
+          },
+          "usage": [
+            0.6,
+            1.0,
+            0.88,
+            0.48,
+            0.33,
+            0.52
+          ],
+          "usageNote": "Gems and light still dominate the count. Intelligence is only part of what this curve is measuring."
+        },
+        {
+          "w": "shrewd",
+          "x": -0.1,
+          "y": 0.4,
+          "z": 0.25,
+          "band": 0.1,
+          "gloss": "Sharp judgment about people and advantage. Admiring, but never quite warm.",
+          "ex": "A shrewd negotiator who knew when to wait.",
+          "from": [
+            {
+              "lang": "English",
+              "form": "shrew"
+            },
+            {
+              "lang": "English",
+              "year": 1300
+            }
+          ],
+          "root": {
+            "id": "shrew",
+            "form": "shrew",
+            "gloss": "wicked person (later: sharp)"
+          },
+          "usage": [
+            0.5,
+            0.94,
+            1.0,
+            0.59,
+            0.35,
+            0.59
+          ]
+        }
+      ]
+    }
+  ]
+}

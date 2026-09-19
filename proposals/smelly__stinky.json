@@ -1,0 +1,54 @@
+{
+  "word": "stinky",
+  "hub": "smelly",
+  "status": "pending",
+  "evidence": [
+    {
+      "source": "wiktionary",
+      "url": "https://en.wiktionary.org/wiki/stinky",
+      "quote": "From {{inh|en|enm|stinky}}, {{m|enm|stynky}}, equivalent to {{af|en|stink|-y|id2=adjectival}}. Compare {{cog|nl|stinkig|t=stinky, foul, rotten}}, {{cog|nds|stinkig|t=stinking, stinky}}, {{cog|de|stinkig|t=stinky}}, {{cog|hrx|stinkich}}. Compare also {{cog|stq|stjunkerch|t=stinky}}, {{cog|fy|stjonkerich|t=stinky}}."
+    },
+    {
+      "source": "etymonline",
+      "url": "https://www.etymonline.com/word/stinky",
+      "quote": "\"having much stink,\" 1888, from stink (n.) + -y (2). Chaucer used stynky. Stinking as a… See origin and meaning of stinky. from Old English -ig , from Proto-Germanic *-iga- , from PIE -(i)ko- , adjectival suffix, cognate with elements in Greek -ikos , Latin -icus (see -ic )."
+    },
+    {
+      "source": "ngrams",
+      "url": "https://books.google.com/ngrams/json?content=stinky&year_start=1800&year_end=2019&corpus=en-2019&smoothing=3",
+      "quote": "years [1800, 1850, 1900, 1950, 2000, 2019] scaled=[0.0023, 0.001, 0.0046, 0.0318, 0.267, 1.0] raw=[1.013e-09, 4.27e-10, 2e-09, 1.3733e-08, 1.15258e-07, 4.31756e-07]"
+    }
+  ],
+  "proposed_from": [
+    {
+      "lang": "Middle English",
+      "form": "stinky",
+      "year": null
+    }
+  ],
+  "proposed_root": {
+    "id": "stinky",
+    "form": "stinky",
+    "gloss": ""
+  },
+  "proposed_usage": [
+    0.0023,
+    0.001,
+    0.0046,
+    0.0318,
+    0.267,
+    1.0
+  ],
+  "proposed_usageNote": null,
+  "proposed_gloss": null,
+  "proposed_ex": null,
+  "rank_suggestions": [],
+  "gloss_candidates": [],
+  "diffs": [
+    "from",
+    "root",
+    "usage"
+  ],
+  "errors": [],
+  "wiki_roots": []
+}
